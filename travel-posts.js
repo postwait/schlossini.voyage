@@ -1,0 +1,157 @@
+var path = require('path'),
+    fs = require('fs'),
+    yaml = require('js-yaml'),
+    markdown = require( "markdown" ).markdown;
+
+var profiledir = 'public/images/profiles';
+
+var agenda = [];
+agenda = JSON.parse(fs.readFileSync('public/travel.json', { encoding: 'utf8' }));
+function get_location(date, off) {
+  if(!off) off = 0;
+  for(b = agenda.length; b > 0; b--) {
+    if(agenda[b-1].date >= date) break;
+  }
+  b += off;
+  if(b >= agenda.length) b = agenda.length - 1;
+  if(b < 0) b = 0;
+  return agenda[b];
+}
+
+var tp = function(pathname) {
+  this.pathname = path.dirname(pathname);
+  this.load();
+}
+
+var load_profiles = function(tgt, dir) {
+  fs.readdir(dir, function(err, list) {
+    tgt.profiles = [];
+    if(!list) return;
+    list.forEach(function(pic) {
+      var m = /(\d{4}-\d{2}-\d{2})\.(png|jpg|jpeg|gif)/.exec(pic);
+      if(m) { tgt.profiles.push(pic); }
+    });
+    tgt.profiles = tgt.profiles.sort(function(a,b) {
+      var adate = /(\d{4}-\d{2}-\d{2})\.(png|jpg|jpeg|gif)/.exec(a);
+      var bdate = /(\d{4}-\d{2}-\d{2})\.(png|jpg|jpeg|gif)/.exec(b);
+      adate = new Date(adate[1]);
+      bdate = new Date(bdate[1]);
+      if(adate < bdate) return -1;
+      if(adate > bdate) return 1;
+      return 0;
+    });
+    tgt.profiles_dates = tgt.profiles.map(function(a) {
+      var adate = /(\d{4}-\d{2}-\d{2})\.(png|jpg|jpeg|gif)/.exec(a);
+      return new Date(adate[1]);
+    });
+  });
+};
+var load_people = function(tgt, dir) {
+  fs.readdir(dir, function(err, list) {
+    if(err) { console.log(err); return; }
+    list.forEach(function(person) {
+      var file = dir + '/' + person;
+      fs.stat(file, function(err, stat) {
+        if (stat && stat.isDirectory()) {
+          tgt[person] = { posts: {} };
+          load_profiles(tgt[person], profiledir + '/' + person);
+          load_posts(tgt[person].posts, person, file);
+        }
+      });
+    });
+  });
+};
+
+var load_posts = function(tgt, person, dir) {
+  fs.readdir(dir, function(err, list) {
+    list.forEach(function(post) {
+      if(! /\.md$/.test(post)) return;
+      var file = dir + '/' + post;
+      fs.stat(file, function(err, stat) {
+        if (stat && stat.isFile()) {
+          post = post.replace(/\.md$/, '');
+          tgt[post] = new Post(person, post, file);
+        }
+      });
+    });
+  });
+};
+
+tp.prototype.load = function() {
+  this.people = {};
+  load_people(this.people, this.pathname);
+}
+
+tp.prototype.newest = function(date, person) {
+  var p = [];
+  for (var people in this.people) {
+    if(person && people != person) continue;
+    for (var post in this.people[people].posts) {
+      if(this.people[people].posts[post].date < date)
+        p.push(this.people[people].posts[post]);
+    }
+  }
+  return p.sort(function (a,b) { if(a<b) return -1; return (a==b) ? 0 : 1; });
+}
+
+tp.prototype.profile_pic = function(person, date) {
+  if(!date) date = new Date();
+  var p = this.people[person];
+  if(!p || !p.profiles_dates) return 'woman.png';
+  if(p.profiles_dates.length < 2) return person + '/' + p.profiles[0];
+  var b = p.profiles_dates.length - 1;
+  while(b >= 0) {
+    if(p.profiles_dates[b] > date) return person + '/' + p.profiles[b+1];
+  }
+  return person + '/' + p.profiles[0];
+}
+
+tp.prototype.frontage = function(date) {
+  var self = this;
+  var front_posts = [];
+  if(!date) date = new Date();
+  if(front_posts.length < 2) {
+    self.newest(date).forEach(function (post) {
+      var aidx;
+      if(front_posts.length > 2) return;
+      for(aidx=0; aidx<front_posts.length; aidx++) {
+        var already = front_posts[aidx];
+        if(already.person == post.person && already.title == post.title) break;
+      }
+      if(aidx == front_posts.length) front_posts.push(post);
+    });
+  }
+  if(front_posts.length > 3)
+    return front_posts.splice(0,3)
+  return front_posts;
+}
+
+tp.prototype.get_location = get_location;
+
+module.exports = tp;
+
+/* Actual post object */
+
+var Post = function(person, post, filename) {
+  var self = this;
+  fs.readFile(filename, { encoding: 'utf8' }, function(err, contents) {
+    var m, meta = '{}';
+    if(m = /^(====*)$/m.exec(contents)) {
+      meta = contents.slice(0,m.index);
+      contents = contents.slice(m.index + m[1].length + 1);
+    }
+    var obj = {};
+    self.person = person;
+    self.title = post;
+    try { obj = yaml.safeLoad(meta); } catch(e) {}
+    for(var key in obj) if(obj.hasOwnProperty(key)) self[key] = obj[key];
+    if (typeof(self.tags) == 'string') self.tags = [self.tags];
+    try { self.date = new Date(self.title); } catch(e) {}
+    if(!self.where && self.date) {
+      self.location = get_location(self.date);
+      if(self.location) self.where = self.location.where;
+    }
+    self.content = markdown.toHTML(contents);
+  });
+}
+

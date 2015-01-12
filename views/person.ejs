@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='/css/travel.css' />
+    <script src="js/jquery-2.1.3.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry"></script>
+    <script src="js/travelmap.js"></script>
+  </head>
+  <body>
+    <div class="jumbotron">
+      <div class="container">
+          <div class="author_face">
+          <div class="author_shadow"></div>
+          <div class="author_frame"></div>
+          <div class="author_clip"></div>
+          <div class="author_image"><img src="/images/profiles/<%= TP.profile_pic(person) %>" /></div>
+        </div>
+        <div class="imgspacer"></div>
+        <h1>Schlossnagles on the run.</h1>
+        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique. This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+      </div>
+    </div>
+    <div class="frontcontainer container-fluid">
+      <div class="row">
+      <% var mdw = 12 / posts.length;
+        for(var i=0; i<posts.length; i++) { %>
+        <div class="col-md-<%- mdw %>">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <%- posts[i].content %>
+          </div>
+        </div>
+      </div>
+      <% } %>
+      </div>
+    </div>
+  <%- include footer.ejs %>
+  </body>
+</html>

@@ -1,0 +1,69 @@
+
+<footer class="jumbotron footer">
+<div class="row">
+  <div class="col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-title">
+        <h3>General Information</h3>
+      </div>
+      <div class="panel-body">
+      
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-title">
+        <h3>Where we were.</h3>
+      </div>
+      <div class="panel-body">
+        <%= TP.get_location(date,-1).name %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-title">
+        <h3>Where we are.</h3>
+      </div>
+      <div class="panel-body">
+        <%= TP.get_location(date).name %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-title">
+        <h3>Where we're going.</h3>
+      </div>
+      <div class="panel-body">
+        <%= TP.get_location(date,1).name %>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-body copyright">
+        Copyright 2015 The Schlossnagle Family. All rights reserved.
+      </div>
+    </div>
+  </div>
+</div>
+</footer>
+
+<script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'Calligraffitti::latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();</script>
