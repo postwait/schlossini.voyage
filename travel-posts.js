@@ -46,6 +46,12 @@ var load_profiles = function(tgt, dir) {
     });
   });
 };
+var md_load = function(tgt, key, file) {
+  fs.readFile(file, {encoding:'utf8'}, function(err, contents) {
+    if(!contents) contents = '# Update about';
+    tgt[key] = markdown.toHTML(contents);
+  });
+}
 var load_people = function(tgt, dir) {
   fs.readdir(dir, function(err, list) {
     if(err) { console.log(err); return; }
@@ -56,6 +62,7 @@ var load_people = function(tgt, dir) {
           tgt[person] = { posts: {} };
           load_profiles(tgt[person], profiledir + '/' + person);
           load_posts(tgt[person].posts, person, file);
+          md_load(tgt[person], 'meta', 'posts/' + person + '.md');
         }
       });
     });
@@ -94,8 +101,7 @@ tp.prototype.newest = function(date, person) {
   return p.sort(function (a,b) { if(a<b) return -1; return (a==b) ? 0 : 1; });
 }
 
-tp.prototype.profile_pic = function(person, date) {
-  if(!date) date = new Date();
+tp.prototype.profile_pic = function(date, person) {
   var p = this.people[person];
   if(!p || !p.profiles_dates) return 'woman.png';
   if(p.profiles_dates.length < 2) return person + '/' + p.profiles[0];
@@ -104,6 +110,10 @@ tp.prototype.profile_pic = function(person, date) {
     if(p.profiles_dates[b] > date) return person + '/' + p.profiles[b+1];
   }
   return person + '/' + p.profiles[0];
+}
+
+tp.prototype.person = function(person) {
+  return this.people[person];
 }
 
 tp.prototype.frontage = function(date) {
@@ -146,7 +156,8 @@ var Post = function(person, post, filename) {
     try { obj = yaml.safeLoad(meta); } catch(e) {}
     for(var key in obj) if(obj.hasOwnProperty(key)) self[key] = obj[key];
     if (typeof(self.tags) == 'string') self.tags = [self.tags];
-    try { self.date = new Date(self.title); } catch(e) {}
+    if (self.date) self.date = new Date(self.date);
+    if (!self.date) try { self.date = new Date(self.title); } catch(e) {}
     if(!self.where && self.date) {
       self.location = get_location(self.date);
       if(self.location) self.where = self.location.where;

@@ -4,20 +4,12 @@
   <div class="col-md-3">
     <div class="panel panel-default">
       <div class="panel-title">
-        <h3>General Information</h3>
-      </div>
-      <div class="panel-body">
-      
-      </div>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <div class="panel panel-default">
-      <div class="panel-title">
         <h3>Where we were.</h3>
       </div>
       <div class="panel-body">
-        <%= TP.get_location(date,-1).name %>
+        <% var last_loc = TP.get_location(date,-1); %>
+        <%= last_loc.name %>
+        on <%= last_loc.when %>
       </div>
     </div>
   </div>
@@ -27,7 +19,9 @@
         <h3>Where we are.</h3>
       </div>
       <div class="panel-body">
-        <%= TP.get_location(date).name %>
+        <% var current_loc = TP.get_location(date); %>
+        <%= current_loc.name %>
+        since <%= current_loc.when %>
       </div>
     </div>
   </div>
@@ -37,11 +31,25 @@
         <h3>Where we're going.</h3>
       </div>
       <div class="panel-body">
-        <%= TP.get_location(date,1).name %>
+        <% var next_loc = TP.get_location(date,1); %>
+        <%= next_loc.name %>
+        <% if (next_loc.when) { %>
+        on or around <%= next_loc.when %>
+        <% } %>
       </div>
     </div>
   </div>
 
+  <div class="col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-title">
+        <h3>General Information</h3>
+      </div>
+      <div class="panel-body">
+      
+      </div>
+    </div>
+  </div>
 </div>
 <div class="row">
   <div class="col-md-12">
