@@ -34,6 +34,12 @@
         <service_fmri value='svc:/system/filesystem/local:default' />
     </dependency>
 
+    <method_context>
+      <method_environment>
+        <envvar name='PATH' value='/opt/omni/bin:/usr/bin:/usr/sbin:/sbin'/>
+      </method_environment>
+    </method_context>
+
     <exec_method
         type='method'
         name='start'
