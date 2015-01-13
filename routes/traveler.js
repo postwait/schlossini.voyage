@@ -22,6 +22,7 @@ var travel_posts = new tp('./posts/.');
 
 router.param('date', /^(\d{4}-\d{2}-\d{2})?$/);
 router.param('person', /^([a-z]+)$/);
+router.param('title', /^([^\/]+)$/);
 /* GET home page. */
 router.get('/:person', function(req, res) {
   var date = new Date();
@@ -50,6 +51,17 @@ router.get('/:person/:date', function(req, res) {
                         dateparam: req.params.date[1],
                         TP: travel_posts,
                         posts: travel_posts.newest(date, person) });
+});
+router.get('/:person/writes/:title', function(req, res) {
+  var person = req.params.person[1];
+  var title = req.params.title[1];
+  var post = travel_posts.post(person, title);
+  res.render('single', { title: post.title || 'Schlossini Voyage',
+                        person: person,
+                        date: post.date,
+                        dateparam: undefined,
+                        TP: travel_posts,
+                        post: post });
 });
 
 module.exports = router;

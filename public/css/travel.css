@@ -1,4 +1,4 @@
-html, body, #map-canvas {
+html, body {
   height: 100%;
   margin: 0px;
   padding: 0px
@@ -8,15 +8,21 @@ body {
   background-image: url("/images/leather.jpg");
   background-repeat: repeat;
 }
+a {
+  color: #339;
+}
 h1,h2,h3 {
   font-family: 'Calligraffitti', cursive;
 }
 .jumbotron {
   padding: 10px 40px;
 }
-.panel-body {
+div.post {
   background-image: url("/images/paper.jpg");
   background-repeat: repeat;
+}
+div.single div.panel-body {
+  margin-top:1em;
 }
 .jumbotron {
   background-color:rgba(224, 224, 224, 0.5)
@@ -54,29 +60,37 @@ div.jumbotron div.imgspacer {
   float: left;
 }
 .snippet div.imgspacer {
-  width: 110px;
-  height: 90px;
+  width: 94px;
+  height: 76px;
   float: left;
 }
 .post .panel-body {
   font-size: 1.4em;
   padding-left: 1.5em;
 }
+.snippet .post-content {
+  padding-top:0.5em;
+}
 .snippet .panel-body {
   font-size: 1em;
+  padding-bottom: 2em;
+  max-height: 200px;
+  overflow-y: hidden;
+}
+div.post-more {
+  text-align:right;
+  padding:0.5em 1em;
+  width:100%;
 }
 .post div.post-date {
   height: 28px;
-  float:right;
-  position: static;
+  position: absolute;
+  right:15px;
   padding:0px;
   padding-left:17px;
   content: "";
   background-image:url('/images/tape-end.png');
   background-repeat:no-repeat;
-}
-.frontcontainer div.pagination {
-  float:right;
 }
 .post div.post-date span {
   font-family: 'Calligraffitti', cursive;
@@ -84,12 +98,14 @@ div.jumbotron div.imgspacer {
   height:100%;
   padding-top:6px;
   display:block;
-  position:relative;
   vertical-align:middle;
   padding-right:8px;
   background-image:url('/images/tape.png');
   background-repeat:repeat-x;
   color:#ddd;
+}
+.frontcontainer div.pagination {
+  float:right;
 }
 div.author_image img {
   border: solid white 4px;

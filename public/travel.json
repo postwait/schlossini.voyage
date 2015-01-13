@@ -1,6 +1,6 @@
 [
-  { "when": "2015-07-08", "name": "Home", "where": "airport.IAD", "method": "air"},
-  { "name": "Turkey", "where": "airport.TAV", "method": "air" },
+  { "when": "2015-01-01", "name": "Home", "where": "airport.IAD", "method": "air"},
+  { "when": "2015-07-09", "name": "Turkey", "where": "airport.TAV", "method": "air" },
   { "name": "Greece", "where": "airport.ATH", "method": "air" },
   { "name": "Ireland", "where": "airport.DUB", "method": "air" },
   { "name": "United Kingdom", "where": "airport.LHR", "method": "land" },

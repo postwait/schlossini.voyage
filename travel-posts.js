@@ -138,6 +138,10 @@ tp.prototype.frontage = function(date) {
 
 tp.prototype.get_location = get_location;
 
+tp.prototype.post = function(person, title) {
+  return this.people[person].posts[title];
+}
+
 module.exports = tp;
 
 /* Actual post object */
@@ -146,22 +150,27 @@ var Post = function(person, post, filename) {
   var self = this;
   fs.readFile(filename, { encoding: 'utf8' }, function(err, contents) {
     var m, meta = '{}';
+    self.name = self.title = post;
     if(m = /^(====*)$/m.exec(contents)) {
       meta = contents.slice(0,m.index);
       contents = contents.slice(m.index + m[1].length + 1);
     }
+    if(m = /^\s*^(#\s*)(.+)$/m.exec(contents)) {
+      self.title = m[2];
+      contents = contents.slice(m.index + m[1].length + m[2].length + 1);
+    }
     var obj = {};
     self.person = person;
-    self.title = post;
     try { obj = yaml.safeLoad(meta); } catch(e) {}
     for(var key in obj) if(obj.hasOwnProperty(key)) self[key] = obj[key];
     if (typeof(self.tags) == 'string') self.tags = [self.tags];
     if (self.date) self.date = new Date(self.date);
-    if (!self.date) try { self.date = new Date(self.title); } catch(e) {}
+    if (!self.date) try { self.date = new Date(self.name); } catch(e) {}
     if(!self.where && self.date) {
       self.location = get_location(self.date);
       if(self.location) self.where = self.location.where;
     }
+console.log(self);
     self.content = markdown.toHTML(contents);
   });
 }
