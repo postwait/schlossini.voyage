@@ -7,9 +7,11 @@
         <h3>Where we were.</h3>
       </div>
       <div class="panel-body">
+        <p>
         <% var last_loc = TP.get_location(date,-1); %>
         <%= last_loc.name %>
         on <%= last_loc.when %>
+        </p>
       </div>
     </div>
   </div>
@@ -19,9 +21,11 @@
         <h3>Where we are.</h3>
       </div>
       <div class="panel-body">
+        <p>
         <% var current_loc = TP.get_location(date); %>
         <%= current_loc.name %>
         since <%= current_loc.when %>
+        </p>
       </div>
     </div>
   </div>
@@ -31,11 +35,13 @@
         <h3>Where we're going.</h3>
       </div>
       <div class="panel-body">
+        <p>
         <% var next_loc = TP.get_location(date,1); %>
         <%= next_loc.name %>
         <% if (next_loc.when) { %>
         on or around <%= next_loc.when %>
         <% } %>
+        </p>
       </div>
     </div>
   </div>
@@ -46,7 +52,11 @@
         <h3>General Information</h3>
       </div>
       <div class="panel-body">
-      
+        <ul class="travelers">
+        <% ['theo','lisa','zoe','gianna','tori'].forEach(function(person) { %>
+          <li><a href="/traveler/<%= person %>"><img src="/images/profiles/<%= TP.profile_pic(date,person) %>"/></a></li>
+        <% }); %>
+        </ul>
       </div>
     </div>
   </div>

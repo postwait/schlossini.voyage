@@ -24,6 +24,7 @@ div.post {
 div.single div.panel-body {
   margin-top:1em;
 }
+.single p { font-size: 1em; }
 .jumbotron {
   background-color:rgba(224, 224, 224, 0.5)
 }
@@ -101,9 +102,10 @@ div.jumbotron div.imgspacer {
   width:100%;
 }
 .post div.post-date {
+  top: 4px;
   height: 28px;
   position: absolute;
-  right:15px;
+  right:12px;
   padding:0px;
   padding-left:17px;
   background-image:url('/images/tape-end.png');
@@ -123,6 +125,9 @@ div.jumbotron div.imgspacer {
 }
 .frontcontainer div.pagination {
   float:right;
+}
+.frontcontainer .row {
+  margin-top:1em;
 }
 div.author_image img {
   border: solid white 4px;
@@ -158,14 +163,37 @@ div.author_image:after {
   z-index: -3;
 }
 
+div.map {
+  position:absolute;
+  border:4px solid #ccc;
+  top: 18px;
+  right: 2em;
+}
 div#map-canvas {
-  width:800px;
-  height: 400px;
+  height:180px;
+  width:360px;
 }
 
 footer.jumbotron {
   margin-top: 2em;
   margin-bottom:0;
+}
+p {
+  font-size: 1.1em;
+}
+.footer p {
+  font-size: 1.1em;
+}
+ul.travelers {
+  list-style-type: none;
+  margin:0;
+  padding:0;
+}
+ul.travelers li {
+  display: inline;
+}
+.footer ul.travelers img {
+  width: 40px;
 }
 .footer .panel {
   border:0;

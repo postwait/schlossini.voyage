@@ -98,7 +98,7 @@ tp.prototype.newest = function(date, person) {
         p.push(this.people[people].posts[post]);
     }
   }
-  return p.sort(function (a,b) { if(a<b) return -1; return (a==b) ? 0 : 1; });
+  return p.sort(function (a,b) { if(a.date<b.date) return 1; return (a.date==b.date) ? 0 : -1; });
 }
 
 tp.prototype.profile_pic = function(date, person) {
@@ -116,14 +116,14 @@ tp.prototype.person = function(person) {
   return this.people[person];
 }
 
-tp.prototype.frontage = function(date) {
+tp.prototype.frontage = function(date, cnt) {
   var self = this;
   var front_posts = [];
   if(!date) date = new Date();
-  if(front_posts.length < 2) {
+  if(front_posts.length < cnt) {
     self.newest(date).forEach(function (post) {
       var aidx;
-      if(front_posts.length > 2) return;
+      if(front_posts.length >= cnt) return;
       for(aidx=0; aidx<front_posts.length; aidx++) {
         var already = front_posts[aidx];
         if(already.person == post.person && already.title == post.title) break;
@@ -131,8 +131,8 @@ tp.prototype.frontage = function(date) {
       if(aidx == front_posts.length) front_posts.push(post);
     });
   }
-  if(front_posts.length > 3)
-    return front_posts.splice(0,3)
+  if(front_posts.length > cnt)
+    return front_posts.splice(0,cnt)
   return front_posts;
 }
 
@@ -140,6 +140,19 @@ tp.prototype.get_location = get_location;
 
 tp.prototype.post = function(person, title) {
   return this.people[person].posts[title];
+}
+
+tp.prototype.getDate = function(req,res) {
+  var date = new Date();
+  if(req.cookies.date) {
+    try { date = new Date(req.cookies.date); }
+    catch(e) { date = null }
+    if(date == null || isNaN(date.getTime())) {
+      res.cookie('date', 'now', { maxAge: 900000, httpOnly: false});
+      date = new Date();
+    }
+  }
+  return date;
 }
 
 module.exports = tp;
@@ -170,7 +183,6 @@ var Post = function(person, post, filename) {
       self.location = get_location(self.date);
       if(self.location) self.where = self.location.where;
     }
-console.log(self);
     self.content = markdown.toHTML(contents);
   });
 }
