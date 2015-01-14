@@ -140,7 +140,7 @@ div.jumbotron div.imgspacer {
   margin-top:1em;
 }
 div.author_image img {
-  border: solid white 4px;
+  border: solid rgba(252, 240, 232, 1) 4px;
   width: 100%;
   height: 100%;
 }
