@@ -30,10 +30,16 @@ router.get('/', function(req, res) {
                         posts: travel_posts.frontage(date,6) });
 });
 router.get('/:date', function(req, res) {
-  var date = new Date(req.params.date[1]);
+  var dateparam = req.params.date[1];
+  var date = new Date(dateparam);
+  if((Object.prototype.toString.call(date) != '[object Date]') ||
+     isNaN(date.getTime())) {
+    dateparam = 'now';
+    date = new Date();
+  }
   res.cookie('date', req.params.date[1], { maxAge: 900000, httpOnly: false});
   res.render('index', { title: 'Schlossini Voyage',
-                        dateparam: req.params.date[1],
+                        dateparam: dateparam,
                         date: date,
                         TP: travel_posts,
                         posts: travel_posts.frontage(date,6) });
