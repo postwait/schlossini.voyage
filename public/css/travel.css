@@ -114,6 +114,7 @@ div.jumbotron div.imgspacer {
   width:100%;
 }
 .post div.post-date {
+  font-size:14px;
   top: 4px;
   height: 28px;
   position: absolute;
