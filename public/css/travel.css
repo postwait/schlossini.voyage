@@ -14,9 +14,6 @@ a {
 h1,h2,h3 {
   font-family: 'Calligraffitti', cursive;
 }
-.jumbotron {
-  padding: 10px 40px;
-}
 div.post {
   background-image: url("/images/paper.jpg");
   background-repeat: repeat;
@@ -26,6 +23,7 @@ div.single div.panel-body {
 }
 .single p { font-size: 1em; }
 .jumbotron {
+  padding: 10px 40px;
   background-color:rgba(224, 224, 224, 0.5)
 }
 div.frontcontainer {
@@ -48,6 +46,18 @@ div.author_face {
 div.frontcontainer div.author_face {
   width: 96px;
   height: 96px;
+}
+div.jumbotron div.back {
+  height:187px;
+  width:20px;
+  position:absolute;
+  left:6px;
+}
+div.jumbotron div.back a::after {
+  content:url('/images/sewn-back.png');
+}
+div.jumbotron div.back a span {
+  display:none;
 }
 div.jumbotron div.author_face {
   width: 150px;
