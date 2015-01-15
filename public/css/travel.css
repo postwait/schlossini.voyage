@@ -103,10 +103,15 @@ div.jumbotron div.imgspacer {
 .snippet div.post-more {
   width:100%;
   height:60px;
-  bottom:1em;
+  bottom:0em;
   position:absolute;
   padding: 0 15px;
   margin-left: -40px;
+}
+@media (min-width: 992px) {
+  .snippet div.post-more {
+    bottom:1em;
+  }
 }
 .snippet div.post-more div {
   text-align:right;
