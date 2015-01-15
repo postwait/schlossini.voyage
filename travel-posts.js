@@ -148,7 +148,11 @@ tp.prototype.getDate = function(req,res) {
     try { date = new Date(req.cookies.date); }
     catch(e) { date = null }
     if(date == null || isNaN(date.getTime())) {
-      res.cookie('date', 'now', { maxAge: 900000, httpOnly: false});
+      res.cookie('date', 'now', {
+        expires: new Date(Date.now() + 14*1000*86400),
+        maxAge: 900000,
+        httpOnly: false
+      });
       date = new Date();
     }
   }

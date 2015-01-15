@@ -37,7 +37,10 @@ router.get('/:date', function(req, res) {
     dateparam = 'now';
     date = new Date();
   }
-  res.cookie('date', req.params.date[1], { maxAge: 900000, httpOnly: false});
+  res.cookie('date', req.params.date[1], {
+    expires: new Date(Date.now() + 14*1000*86400),
+    httpOnly: false
+  });
   res.render('index', { title: 'Schlossini Voyage',
                         dateparam: dateparam,
                         date: date,
