@@ -32,10 +32,30 @@ var imgfixup = function(arr) {
   }
   return false;
 }
-markdown.toExtraHTML = function(contents) {
+var paretree = function(arr, l, cnt) {
+ if(!cnt) cnt = 0;
+ for(var i=1;i<arr.length;i++) {
+   if(Array.isArray(arr[i])) cnt = paretree(arr[i], l, cnt);
+   if(cnt >= l) {
+     arr.splice(i+1);
+     break;
+   }
+   if(typeof(arr[i]) === 'string') {
+     var want = l - cnt;
+     var w = arr[i].split(/\s+/);
+     if(want < w.length) {
+       arr[i] = w.slice(0,want).join(' ');
+     }
+     cnt += w.length;
+   }
+ }
+ return cnt;
+}
+markdown.toExtraHTML = function(contents, wordlimit) {
   var tree;
   tree = markdown.parse(contents);
   imgfixup(tree);
+  if(wordlimit) paretree(tree, wordlimit);
   html = markdown.renderJsonML( markdown.toHTMLTree(tree) );
   return html;
 };
@@ -225,6 +245,7 @@ var Post = function(person, post, filename) {
       if(self.location) self.where = self.location.where;
     }
     self.content = markdown.toExtraHTML(contents);
+    self.content_brief = markdown.toExtraHTML(contents, 150);
   });
 }
 
