@@ -3,6 +3,43 @@ var path = require('path'),
     yaml = require('js-yaml'),
     markdown = require( "markdown" ).markdown;
 
+var imgfixup = function(arr) {
+  var i;
+  if (arr[0] == 'img') return true;
+  for(i=0;i<arr.length;i++) {
+    if(Array.isArray(arr[i])) {
+      if(imgfixup(arr[i])) {
+        if(arr.length > i+1) {
+          var m = /^\{([^\}]+)\}/.exec(arr[i+1]);
+          if(m) {
+            var parts = m[1].split(/\s+/)
+            arr[i][1].style = parts
+              .filter(function(a) { /^[^\.]/.test(a) })
+              .join(' ');
+            arr[i][1].class = parts
+              .filter(function(a) { return /^\./.test(a) })
+              .map(function(a) { return a.substr(1); })
+              .join(' ');
+            arr[i+1] = arr[i+1].replace(/^\{[^\}]+\}\s*/, '');
+            if(/^\s*$/.test(arr[i+1])) {
+              arr.splice(i+1,1);
+              i--;
+            }
+          }
+        }
+      }
+    }
+  }
+  return false;
+}
+markdown.toExtraHTML = function(contents) {
+  var tree;
+  tree = markdown.parse(contents);
+  imgfixup(tree);
+  html = markdown.renderJsonML( markdown.toHTMLTree(tree) );
+  return html;
+};
+
 var profiledir = 'public/images/profiles';
 
 var agenda = [];
@@ -49,7 +86,7 @@ var load_profiles = function(tgt, dir) {
 var md_load = function(tgt, key, file) {
   fs.readFile(file, {encoding:'utf8'}, function(err, contents) {
     if(!contents) contents = '# Update about';
-    tgt[key] = markdown.toHTML(contents);
+    tgt[key] = markdown.toExtraHTML(contents);
   });
 }
 var load_people = function(tgt, dir) {
@@ -187,7 +224,7 @@ var Post = function(person, post, filename) {
       self.location = get_location(self.date);
       if(self.location) self.where = self.location.where;
     }
-    self.content = markdown.toHTML(contents);
+    self.content = markdown.toExtraHTML(contents);
   });
 }
 

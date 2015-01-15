@@ -19,10 +19,6 @@ h1 a:hover, h2 a:hover, h3 a:hover {
 h1,h2,h3 {
   font-family: 'Calligraffitti', cursive;
 }
-div.post {
-  background-image: url("/images/paper.jpg");
-  background-repeat: repeat;
-}
 div.single div.panel-body {
   margin-top:1em;
 }
@@ -86,6 +82,27 @@ div.jumbotron div.imgspacer {
   width: 94px;
   height: 76px;
   float: left;
+}
+div.post {
+  background-image: url("/images/paper.jpg");
+  background-repeat: repeat;
+}
+img.img-right {
+  float: right;
+  margin: 0.5em 0 0.5em 0.5em;
+}
+img.img-left {
+  float: left;
+  margin: 0.5em 0.5em 0.5em 0;
+}
+img.img-top {
+  margin-top: 0;
+}
+.post img {
+  max-width:100%;
+  padding:4px;
+  background-color:rgba(252, 240, 232, 1);
+  border:solid #262626 1px;
 }
 .post .panel-body {
   font-size: 1.4em;
@@ -167,7 +184,7 @@ div.author_face div.author_image {
   height: 100%;
   position: absolute;
   background-color: rgba(240, 240, 240, 1);
-  border: 1px solid black;
+  border: 1px solid #262626;
   left: 0px;
   top: 0px;
   z-index: -2;
