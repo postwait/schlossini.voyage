@@ -221,8 +221,10 @@ div#map-canvas {
 
 /* agenda */
 
-.agenda .travel-method span {
+.agenda .travel-method {
  position:absolute;
+}
+.agenda .travel-method span {
  margin: 0.5em 1em;
 }
 @media (min-width: 992px) {
