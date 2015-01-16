@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include head %>
+  </head>
+  <body>
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Schlossini travel agenda</h1>
+        <p>The master plan.</p>
+      </div>
+      <div class="world"></div>
+    </div>
+    <div class="frontcontainer container-fluid">
+      <%
+        var agenda = TP.get_agenda();
+        for(var i=0;i<agenda.length;i++) {
+          var loc = agenda[i],
+              next_loc = (i+1 == agenda.length) ? {} : agenda[i+1];
+      %>
+      <div class="row">
+        <div class="col-md-4 agenda">
+          <% if(loc.method && i) { %>
+            <div class="travel-method travel-method-<%= loc.method %>"><span>traveling by <%= loc.method %></span></div>
+          <% } %>
+          <div class="panel panel-default agenda-location">
+            <div class="pin"></div>
+            <div class="panel-body">
+              <h2><%= loc.name %></h2>
+              <p>
+              <% if(i!=0) { %>
+              <%- loc.when ? loc.when.format("dS &#111;&#102; mmmm, yyyy", true) : "TBD" %> <!--  - <%- next_loc.when ? next_loc.when.format("dS &#111;&#102; mmmm, yyyy", true) : "TBD" %> -->
+              <% } %>
+              </p>
+            </div>
+          </div>
+          <div class="panel-follow"></div>
+        </div>
+        <div class="col-md-8">
+          <% if(loc.when && next_loc.when) {
+               var posts = TP.oldest(
+                (function(low,high) {
+                   return function(a) { return (a >= low && a < high); }
+                 })(loc.when, next_loc.when)
+               );
+               if(posts.length) { %>
+          <div class="panel panel-default post snippet">
+            <div class="panel-body">
+          <%   posts.forEach(function(post) { %>
+          <div><%- post.date.format("dS &#111;&#102; mmmm, yyyy", true) %> - <a href="/traveler/<%= post.person %>/writes/<%= post.name %>"><%= post.title %></a> - <a href="/traveler/<%= post.person%>"><%= post.person %></a></div>
+          <%   }); %>
+            </div>
+          </div>
+          <%   }
+             } %>
+        </div>
+      </div>
+      <%
+        }
+      %>
+    </div>
+    <%- include footer.ejs %>
+  </body>
+</html>

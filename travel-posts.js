@@ -64,6 +64,9 @@ var profiledir = 'public/images/profiles';
 
 var agenda = [];
 agenda = JSON.parse(fs.readFileSync('public/travel.json', { encoding: 'utf8' }));
+agenda.forEach(function(o) {
+  if(o.when) o.when = new Date(o.when);
+});
 function get_location(date, off) {
   if(!off) off = 0;
   for(b = agenda.length; b > 0; b--) {
@@ -74,11 +77,12 @@ function get_location(date, off) {
   if(b < 0) b = 0;
   return agenda[b];
 }
-
 var tp = function(pathname) {
   this.pathname = path.dirname(pathname);
   this.load();
 }
+
+tp.prototype.get_agenda = function() { return agenda; }
 
 var load_profiles = function(tgt, dir) {
   fs.readdir(dir, function(err, list) {
@@ -146,17 +150,24 @@ tp.prototype.load = function() {
   load_people(this.people, this.pathname);
 }
 
-tp.prototype.newest = function(date, person) {
+tp.prototype.newest = function(select, person) {
   var p = [];
+  if(typeof(select) !== 'function') {
+    var date = select;
+    select = function(a) {
+      return a < date;
+    }
+  }
   for (var people in this.people) {
     if(person && people != person) continue;
     for (var post in this.people[people].posts) {
-      if(this.people[people].posts[post].date < date)
+      if(select(this.people[people].posts[post].date))
         p.push(this.people[people].posts[post]);
     }
   }
   return p.sort(function (a,b) { if(a.date<b.date) return 1; return (a.date==b.date) ? 0 : -1; });
 }
+tp.prototype.oldest = function(s,p) { return this.newest(s,p).reverse(); }
 
 tp.prototype.profile_pic = function(date, person) {
   var p = this.people[person];
