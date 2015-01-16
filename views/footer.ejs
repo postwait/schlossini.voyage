@@ -10,7 +10,7 @@
         <p>
         <% var last_loc = TP.get_location(date,-1); %>
         <%= last_loc.name %>
-        on <%= last_loc.when %>
+        on <%= last_loc.when.format("yyyy-mm-dd",true) %>
         </p>
       </div>
     </div>
@@ -24,7 +24,7 @@
         <p>
         <% var current_loc = TP.get_location(date); %>
         <%= current_loc.name %>
-        since <%= current_loc.when %>
+        since <%= current_loc.when.format("yyyy-mm-dd",true) %>
         </p>
       </div>
     </div>
@@ -39,7 +39,7 @@
         <% var next_loc = TP.get_location(date,1); %>
         <%= next_loc.name %>
         <% if (next_loc.when) { %>
-        on or around <%= next_loc.when %>
+        on or around <%= next_loc.when.format("yyyy-mm-dd",true) %>
         <% } %>
         </p>
       </div>
@@ -57,6 +57,7 @@
           <li><a href="/traveler/<%= person %>"><img src="/images/profiles/<%= TP.profile_pic(date,person) %>"/></a></li>
         <% }); %>
         </ul>
+        <p><a href="/agenda">Agenda</a></p>
       </div>
     </div>
   </div>
