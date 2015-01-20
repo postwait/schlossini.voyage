@@ -28,6 +28,14 @@ div.single div.panel-body {
   background-color:rgba(224, 224, 224, 0.5);
   min-height: 190px;
 }
+.jumbotron ol.breadcrumb {
+  margin: 5px 0 -15px 0;
+  background: transparent;
+  color: rgb(51,51,51);
+}
+.jumbotron ol.breadcrumb>.active {
+  color: rgb(51,51,51);
+}
 .jumbotron div.world {
   position:absolute;
   top:3px;

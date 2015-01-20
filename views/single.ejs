@@ -6,7 +6,6 @@
   <body>
     <div class="jumbotron">
       <div class="container">
-          <div class="back"><a href="/"><span>home</span></a></div>
           <a href="/traveler/<%- post.person %>"><div class="author_face">
           <div class="author_image"><img src="/images/profiles/<%= TP.profile_pic(post.date, post.person) %>" /></div>
         </div></a>
@@ -14,6 +13,11 @@
         <h1><%= post.title %></h1>
         <div class="world"></div>
       </div>
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li><a href="/traveler/<%- post.person %>"><%- post.person %></a></li>
+        <li class="active">Post</li>
+      </ol>
     </div>
     <div class="frontcontainer container-fluid single">
       <div class="row">
