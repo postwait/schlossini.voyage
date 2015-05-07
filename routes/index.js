@@ -29,9 +29,9 @@ router.get('/', function(req, res) {
                         TP: travel_posts,
                         posts: travel_posts.frontage(date,6) });
 });
-router.get('/agenda', function(req, res) {
+router.get('/itinerary', function(req, res) {
   var date = travel_posts.getDate(req,res);
-  res.render('agenda', { title: 'Schlossini Voyage Agenda',
+  res.render('itinerary', { title: 'Schlossini Voyage Itinerary',
                         dateparam: undefined,
                         date: date,
                         TP: travel_posts });
