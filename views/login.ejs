@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html ng-app="tresbon">
+  <head>
+    <% include head %>
+  </head>
+  <body>
+
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Login</h2>
+      </div>
+    </div>
+    <div class="frontcontainer container-fluid" ng-controller="LoginController as login">
+      <div ng-class="{hidden: login.error == null}">
+        <span ng-bind="login.error"></span>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-title">
+              <h2>Sign in</h2>
+            </div>
+            <div class="panel-body">
+              <div class="login-plain">
+                <form method="POST" action="/login">
+                  <% if(to) { %> <input type="hidden" name="to" value="<%= to %>"/> <% } %>
+                  <p class="inputgroup">
+                  <label for="login_email">Email</label>
+                  <input type="text" id="login_email" name="login_email" size="40">
+                  </p>
+                  <p class="inputgroup">
+                  <label for="login_password">Password</label>
+                  <input type="password" id="login_password" name="login_password" size="40">
+                  </p>
+                  <input type="submit" value="Sign In"/>
+                </form>
+              </div>
+              <div class="login-or"></div>
+              <div class="login-facebook">
+                <div ng-click="login.fb_login()" id="login-fb-button">Login with Facebook</div>
+              </div>
+              <div class="login-or"></div>
+              <div class="login-smugmug">
+                <a href="/auth/smugmug?method=login">Login with SmugMug</a>
+              </div>
+              <div class="login-or"></div>
+              <div class="login-google">
+                <a href="/auth/google?method=login">Login with Google</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-title">
+              <h2>Sign up</h2>
+            </div>
+            <div class="panel-body">
+              <div class="login-plain">
+                <form id="signup" method="POST" action="/login?method=signup">
+                  <% if(to) { %> <input type="hidden" name="to" value="<%= to %>"/> <% } %>
+                  <p class="inputgroup">
+                  <label for="signup_email">Email</label>
+                  <input type="text" id="signup_email" name="signup_email" size="40">
+                  </p>
+                  <p class="inputgroup">
+                  <label for="signup_password">Password</label>
+                  <input type="password" id="signup_password" name="signup_password" size="40">
+                  </p>
+                  <p class="inputgroup">
+                  <label for="signup_password2">Again</label>
+                  <input type="password" id="signup_password2" name="signup_password2" size="40">
+                  </p>
+                  <input type="submit" value="Sign Up"/>
+                </form>
+              </div>
+              <div class="login-or"></div>
+              <div class="login-facebook">
+                <div ng-click="login.fb_signup()">Signup with Facebook</div>
+              </div>
+              <div class="login-or"></div>
+              <div class="login-google">
+                <a href="/auth/google?method=signup">Signup via Google</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="/js/login.js"></script>
+  </body>
+</html>

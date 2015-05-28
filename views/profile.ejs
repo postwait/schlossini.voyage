@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include head %>
+    <script src="/js/profile.js"></script>
+  </head>
+  <body ng-app="tresbon">
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Third-party Integrations</h1>
+      </div>
+      <div class="world"></div>
+    </div>
+    <div class="frontcontainer container-fluid" ng-controller="ProfileController as profile">
+      <div class="row">
+        <div class="col-lg-4">
+          <panel class="panel-default">
+            <div class="panel-title">
+              <h2> Profile </h2>
+            </div>
+            <div class="panel-body">
+              {{profile.info.email}}
+            </div>
+          </panel>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
