@@ -166,12 +166,13 @@ img.img-top {
   font-size:14px;
   top: 4px;
   height: 28px;
-  position: absolute;
   right:12px;
   padding:0px;
   padding-left:17px;
   background-image:url('/images/tape-end.png');
   background-repeat:no-repeat;
+  float:right;
+  margin-right:-3px;
 }
 .post div.post-date span {
   font-family: 'Calligraffitti', cursive;
@@ -280,9 +281,9 @@ div#map-canvas {
 
 div.agenda-location {
   background-color: #fae468; /* postit yellow */
-	-webkit-box-shadow: 2px 5px 6px rgba(0,0,0,0.5);
-	-moz-box-shadow: 2px 5px 6px rgba(0,0,0,0.5);
-	box-shadow: 2px 5px 6px rgba(0,0,0,0.5);
+  -webkit-box-shadow: 2px 5px 6px rgba(0,0,0,0.5);
+  -moz-box-shadow: 2px 5px 6px rgba(0,0,0,0.5);
+  box-shadow: 2px 5px 6px rgba(0,0,0,0.5);
 }
 div.agenda-location .pin {
   position:absolute;

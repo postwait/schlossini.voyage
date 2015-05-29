@@ -22,32 +22,29 @@
     });
   }
 
-var errorit;
-angular.module('tresbon', [])
-  .controller('LoginController', function($http) {
-    var login = this;
-    login.error = null;
+TB.app.controller('LoginController', function($scope, $http) {
+    $scope.error = null;
 
- errorit = function(str)  { login.error = str; console.log(login); }
     var statusChangeCallback = function(response, method) {
       if(!method) return;
       if (response.status === 'connected') {
         var data = { "oauth[function]": method,
                      "oauth[service]": 'facebook',
                      "oauth[accesstoken]": response.authResponse.accessToken };
-        $http.post("/login", data)
+        if(method === 'associate') data.noredirect = 1;
+        $http.post("/login", data, { headers: { 'X-CSRF-Token': TB._csrf } })
           .success(function (data, status, headers, config) {
-console.log(data);
-            if(data.error) login.error = data.error;
-            if(data.location) document.location = data.location;
+            if(data.error) $scope.error = data.error;
+            if(method !== 'associate' && data.location) document.location = data.location;
+            $scope.$emit('profileChanged');
           })
           .error(function (data, status, headers, config) {
-            login.error = 'An unknown asynchronous error has occurred.';
+            $scope.error = 'An unknown asynchronous error has occurred.';
           });
       } else if (response.status === 'not_authorized') {
-        login.error = 'Facebook requires you log into this application';
+        $scope.error = 'Facebook requires you log into this application';
       } else {
-        login.error = 'Please log into Facebook';
+        $scope.error = 'Please log into Facebook';
       }
     }
     var fblogin = function(method) {
@@ -61,8 +58,7 @@ console.log(data);
       }
     }
 
-    login.fuck = function() { console.log(login); }
-    login.fb_login = fblogin('login');
-    login.fb_signup = fblogin('signup');
-    login.fb_associate = fblogin('associate');
+    $scope.fb_login = fblogin('login');
+    $scope.fb_signup = fblogin('signup');
+    $scope.fb_associate = fblogin('associate');
   });

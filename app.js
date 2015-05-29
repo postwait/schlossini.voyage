@@ -7,13 +7,16 @@ var bodyParser = require('body-parser');
 
 require('./date');
 
-var index = require('./routes/index');
-var traveler = require('./routes/traveler');
+var index = require('./publish-routes/index');
+var traveler = require('./publish-routes/traveler');
 
 var app = express();
+app.locals = {
+  theme: { css: "leather" }
+};
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'publish-views'));
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public

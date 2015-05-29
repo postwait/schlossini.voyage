@@ -1,8 +1,11 @@
+'use strict';
+
 var url = require('url');
 var express = require('express');
+var errors = require('../lib/errors');
 var evalid = require('email-validator');
 var login = require('../lib/login');
-var user = require('../lib/user');
+var User = require('../lib/user');
 
 var router = express.Router();
 
@@ -16,10 +19,20 @@ router.get('/', function(req, res) {
   params.to = info.query.to ? encodeURIComponent(info.query.to) : null;
 
   if(req.session.userid) {
-    return res.redirect(info.query.to || '/');
+    return res.redirect(info.query.to || '/profile');
   }
   params.error = info.query.error ? info.query.error : null;
+  params.csrfToken = req.csrfToken();
   res.render('login', params);
+});
+
+router.get('/confirm/:userid', function(req,res) {
+  User.confirm(req.params.userid, req.query.token,
+    function(err) {
+      res.render('confirm',
+                 { title: 'Email Confirmation',
+                   error: errors.translate('confirm', err) });
+    });
 });
 
 router.post('/', function(req, res) {
@@ -28,6 +41,12 @@ router.post('/', function(req, res) {
   if(req.body.hasOwnProperty('oauth[accesstoken]')) {
     if(req.body['oauth[function]'] === 'signup') {
       login.signup_backchannel(req, res,
+                   req.body['oauth[service]'],
+                   req.body['oauth[accesstoken]']);
+      return;
+    }
+    else if(req.body['oauth[function]'] === 'associate') {
+      login.associate_backchannel(req, res,
                    req.body['oauth[service]'],
                    req.body['oauth[accesstoken]']);
       return;

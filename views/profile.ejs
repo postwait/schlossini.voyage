@@ -2,27 +2,76 @@
 <html>
   <head>
     <% include head %>
+    <script src="/js/login.js"></script>
     <script src="/js/profile.js"></script>
+    <script>TB._csrf = "<%= csrfToken %>";</script>
   </head>
   <body ng-app="tresbon">
     <div class="jumbotron">
       <div class="container">
-        <h1>Third-party Integrations</h1>
+        <h1>Profile</h1>
       </div>
       <div class="world"></div>
     </div>
-    <div class="frontcontainer container-fluid" ng-controller="ProfileController as profile">
+    <div class="frontcontainer container-fluid" ng-controller="ProfileController">
+      <div class="notification-container">
+      <div class="alert alert-success ng-hide" ng-show="success" role="alert">
+        <span ng-bind="success"></span>
+      </div>
+      <div class="alert alert-danger ng-hide" ng-show="error" role="alert">
+        <span ng-bind="error"></span>
+      </div>
+      <div class="alert alert-info ng-hide" ng-show="info.email_confirmed === false" role="alert">
+        <p>Your email address has not been confirmed.</p>
+        <p>Please check for a confirmation email from us and act on the link therein.</p>
+        <p>Didn't get the email? <a ng-click="sendConfirmation()">Send another.</a></p>
+      </div>
+      <div class="alert alert-info ng-hide" ng-show="info.notices && info.notices.length" role="alert">
+        <ul ng-repeat="notice in info.notices">
+          <li><span>{{notice}}</span></li>
+        </ul>
+      </div>
+      </div>
       <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-6">
           <panel class="panel-default">
-            <div class="panel-title">
-              <h2> Profile </h2>
-            </div>
+            <div class="panel-title"><h2 class="profile-profile">Profile</h2></div>
             <div class="panel-body">
-              {{profile.info.email}}
+              <dl class="dl-horizontal">
+                <dt>Email:</dt><dd ng-bind="info.email"></dd>
+                <dt>Voyager Since:</dt><dd ng-bind="info.created_on | date:'fullDate'"></dd>
+              </dl>
+            </div>
+          </panel>
+          <panel class="panel-default profile-link" ng-controller="LoginController">
+            <div class="panel-title"><h2>Integrations</h2></div>
+            <div class="panel-body">
+              <ul class="list-group">
+                <li class="list-group-item" ng-repeat="link in info.thirdparty">
+                  <span class="{{ link.service }}">
+                  <div class="link-pic" ng-if="link.image_url"><img ng-src="{{link.image_url}}"/></div>
+                  <h4>
+                  {{ link.display_name ? link.display_name : link.service }}
+	  </h4>
+                  <a href="{{ link.url }}">link</a>
+                  <span class="link-remove"><a ng-click="removeLink(link)">remove</a></span>
+                  <span class="link-refresh"><a ng-click="link.service === 'facebook' ? fb_associate() : refreshLink(link)">refresh</a></span></li>
+             </ul>
+             <div>
+               <div class="link-new link-fb">
+               <a href="/auth/google">Google</a>
+               </div>
+               <div class="link-new link-fb">
+               <a ng-click="fb_associate()">Facebook</a>
+               </div>
+               <div class="link-new link-fb">
+               <a href="/auth/smugmug">SmugMug</a>
+               </div>
             </div>
           </panel>
         </div>
+        </div>
+        <div class="col-lg-6">
       </div>
     </div>
   </body>

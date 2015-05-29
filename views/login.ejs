@@ -2,6 +2,7 @@
 <html ng-app="tresbon">
   <head>
     <% include head %>
+    <script>TB._csrf = "<%= csrfToken %>";</script>
   </head>
   <body>
 
@@ -10,9 +11,9 @@
         <h1>Login</h2>
       </div>
     </div>
-    <div class="frontcontainer container-fluid" ng-controller="LoginController as login">
-      <div ng-class="{hidden: login.error == null}">
-        <span ng-bind="login.error"></span>
+    <div class="frontcontainer container-fluid" ng-controller="LoginController">
+      <div class="alert alert-danger ng-hide" ng-show="error" role="alert">
+        <span ng-bind="error"></span>
       </div>
       <div class="row">
         <div class="col-md-6">
@@ -23,10 +24,11 @@
             <div class="panel-body">
               <div class="login-plain">
                 <form method="POST" action="/login">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>"/>
                   <% if(to) { %> <input type="hidden" name="to" value="<%= to %>"/> <% } %>
                   <p class="inputgroup">
                   <label for="login_email">Email</label>
-                  <input type="text" id="login_email" name="login_email" size="40">
+                  <input type="text" id="login_email" name="login_email" size="40"/>
                   </p>
                   <p class="inputgroup">
                   <label for="login_password">Password</label>
@@ -35,15 +37,15 @@
                   <input type="submit" value="Sign In"/>
                 </form>
               </div>
-              <div class="login-or"></div>
+              <div class="login-or"><span></span></div>
               <div class="login-facebook">
-                <div ng-click="login.fb_login()" id="login-fb-button">Login with Facebook</div>
+                <div ng-click="fb_login()" id="login-fb-button">Login with Facebook</div>
               </div>
-              <div class="login-or"></div>
+              <div class="login-or"><span></span></div>
               <div class="login-smugmug">
                 <a href="/auth/smugmug?method=login">Login with SmugMug</a>
               </div>
-              <div class="login-or"></div>
+              <div class="login-or"><span></span></div>
               <div class="login-google">
                 <a href="/auth/google?method=login">Login with Google</a>
               </div>
@@ -58,6 +60,7 @@
             <div class="panel-body">
               <div class="login-plain">
                 <form id="signup" method="POST" action="/login?method=signup">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>"/>
                   <% if(to) { %> <input type="hidden" name="to" value="<%= to %>"/> <% } %>
                   <p class="inputgroup">
                   <label for="signup_email">Email</label>
@@ -74,11 +77,11 @@
                   <input type="submit" value="Sign Up"/>
                 </form>
               </div>
-              <div class="login-or"></div>
+              <div class="login-or"><span></span></div>
               <div class="login-facebook">
-                <div ng-click="login.fb_signup()">Signup with Facebook</div>
+                <div ng-click="fb_signup()">Signup with Facebook</div>
               </div>
-              <div class="login-or"></div>
+              <div class="login-or"><span></span></div>
               <div class="login-google">
                 <a href="/auth/google?method=signup">Signup via Google</a>
               </div>
