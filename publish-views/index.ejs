@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include head %>
+  </head>
+  <body>
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Schlossini Travel Journal</h1>
+        <p>Follow our travels around the world.</p>
+      </div>
+      <div class="world"></div>
+    </div>
+    <div class="frontcontainer container-fluid">
+      <%
+        var start = 2;
+        var todo = posts.slice(0,start);
+        while(todo.length) {
+          var mdw = 12/todo.length;
+      %>
+      <div class="row">
+      <%
+          for(var i=0; i<todo.length; i++) { %>
+          <div class="col-md-<%- mdw %>">
+          <% (function(post) { %>
+          <% include snippet %>
+          <% })(todo[i]) %>
+          </div>
+        <% } %>
+      </div>
+      <%
+          todo = posts.slice(start, start+3);
+          start+=3;
+        }
+      %>
+    </div>
+    <%- include footer.ejs %>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include head %>
+  </head>
+  <body class="splash">
+    <div class="jumbotron">
+      <a href="/login" role="button" class="btn btn-success">Use Tres Bon Voyage</a>
+      <div class="container">
+        <h1>Tres Bon Voyage</h1>
+        <p>The best way to remember your travels.</p>
+      </div>
+    </div>
+    <div class="frontcontainer container-fluid">
+      <% if(error) { %>
+      <%= error %>
+      <% } else { %>
+      You're all set. <a href="/profile">Start your voyage!</a>
+      <% } %>
+    </div>
+    <%- include footer %>
+  </body>
+</html>

@@ -3,37 +3,53 @@
   <head>
     <% include head %>
   </head>
-  <body>
+  <body class="splash">
     <div class="jumbotron">
+      <a href="/login" role="button" class="btn btn-success">Use Tres Bon Voyage</a>
       <div class="container">
-        <h1>Schlossini Travel Journal</h1>
-        <p>Follow our travels around the world.</p>
+        <h1>Tres Bon Voyage</h1>
+        <p>The best way to remember your travels.</p>
       </div>
-      <div class="world"></div>
     </div>
     <div class="frontcontainer container-fluid">
-      <%
-        var start = 2;
-        var todo = posts.slice(0,start);
-        while(todo.length) {
-          var mdw = 12/todo.length;
-      %>
-      <div class="row">
-      <%
-          for(var i=0; i<todo.length; i++) { %>
-          <div class="col-md-<%- mdw %>">
-          <% (function(post) { %>
-          <% include snippet %>
-          <% })(todo[i]) %>
-          </div>
-        <% } %>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="bs-callout bs-callout-danger" id="callout-glyphicons-empty-only">
+        <h2>Built for the traveler.</h2>
+        <p>We're travelers. We understand.  
+        We integrating with all the services
+        you know and love, so tracking your experiences
+        is frictionless.</p>
+        </div>
       </div>
-      <%
-          todo = posts.slice(start, start+3);
-          start+=3;
-        }
-      %>
+      <div class="col-md-4">
+        <div class="bs-callout bs-callout-info" id="callout-glyphicons-empty-only">
+        <h2>Where time is first class.</h2>
+        <p>Most trips are fast-paced and while they are amazing,
+        the details all blur together.  By treating time special,
+        we allow you to rewind the experience and relive it.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="bs-callout bs-callout-warning" id="callout-glyphicons-empty-only">
+        <h2>Built for groups.</h2>
+        <p>We understand that most trips aren't just a destination,
+        they are a deep experiences shared by a group.  Part of
+        remembering is sharing perspective together.</p>
+        </div>
+      </div>
     </div>
-    <%- include footer.ejs %>
+    </div>
+    <%- include footer %>
   </body>
+
+<style>
+body {
+  background: url(https://lh3.googleusercontent.com/GbhqSX4rYc-8zSipZQzXF--dmGLfU352zUKEcjEAr1g=w1153-h649-no) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+</style>
 </html>
