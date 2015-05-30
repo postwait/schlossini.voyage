@@ -70,8 +70,26 @@ div.login-or {
 div.login-or span::before {
   content: ' ~ or ~ ';
 }
-panel.profile-link div.link-pic {
+
+div.link-add {
   float:right;
+  padding-right:15px;
+}
+div.link-add .glyph-icon {
+  font-size:1.2em;
+}
+div.link-new {
+  display:inline;
+}
+div.link-new img {
+  height: 30px;
+  width: 30px;
+  border-radius: 5px;
+}
+panel.profile-link div.link-pic {
+  float: left;
+  margin-right: 15px;
+  margin-top: 5px;
 }
 panel.profile-link div.link-pic img {
   height:50px;
@@ -79,6 +97,32 @@ panel.profile-link div.link-pic img {
   border-radius:50%;
 }
 
+
+img.img-1-8 { width:12.5% }
+img.img-2-8 { width:25% }
+img.img-3-8 { width:37.5% }
+img.img-4-8 { width:50% }
+img.img-5-8 { width:62.5% }
+img.img-6-8 { width:75% }
+img.img-7-8 { width:87.5% }
+img.img-8-8 { width:100% }
+img.img-right {
+  float: right;
+  margin: 0.5em 0 0.5em 0.5em;
+}
+img.img-left {
+  float: left;
+  margin: 0.5em 0.5em 0.5em 0;
+}
+img.img-top {
+  margin-top: 0;
+}
+.post img {
+  max-width:100%;
+  padding:4px;
+  background-color:rgba(252, 240, 232, 1);
+  border:solid #262626 1px;
+}
 /* Base styles (regardless of theme) */
 .bs-callout {
   margin: 10px 0;
@@ -98,7 +142,7 @@ panel.profile-link div.link-pic img {
 .bs-callout .highlight {
   background-color: #fff;
 }
- 
+
 /* Themes for different contexts */
 .bs-callout-danger {
   background-color: rgba(252,248,248,0.8);
@@ -111,4 +155,21 @@ panel.profile-link div.link-pic img {
 .bs-callout-info {
   background-color: rgba(240,247,253,0.8);
   border-color: #d0e3f0;
+}
+.btn-clipboard {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  display: block;
+  padding: 5px 8px;
+  font-size: 12px;
+  background-color: rgba(230,230,230,0);
+  cursor: pointer;
+  border: 0px;
+  border-radius: 0 4px 0 4px;
+}
+.zero-clipboard {
+  position: relative;
+  display: block;
 }

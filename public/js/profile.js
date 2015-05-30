@@ -1,10 +1,7 @@
-
 TB.app.controller('ProfileController', ['$scope','ProfileService',
   function($scope,ProfileService) {
     var scopederror = function(scope) { return function(e) { seterror(scope,e); } }
-    var seterror = function(s, e) {
-      $scope.error = TB.errors.translate(s, e);
-    }
+    var seterror = function(s, e) { $scope.$emit('error', s, e); }
     var refresh = function () {
       ProfileService.refresh(
         function(d) {
@@ -30,6 +27,7 @@ TB.app.controller('ProfileController', ['$scope','ProfileService',
         scopederror('confirm')
       );
     }
+    $scope.clearError = function() { $scope.error = null; }
 }]);
 
 TB.app.service('ProfileService', function($http) {

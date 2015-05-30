@@ -6,31 +6,35 @@
     <script src="/js/profile.js"></script>
     <script>TB._csrf = "<%= csrfToken %>";</script>
   </head>
-  <body ng-app="tresbon">
+  <body ng-app="tresbon" ng-controller="TBC">
     <div class="jumbotron">
       <div class="container">
         <h1>Profile</h1>
       </div>
-      <div class="world"></div>
     </div>
     <div class="frontcontainer container-fluid" ng-controller="ProfileController">
       <div class="notification-container">
-      <div class="alert alert-success ng-hide" ng-show="success" role="alert">
-        <span ng-bind="success"></span>
-      </div>
-      <div class="alert alert-danger ng-hide" ng-show="error" role="alert">
-        <span ng-bind="error"></span>
-      </div>
-      <div class="alert alert-info ng-hide" ng-show="info.email_confirmed === false" role="alert">
-        <p>Your email address has not been confirmed.</p>
-        <p>Please check for a confirmation email from us and act on the link therein.</p>
-        <p>Didn't get the email? <a ng-click="sendConfirmation()">Send another.</a></p>
-      </div>
-      <div class="alert alert-info ng-hide" ng-show="info.notices && info.notices.length" role="alert">
-        <ul ng-repeat="notice in info.notices">
-          <li><span>{{notice}}</span></li>
-        </ul>
-      </div>
+        <div class="alert alert-success ng-hide" ng-show="success" role="alert">
+          <span ng-bind="success"></span>
+        </div>
+        <div class="ng-hide" ng-show="error">
+          <div class="zero-clipboard alert-danger">
+            <button ng-click="clearError()" class="btn-clipboard"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+          </div>
+          <div class="alert alert-danger" role="alert">
+            <span ng-bind="error"></span>
+          </div>
+        </div>
+        <div class="alert alert-info ng-hide" ng-show="info.email_confirmed === false" role="alert">
+          <p>Your email address has not been confirmed.</p>
+          <p>Please check for a confirmation email from us and act on the link therein.</p>
+          <p>Didn't get the email? <a ng-click="sendConfirmation()">Send another.</a></p>
+        </div>
+        <div class="alert alert-info ng-hide" ng-show="info.notices && info.notices.length" role="alert">
+          <ul ng-repeat="notice in info.notices">
+            <li><span>{{notice}}</span></li>
+          </ul>
+        </div>
       </div>
       <div class="row">
         <div class="col-lg-6">
@@ -44,34 +48,49 @@
             </div>
           </panel>
           <panel class="panel-default profile-link" ng-controller="LoginController">
-            <div class="panel-title"><h2>Integrations</h2></div>
+            <div class="panel-title">
+              <div class="link-add">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                <div class="link-new link-facebook">
+                  <a ng-click="fb_associate()"><img src="/images/icons/facebook.png" title="Connect to Facebook" alt="Facebook"/></a>
+                </div>
+                <div class="link-new link-google">
+                  <a href="/auth/google"><img src="/images/icons/google.png" title="Connect to Google" alt="Google"/></a>
+                </div>
+                <div class="link-new link-instagram">
+                  <a href="/auth/instagram"><img src="/images/icons/instagram.png" title="Connect to Instagram" alt="Instagram"/></a>
+                </div>
+                <div class="link-new link-smugmug">
+                  <a href="/auth/smugmug"><img src="/images/icons/smugmug.png" title="Connect to SmugMug" alt="SmugMug"/></a>
+                </div>
+              </div>
+              <h2>Integrations</h2>
+            </div>
             <div class="panel-body">
-              <ul class="list-group">
-                <li class="list-group-item" ng-repeat="link in info.thirdparty">
-                  <span class="{{ link.service }}">
+              <div class="list-group">
+                <div class="list-group-item" ng-repeat="link in info.thirdparty">
                   <div class="link-pic" ng-if="link.image_url"><img ng-src="{{link.image_url}}"/></div>
+                  <span class="{{ link.service }}">
                   <h4>
                   {{ link.display_name ? link.display_name : link.service }}
-	  </h4>
+	                </h4>
                   <a href="{{ link.url }}">link</a>
                   <span class="link-remove"><a ng-click="removeLink(link)">remove</a></span>
-                  <span class="link-refresh"><a ng-click="link.service === 'facebook' ? fb_associate() : refreshLink(link)">refresh</a></span></li>
-             </ul>
-             <div>
-               <div class="link-new link-fb">
-               <a href="/auth/google">Google</a>
-               </div>
-               <div class="link-new link-fb">
-               <a ng-click="fb_associate()">Facebook</a>
-               </div>
-               <div class="link-new link-fb">
-               <a href="/auth/smugmug">SmugMug</a>
-               </div>
+                  <span class="link-refresh"><a ng-click="link.service === 'facebook' ? fb_associate() : refreshLink(link)">refresh</a></span>
+                </div>
+             </div>
             </div>
           </panel>
         </div>
-        </div>
         <div class="col-lg-6">
+          <panel class="panel-default">
+            <div class="panel-title"><h2>Voyages</h2></div>
+            <div class="panel-body">
+              <ul class="list-group">
+              </ul>
+            </div>
+          </panel>
+        </div>
       </div>
     </div>
   </body>

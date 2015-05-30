@@ -1,4 +1,9 @@
 window.TB = window.TB || {};
+TB.error = function(ctx,msg) {
+  var body = document.getElementsByTagName("body")[0]
+  var scope = angular.element(body).scope();
+  scope.$apply(function() { scope.$emit('error', ctx, msg); });
+}
 TB.errors = require('/lib/errors');
 TB.app = angular.module('tresbon', ['ngRoute'])
 TB.app.config(
@@ -27,3 +32,12 @@ TB.app.config(
     }
   }
 );
+
+TB.app.controller('TBC',
+  function($scope) {
+    $scope.scopedError = function(scope) { return function(e) { $scope.seterror(scope,e); } }
+    $scope.setError = function(s, e) {
+      $scope.error = TB.errors.translate(s, e);
+    }
+    $scope.$on('error', function(s,e) { $scope.setError(s,e); });
+});
