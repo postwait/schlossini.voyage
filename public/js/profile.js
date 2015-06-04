@@ -5,7 +5,7 @@ TB.app.controller('ProfileController', ['$scope','ProfileService',
     var refresh = function () {
       ProfileService.refresh(
         function(d) {
-          $scope.info = d;
+          $scope.info = d.data;
         },
         seterror
       );
@@ -27,7 +27,6 @@ TB.app.controller('ProfileController', ['$scope','ProfileService',
         scopederror('confirm')
       );
     }
-    $scope.clearError = function() { $scope.error = null; }
 }]);
 
 TB.app.service('ProfileService', function($http) {
@@ -39,16 +38,15 @@ TB.app.service('ProfileService', function($http) {
         .success(function (result) {
           myData = result;
           dataf(result);
+          $http.get('/api/profile/voyages')
+            .success(function(set){
+              result.data.voyages = set.data;
+              dataf(result);
+            })
          })
         .error(function (e) {
           errorf(e);
         })
-    },
-    setData: function (data) {
-        myData = data;
-    },
-    getData: function () {
-        return myData;
     },
     removeLink: function(link, dataf, errf) {
       $http.csrfDelete('/api/profile/link/' + link.service + '/' + link.remoteid)
@@ -67,5 +65,4 @@ TB.app.service('ProfileService', function($http) {
         .error(function(data) { cb(data); });
     }
   };
-}); 
-
+});

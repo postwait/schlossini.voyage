@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <% include head %>
+    <% include include/head %>
     <script src="/js/login.js"></script>
     <script src="/js/profile.js"></script>
     <script>TB._csrf = "<%= csrfToken %>";</script>
@@ -9,36 +9,14 @@
   <body ng-app="tresbon" ng-controller="TBC">
     <div class="jumbotron">
       <div class="container">
-        <h1>Profile</h1>
+        <h1><%= title %></h1>
       </div>
     </div>
     <div class="frontcontainer container-fluid" ng-controller="ProfileController">
-      <div class="notification-container">
-        <div class="alert alert-success ng-hide" ng-show="success" role="alert">
-          <span ng-bind="success"></span>
-        </div>
-        <div class="ng-hide" ng-show="error">
-          <div class="zero-clipboard alert-danger">
-            <button ng-click="clearError()" class="btn-clipboard"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-          </div>
-          <div class="alert alert-danger" role="alert">
-            <span ng-bind="error"></span>
-          </div>
-        </div>
-        <div class="alert alert-info ng-hide" ng-show="info.email_confirmed === false" role="alert">
-          <p>Your email address has not been confirmed.</p>
-          <p>Please check for a confirmation email from us and act on the link therein.</p>
-          <p>Didn't get the email? <a ng-click="sendConfirmation()">Send another.</a></p>
-        </div>
-        <div class="alert alert-info ng-hide" ng-show="info.notices && info.notices.length" role="alert">
-          <ul ng-repeat="notice in info.notices">
-            <li><span>{{notice}}</span></li>
-          </ul>
-        </div>
-      </div>
+      <% include include/notify %>
       <div class="row">
         <div class="col-lg-6">
-          <panel class="panel-default">
+          <div class="panel-default">
             <div class="panel-title"><h2 class="profile-profile">Profile</h2></div>
             <div class="panel-body">
               <dl class="dl-horizontal">
@@ -46,8 +24,8 @@
                 <dt>Voyager Since:</dt><dd ng-bind="info.created_on | date:'fullDate'"></dd>
               </dl>
             </div>
-          </panel>
-          <panel class="panel-default profile-link" ng-controller="LoginController">
+          </div>
+          <div class="panel-default profile-link" ng-controller="LoginController">
             <div class="panel-title">
               <div class="link-add">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -80,16 +58,21 @@
                 </div>
              </div>
             </div>
-          </panel>
+          </div>
         </div>
         <div class="col-lg-6">
-          <panel class="panel-default">
+          <div class="panel-default">
             <div class="panel-title"><h2>Voyages</h2></div>
             <div class="panel-body">
-              <ul class="list-group">
-              </ul>
+              <div class="list-group">
+                <div class="list-group-item" ng-repeat="voyage in info.voyages">
+                  <span><a href="/voyage/{{voyage.shortname}}">{{voyage.title || voyage.shortname}}</a></span>
+                  <span ng-show="info.userid == voyage.owner" class="label label-primary">Owner</span>
+                  <span class="label" ng-class="{'label-success': voyage.role_name == 'guide', 'label-default': voyage.role_name == 'traveler'}">Guide</span>
+                </div>
+              </div>
             </div>
-          </panel>
+          </div>
         </div>
       </div>
     </div>

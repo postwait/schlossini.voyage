@@ -25,6 +25,21 @@
 TB.app.controller('LoginController', function($scope, $http) {
     $scope.error = null;
 
+    function getQueryVariable(variable) {
+      var query = window.location.search.substring(1);
+      var vars = query.split('&');
+      for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split('=');
+        if (decodeURIComponent(pair[0]) == variable) {
+          return decodeURIComponent(pair[1]);
+        }
+      }
+      return null;
+    }
+
+    var qs_error = getQueryVariable("error");
+    if(qs_error) $scope.error = qs_error;
+
     var statusChangeCallback = function(response, method) {
       if(!method) return;
       if (response.status === 'connected') {

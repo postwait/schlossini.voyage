@@ -47,7 +47,7 @@ TB.app.controller('WaypointController', ['$scope','$modal','WaypointService',
             }
           },
           trip: function() { return $scope.trip; },
-          zones: function() { return TB.zones; },
+          zones: function() { return TB.zoneGroups; },
         }
       });
 

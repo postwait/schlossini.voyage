@@ -1,3 +1,36 @@
+TB.app.directive('dragAndDrop', function() {
+    return {
+      restrict: 'A',
+      link: function($scope, elem, attr) {
+        elem.bind('dragover', function (e) {
+          e.stopPropagation();
+          e.preventDefault();
+          //debugger;
+          e.dataTransfer.dropEffect = 'copy';
+        });
+        elem.bind('dragenter', function(e) {
+          e.stopPropagation();
+          e.preventDefault();
+          $scope.$apply(function() {
+            $scope.divClass = 'on-drag-enter';
+          });
+        });
+        elem.bind('dragleave', function(e) {
+          e.stopPropagation();
+          e.preventDefault();
+          $scope.$apply(function() {
+            $scope.divClass = '';
+          });
+        });
+        elem.bind('drop', function(e,a,b) {
+          e.stopPropagation();
+          e.preventDefault();
+          alert('drop')
+        });
+      }
+    };
+  });
+
 TB.app.controller('PostController',
   ['$scope','$modal','PostService','WaypointService',
   function($scope,$modal,PostService,WaypointService) {
@@ -42,7 +75,7 @@ TB.app.controller('PostController',
             }}}
           },
           voyage: function() { return $scope.voyage },
-          zones: function() { return TB.zones },
+          zones: function() { return TB.zoneGroups },
         }
       });
 
@@ -83,10 +116,23 @@ TB.app.controller('PostInstanceCtrl',
   $scope.ok = function () {
     $scope.post.whence = TB.smashTZ($scope.post.timezone, $scope.post.whence)
     $modalInstance.close($scope.post);
-  };
+  }
+  $scope.removeTag = function(tag) {
+    var idx = $scope.post.data.tags.indexOf(tag);
+    if(idx >= 0) $scope.post.data.tags.splice(idx,1)
+  }
+  $scope.addTag = function() {
+    if (event.which === 13) {
+      if($scope.post.data.tags.indexOf($scope.addtag) == -1) {
+        $scope.post.data.tags.push($scope.addtag);
+      }
+      $scope.addtag = null;
+      event.preventDefault();
+    }
+  }
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
-  };
+  }
   $scope.setWhenceHours = function() {
     $scope.post.whence.setHours($scope.whencehours)
   }

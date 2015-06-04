@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="tresbon">
   <head>
-    <% include head %>
+    <% include include/head %>
     <script>TB._csrf = "<%= csrfToken %>";</script>
   </head>
   <body>
@@ -12,9 +12,7 @@
       </div>
     </div>
     <div class="frontcontainer container-fluid" ng-controller="LoginController">
-      <div class="alert alert-danger ng-hide" ng-show="error" role="alert">
-        <span ng-bind="error"></span>
-      </div>
+      <% include include/notify %>
       <div class="row">
         <div class="col-md-6">
           <div class="panel panel-default">
