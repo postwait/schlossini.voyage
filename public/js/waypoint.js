@@ -84,10 +84,10 @@ TB.app.controller('WaypointInstanceCtrl',
   if($scope.waypoint.whence.constructor != Date)
     $scope.waypoint.whence = new Date($scope.waypoint.whence);
 
-  $scope.waypoint.whence = TB.unsmashTZ($scope.waypoint.timezone, $scope.waypoint.whence)
+  $scope.edit_whence = TB.unsmashTZ($scope.waypoint.timezone, $scope.waypoint.whence)
 
-  $scope.whencehours = $scope.waypoint.whence.getHours();
-  $scope.whenceminutes = $scope.waypoint.whence.getMinutes();
+  $scope.whencehours = $scope.edit_whence.getHours();
+  $scope.whenceminutes = $scope.edit_whence.getMinutes();
   if($scope.whencehours < 10) $scope.whencehours = "0" + $scope.whencehours;
   if($scope.whenceminutes < 10) $scope.whenceminutes = "0" + $scope.whenceminutes;
 
@@ -150,19 +150,19 @@ TB.app.controller('WaypointInstanceCtrl',
       });
   }
   $scope.ok = function () {
-    $scope.waypoint.whence.setHours($scope.whencehours)
-    $scope.waypoint.whence.setMinutes($scope.whenceminutes)
-    $scope.waypoint.whence = TB.smashTZ($scope.waypoint.timezone, $scope.waypoint.whence)
+    $scope.edit_whence.setHours($scope.whencehours)
+    $scope.edit_whence.setMinutes($scope.whenceminutes)
+    $scope.waypoint.whence = TB.smashTZ($scope.waypoint.timezone, $scope.edit_whence)
     $modalInstance.close($scope.waypoint);
   };
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
   };
   $scope.setWhenceHours = function() {
-    $scope.waypoint.whence.setHours($scope.whencehours)
+    $scope.edit_whence.setHours($scope.whencehours)
   }
   $scope.setWhenceMinutes = function() {
-    $scope.waypoint.whence.setMinutes($scope.whenceminutes)
+    $scope.edit_whence.setMinutes($scope.whenceminutes)
   }
   $scope.openDate = function($event) {
     $event.preventDefault();
@@ -196,6 +196,7 @@ TB.app.service('WaypointService', function($http) {
       $http.get('/api/voyage/' + TB.voyage.shortname + '/trip/' + tripid + '/waypoints')
         .success(function (result) {
           myData = result;
+          myData.data.forEach(function(wp) { wp.whence = new Date(wp.whence); })
           dataf(result);
          })
         .error(function (e) {

@@ -94,9 +94,13 @@ div.post-add {
   float:right;
   padding-right:15px;
 }
-span.label .glyphicon {
+div.post-tag {
+  display:inline-flex;
+}
+span.label.post-tag .glyphicon {
   margin: 0 -4px 0 4px;
   top: 3px;
+  color: #ccc;
 }
 span.waypoint-remove {
   float:right;
@@ -145,6 +149,10 @@ div#post-preview {
   overflow-y:scroll;
 }
 
+div.modal.in {
+  background-color: rgba(0,0,0,0.7);
+}
+
 div.profile-link div.link-pic img,
 div.post-item div.link-pic img
 {
@@ -160,11 +168,8 @@ div.post-item div.link-pic img
 .input-group div.input-datetime {
   display: flex;
 }
-div.input-datetime input.input-date-flow {
-  width: 100px;
-}
 div.input-datetime input.input-time-flow {
-  width: 45px;
+  width: 50px;
 }
 
 .angular-google-map-container { height: 200px; }

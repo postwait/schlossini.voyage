@@ -36,7 +36,7 @@
                   <td ng-click="selectTrip(t)">
                     <span>{{t.description}}</span>
                   </td>
-                  <td><span ng-if="t.start_date">{{t.start_date | date:'fullDate'}} - {{t.end_date | date:'fullDate'}}</span></td>
+                  <td ng-click="selectTrip(t)"><span ng-if="t.start_date">{{t.start_date | date:'fullDate'}} - {{t.end_date | date:'fullDate'}}</span></td>
                   <td style="width:1em"><span ng-click="saveTrip(t, t.active = true)" ng-show="!t.active" class="glyphicon glyphicon-play"></span>
                       <span ng-click="saveTrip(t, t.active = false)" ng-show="t.active" class="glyphicon glyphicon-pause"></span></td>
                 </tr>
@@ -78,12 +78,9 @@
                   <div class="input-group no-time-controls">
                     <span class="input-group-addon" id="waypoint-whence">Arriving at</span>
                     <div class="input-datetime">
-                    <input type="text" class="form-control input-date-flow" datepicker-popup="yyyy-MM-dd" ng-model="waypoint.whence" is-open="opened" date-disabled="false" ng-required="true" close-text="Close" />
+                    <input type="date" class="form-control input-date-flow" datepicker-popup ng-model="waypoint.whence" is-open="opened" date-disabled="false" ng-required="true" close-text="Close" />
                     <input type="text" class="form-control input-time-flow" size="2" ng-change="setWhenceHours()" ng-model="whencehours"/>
                     <input type="text" class="form-control input-time-flow" size="2" ng-change="setWhenceMinutes()" ng-model="whenceminutes"/>
-                    <span class="input-group-btn cal-button">
-                      <button type="button" class="btn btn-default" ng-click="openDate($event)"><span class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
                     </div>
                   </div>
                   <div class="input-group no-time-controls">
@@ -140,7 +137,7 @@
                   <div class="col-md-12">
                     <div class="input-group">
                       <span class="input-group-addon" id="post-url">Url</span>
-                      <input type="text" ng-model="post.url_snippet" class="form-control" placeholder="post-title" aria-describedby="post-url">
+                      <input type="text" ng-disabled="post.postid" ng-model="post.url_snippet" class="form-control" placeholder="post-title" aria-describedby="post-url">
                     </div>
                     <div class="input-group">
                       <span class="input-group-addon" id="post-title">Title</span>
@@ -159,21 +156,20 @@
                     <div class="input-group">
                       <span class="input-group-addon" id="post-tags">Tags</span>
                       <input type="text" ng-model="addtag" ng-keypress="addTag('a')" class="form-control tag-add" placeholder="tag" aria-describedby="post-tag">
-                      <span class="label label-default post-tag" ng-repeat="tag in post.data.tags">
-                        <span ng-bind="tag"></span> | <span ng-click="removeTag(tag)" class="glyphicon glyphicon-remove"></span>
+                      <div ng-repeat="tag in post.data.tags" class="post-tag">
+                      <span class="label label-default post-tag">
+                        <span ng-bind="tag"></span> <span ng-click="removeTag(tag)" class="glyphicon glyphicon-remove"></span>
                       </span>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="input-group no-time-controls">
-                      <span class="input-group-addon" id="waypoint-whence">Date</span>
+                      <span class="input-group-addon" id="post-whence">Date</span>
                       <div class="input-datetime">
-                      <input type="text" class="form-control input-date-flow" datepicker-popup="yyyy-MM-dd" ng-model="post.whence" is-open="opened" date-disabled="false" ng-required="true" close-text="Close" />
+                      <input type="date" class="form-control input-date-flow" datepicker-popup ng-model="post.whence" is-open="opened" date-disabled="false" ng-required="true" close-text="Close" />
                       <input type="text" class="form-control input-time-flow" size="2" ng-change="setWhenceHours()" ng-model="whencehours"/>
                       <input type="text" class="form-control input-time-flow" size="2" ng-change="setWhenceMinutes()" ng-model="whenceminutes"/>
-                      <span class="input-group-btn cal-button">
-                        <button type="button" class="btn btn-default" ng-click="openDate($event)"><span class="glyphicon glyphicon-calendar"></i></button>
-                      </span>
                       </div>
                     </div>
                     <div class="input-group no-time-controls">

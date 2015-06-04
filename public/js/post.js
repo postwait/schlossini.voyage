@@ -113,6 +113,16 @@ TB.app.controller('PostInstanceCtrl',
   if($scope.whencehours < 10) $scope.whencehours = "0" + $scope.whencehours;
   if($scope.whenceminutes < 10) $scope.whenceminutes = "0" + $scope.whenceminutes;
 
+  $scope.$watch('post.title', function(newVal, oldVal) {
+    if($scope.post.postid) return;
+    if(!newVal) return;
+    $scope.post.url_snippet = newVal
+      .replace(/[^-a-zA-Z0-9]/g, " ")
+      .replace(/^\s+/g,"")
+      .replace(/\s+$/g, "")
+      .replace(/\s+/g,"-")
+      .toLowerCase();
+  });
   $scope.ok = function () {
     $scope.post.whence = TB.smashTZ($scope.post.timezone, $scope.post.whence)
     $modalInstance.close($scope.post);
