@@ -17,7 +17,6 @@ body {
   font-size:1.2em;
 }
 .splash .jumbotron p {
-  margin-top: -0.5em;
   font-size:2em;
 }
 .splash .bs-callout p {
@@ -58,9 +57,9 @@ div.single div.panel-body {
 }
 .single p { font-size: 1em; }
 .jumbotron {
-  padding: 10px 40px;
+  padding: 10px 40px 0px 40px;
   background-color:rgba(224, 224, 224, 0.85);
-  min-height: 190px;
+  min-height: 160px;
 }
 .jumbotron ol.breadcrumb {
   margin: 5px 0 -15px 0;
