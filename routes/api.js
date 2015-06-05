@@ -69,6 +69,18 @@ router.get('/voyage/:shortname', loggedin(function(req,res) {
     }
   );
 }));
+router.get('/voyage/:shortname/profilepics/me', loggedin(function(req,res) {
+  Voyage.getProfilePics(req.session.userid, req.params.shortname, req.session.userid,
+    function(err, pics) {
+      api_response(res, err, pics);
+    });
+}));
+router.get('/voyage/:shortname/profilepics/:ouserid', loggedin(function(req,res) {
+  Voyage.getProfilePics(req.session.userid, req.params.shortname, req.params.ouserid,
+    function(err, pics) {
+      api_response(res, err, pics);
+    });
+}));
 router.get('/voyage/:shortname/trip/:tripid/waypoints',
   loggedin(function(req,res) {
     Voyage.getTripWaypoints(req.session.userid, req.params.shortname,

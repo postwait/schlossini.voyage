@@ -12,6 +12,7 @@ router.get('/:shortname', loggedin(function(req, res, next) {
       if(err || !voyage || !voyage.voyageid) return next();
       res.render('voyage',
              { title: 'Voyage: ' + (voyage.title || voyage.shortname),
+               userid: req.session.userid,
                csrfToken: req.csrfToken(),
                voyageid_as_json: JSON.stringify(voyage.voyageid),
                shortname_as_json: JSON.stringify(voyage.shortname),

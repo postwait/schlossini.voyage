@@ -9,6 +9,9 @@ var t = function(scope, msg) {
   }
   if(msg == null) return null;
 
+  if(/not .*(?:owner|guide)/i.test(msg))
+    return "This action is restricted to guides."
+
   if(scope === 'confirm') {
     if(/unique constraint.*email/.test(msg)) {
       return "We won't send more than one email every two hours.";

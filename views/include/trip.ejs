@@ -1,0 +1,180 @@
+<div ng-show="trip">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="panel-default waypoints" ng-controller="WaypointController">
+        <script type="text/ng-template" id="WaypointEdit.html">
+          <div class="modal-header">
+            <h3 class="modal-title">Add/Edit Waypoint</h3>
+          </div>
+          <div class="modal-body">
+            <form>
+            <div class="input-group">
+              <span class="input-group-addon" id="waypoint-name">Visiting</span>
+              <input type="text" ng-model="waypoint.name" class="form-control" placeholder="Stonehenge" aria-describedby="waypoint-name">
+              <div class="input-group-addon btn btn-default" ng-click="lookupName()">
+                <span class="glyphicon glyphicon-search"></span></div>
+            </div>
+            <div class="input-group">
+              <span class="input-group-addon" id="waypoint-arrival-method">Arriving by</span>
+              <select class="form-control" ng-model="waypoint.arrival_method"
+                ng-options="method for method in arrival_methods">
+              </select>
+            </div>
+            <div class="input-group">
+              <span class="input-group-addon" id="waypoint-arrival-method">Visibility</span>
+              <select class="form-control" ng-model="waypoint.visibility" convert-to-number>
+                <option value="1">Itinerary</option>
+                <option value="2">Private</option>
+                <option value="0">Tentative</option>
+              </select>
+            </div>
+            <div class="input-group no-time-controls">
+              <span class="input-group-addon" id="waypoint-whence">Arriving at</span>
+              <div class="input-datetime">
+              <input type="date" class="form-control input-date-flow" datepicker-popup ng-model="edit_whence" is-open="opened" date-disabled="false" ng-required="true" close-text="Close" />
+              <input type="text" class="form-control input-time-flow" size="2" ng-change="setWhenceHours()" ng-model="whencehours"/>
+              <input type="text" class="form-control input-time-flow" size="2" ng-change="setWhenceMinutes()" ng-model="whenceminutes"/>
+              </div>
+            </div>
+            <div class="input-group no-time-controls">
+              <span class="input-group-addon" id="waypoint-timezone">in timezone</span>
+              <sdropdown dropdown-model="waypoint.timezone" dropdown-placeholder="{{waypoint.timezone}}">
+                <sdropdown-group ng-repeat="(group, list) in zones" name="{{group}}">
+                  <sdropdown-item sdropdown-value="{{z.value}}" ng-repeat="z in list">{{z.name}}</sdropdown-item>
+                </sdropdown-group>
+              </sdropdown>
+            </div>
+            <div>
+            <ui-gmap-google-map center='map.center' zoom='map.zoom' refresh="map_refresh">
+              <ui-gmap-marker coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
+              </ui-gmap-marker
+            </ui-gmap-google-map>
+            </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+          </div>
+        </script>
+        <div class="panel-title">
+          <div class="waypoint-add">
+            <span ng-click="openWaypoint('add')" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+          </div>
+          <h2>Waypoints</h2>
+        </div>
+        <div class="panel-body">
+          <div class="list-group">
+            <div ng-class="{ 'list-group-item': true, 'list-item-itinerary': p.visibility==1, 'list-item-private': p.visibility==2, 'list-item-hidden': p.visibility==0 }"  ng-repeat="p in waypoints | orderBy:'-whence'">
+              <span ng-click="removeWaypoint(p.waypointid)" class="waypoint-remove glyphicon glyphicon-remove" aria-hidden="true"></span>
+              <div ng-click="openWaypoint('edit', p)">
+                <h4 class="list-group-item-heading">{{p.name}}</h4>
+                  <p class="list-group-item-text">
+                    on {{p.whence | date: "fullDate"}} by {{p.arrival_method}}
+                  </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="panel-default posts" ng-controller="PostController">
+        <script type="text/ng-template" id="PostEdit.html">
+          <div class="modal-header">
+            <h3 class="modal-title">Add/Edit Post</h3>
+            <% include notify %>
+          </div>
+          <form>
+          <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="input-group">
+                <span class="input-group-addon" id="post-url">Url</span>
+                <input type="text" ng-disabled="post.postid" ng-model="post.url_snippet" class="form-control" placeholder="post-title" aria-describedby="post-url">
+              </div>
+              <div class="input-group">
+                <span class="input-group-addon" id="post-title">Title</span>
+                <input type="text" ng-model="post.title" class="form-control" placeholder="Post Title" aria-describedby="post-title">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-group">
+                <span class="input-group-addon" id="post-author">Author</span>
+                <select class="form-control" ng-model="post.author"
+                        ng-options="t.userid as t.name for t in voyage.travelers">
+                </select>
+              </div>
+              <div class="input-group">
+                <span class="input-group-addon" id="post-tags">Tags</span>
+                <input type="text" ng-model="addtag" ng-keypress="addTag('a')" class="form-control tag-add" placeholder="tag" aria-describedby="post-tag">
+                <div ng-repeat="tag in post.data.tags" class="post-tag">
+                <span class="label label-default post-tag">
+                  <span ng-bind="tag"></span> <span ng-click="removeTag(tag)" class="glyphicon glyphicon-remove"></span>
+                </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-group no-time-controls">
+                <span class="input-group-addon" id="post-whence">Date</span>
+                <div class="input-datetime">
+                <input type="date" class="form-control input-date-flow" datepicker-popup ng-model="post.whence" is-open="opened" date-disabled="false" ng-required="true" close-text="Close" />
+                <input type="text" class="form-control input-time-flow" size="2" ng-change="setWhenceHours()" ng-model="whencehours"/>
+                <input type="text" class="form-control input-time-flow" size="2" ng-change="setWhenceMinutes()" ng-model="whenceminutes"/>
+                </div>
+              </div>
+              <div class="input-group no-time-controls">
+                <span class="input-group-addon" id="post-timezone">in timezone</span>
+                <sdropdown dropdown-model="waypoint.timezone" dropdown-placeholder="{{post.timezone}}">
+                  <sdropdown-group ng-repeat="(group, list) in zones" name="{{group}}">
+                    <sdropdown-item sdropdown-value="{{z.value}}" ng-repeat="z in list">{{z.name}}</sdropdown-item>
+                  </sdropdown-group>
+                </sdropdown>
+              </div>
+            </div>
+          </div>
+          <tabset>
+            <tab heading="Edit">
+              <textarea class="post-editor" id="post-editor" ng-model="post.data.body" drag-and-drop></textarea>
+            </tab>
+            <tab heading="Preview">
+              <div id="post-preview" ng-bind-html="post.data.body | markdown"></div>
+            </tab>
+          </tabset>
+          </div>
+          <div class="modal-footer">
+            <div class="btn-group">
+                <label class="btn btn-default" ng-model="post.published" btn-radio="true">Published</label>
+                <label class="btn btn-default" ng-model="post.published" btn-radio="false">Draft</label>
+            </div>
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+          </div>
+          </form>
+        </script>
+        <div class="panel-title">
+          <div class="post-add">
+            <span ng-click="openPost('add')" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+          </div>
+          <h2>Posts</h2>
+        </div>
+        <div class="panel-body">
+          <div class="list-group post-item">
+            <div ng-class="{ 'list-group-item': true, 'list-item-published': p.published, 'list-item-unpublished': !p.published }"  ng-repeat="p in posts | orderBy:'-whence'">
+              <span ng-click="removePost(p.postid)" class="post-remove glyphicon glyphicon-remove" aria-hidden="true"></span>
+              <div ng-click="openPost('edit', p)">
+                <div class="link-pic" ng-if="p.author_face"><img ng-src="{{p.author_face}}"/></div>
+                <h4 class="list-group-item-heading">{{p.title}}</h4>
+                <p class="list-group-item-text">
+                  on {{p.whence | date: "fullDate"}} by {{p.author_name}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

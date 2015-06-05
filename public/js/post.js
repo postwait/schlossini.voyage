@@ -56,7 +56,7 @@ TB.app.controller('PostController',
     $scope.$on('postsChanged', refresh);
     var notify_refresh = function() { $scope.$emit('postsChanged'); }
 
-    $scope.openPost = function (mode, post) {
+    $scope.openPost = function (mode, post, error) {
       var modalInstance = $modal.open({
         animation: false,
         templateUrl: 'PostEdit.html',
@@ -68,6 +68,7 @@ TB.app.controller('PostController',
             if(post) return PostService.getPost(post.postid);
             return { data: { data: {
               data: {},
+              author: TB.userid,
               whence: new Date(),
               timezone: WaypointService.guessTimezone(new Date()),
               tripid: $scope.tripid,
@@ -76,21 +77,27 @@ TB.app.controller('PostController',
           },
           voyage: function() { return $scope.voyage },
           zones: function() { return TB.zoneGroups },
+          error: function() { return error },
         }
       });
+
+      var reopen_error = function(err) {
+        console.log(err, "reopening")
+        $scope.openPost(mode,post,err);
+      }
 
       modalInstance.result.then(function (post) {
         $scope.post = post;
         if(mode == 'add') {
           PostService.addPost($scope.post,
             notify_refresh,
-            $scope.scopedError('post')
+            reopen_error
           );
         }
         if(mode == 'edit') {
           PostService.updatePost($scope.post,
             notify_refresh,
-            $scope.scopedError('post')
+            reopen_error
           );
         }
       }, function () {
@@ -100,7 +107,8 @@ TB.app.controller('PostController',
 
 TB.app.controller('PostInstanceCtrl',
                   function ($scope, $timeout, $modalInstance,
-                            zones, post, voyage) {
+                            zones, post, voyage, error) {
+  $scope.error = error
   $scope.post = post.data.data;
   $scope.voyage = voyage;
   $scope.zones = zones;

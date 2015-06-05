@@ -23,6 +23,21 @@ body {
 .splash .bs-callout p {
   font-size:1.2em;
 }
+
+.manage .jumbotron {
+  padding: 0 40px;
+  min-height: 120px;
+}
+.manage .jumbotron h1 {
+  font-size:36px;
+}
+.manage .jumbotron div.container {
+  margin-left:inherit;
+  margin-right:inherit;
+}
+div.modal-header div.notification-container {
+  width:100%;
+}
 a {
   color: #339;
 }

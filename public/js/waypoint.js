@@ -83,7 +83,6 @@ TB.app.controller('WaypointInstanceCtrl',
   $scope.waypoint = waypoint || {};
   if($scope.waypoint.whence.constructor != Date)
     $scope.waypoint.whence = new Date($scope.waypoint.whence);
-
   $scope.edit_whence = TB.unsmashTZ($scope.waypoint.timezone, $scope.waypoint.whence)
 
   $scope.whencehours = $scope.edit_whence.getHours();
@@ -153,6 +152,7 @@ TB.app.controller('WaypointInstanceCtrl',
     $scope.edit_whence.setHours($scope.whencehours)
     $scope.edit_whence.setMinutes($scope.whenceminutes)
     $scope.waypoint.whence = TB.smashTZ($scope.waypoint.timezone, $scope.edit_whence)
+    console.log($scope.edit_whence,$scope.waypoint.whence)
     $modalInstance.close($scope.waypoint);
   };
   $scope.cancel = function () {

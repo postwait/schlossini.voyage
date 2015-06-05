@@ -16,7 +16,7 @@ TB.app.controller('VoyageController', ['$scope','VoyageService',
 
     $scope.getTrip = function() { return $scope.trip; }
     $scope.selectTrip = function(trip) {
-      var links = [ { name: 'Trips' } ];
+      var links = [ { name: 'Home' } ];
       if(trip) {
         links[0].click = function() { $scope.selectTrip(); }
         links.push({name: trip.description})
@@ -27,7 +27,7 @@ TB.app.controller('VoyageController', ['$scope','VoyageService',
     }
     $scope.saveTrip = function(t) {
       VoyageService.saveTrip(t, function(err) {
-        $scope.scopedError('voyage');
+        $scope.scopedError('voyage')(err);
         notify_refresh();
       });
     }
@@ -37,7 +37,7 @@ TB.app.controller('VoyageController', ['$scope','VoyageService',
 
 TB.app.service('VoyageService', function($http) {
   var myData = null;
-  
+
   return {
     refresh: function(dataf,errorf) {
       $http.get('/api/voyage/' + TB.voyage.shortname)
