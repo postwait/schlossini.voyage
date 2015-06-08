@@ -73,12 +73,13 @@ TB.app.controller('WaypointController', ['$scope','$modal','WaypointService',
 TB.app.controller('WaypointInstanceCtrl',
                   function ($scope, $timeout, $modalInstance,
                             uiGmapIsReady, zones, trip, waypoint) {
-
   uiGmapIsReady.promise(1).then(function(instances) {
         instances.forEach(function(inst) {
           google.maps.event.trigger(inst.map, 'resize');
+          $scope.mapInstance = inst.map;
         });
     });
+  TB.debug = function() {return $scope.mapInstance;}
   $scope.zones = zones;
   $scope.waypoint = waypoint || {};
   if($scope.waypoint.whence.constructor != Date)
@@ -126,8 +127,7 @@ TB.app.controller('WaypointInstanceCtrl',
   };
   var recenter;
   $scope.$watchCollection("marker.coords", function (newVal, oldVal) {
-    if (_.isEqual(newVal, oldVal))
-      return;
+    if (_.isEqual(newVal, oldVal)) return;
     if(recenter) $timeout.cancel(recenter);
     recenter = $timeout(function() {
       $scope.map.center.latitude = $scope.marker.coords.latitude;
@@ -145,6 +145,7 @@ TB.app.controller('WaypointInstanceCtrl',
           $scope.marker.coords.latitude = $scope.map.center.latitude = loc.lat()
           $scope.marker.coords.longitude = $scope.map.center.longitude = loc.lng()
           $scope.waypoint.latlong = [loc.lat(),loc.lng()];
+          $scope.$digest();
         }
       });
   }
@@ -152,7 +153,6 @@ TB.app.controller('WaypointInstanceCtrl',
     $scope.edit_whence.setHours($scope.whencehours)
     $scope.edit_whence.setMinutes($scope.whenceminutes)
     $scope.waypoint.whence = TB.smashTZ($scope.waypoint.timezone, $scope.edit_whence)
-    console.log($scope.edit_whence,$scope.waypoint.whence)
     $modalInstance.close($scope.waypoint);
   };
   $scope.cancel = function () {

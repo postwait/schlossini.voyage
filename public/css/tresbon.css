@@ -153,6 +153,52 @@ div.post-item div.link-pic {
 div.input-group .tag-add {
   width:80px;
 }
+
+.profile-manager div.profile-pic {
+  width:100px;
+  text-align: center;
+  line-height: 1em;
+  display: inline-block;
+}
+.profile-manager img,
+.profile-manager div.plus {
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  border:1px solid #aaa;
+  padding: 2px;
+  margin-left:auto;
+  margin-right:auto;
+}
+.profile-manager div.plus {
+  border: 2px solid #666;
+}
+.profile-manager div.plus span {
+  font-size:40px;
+  margin-top:14px;
+  margin-left:4px;
+}
+.profile-manager span {
+  white-space: nowrap;
+  font-size: 12px;
+  display: block;
+}
+.profile-manager span.time {
+  font-size: 9px;
+  display: block;
+}
+div.panel-heading a {
+    outline: none;
+}
+div.delete-pic-container {
+  text-align:center;
+}
+img.profile-pic-add {
+  width:150px;
+  height:150px;
+  padding:2px;
+  border:1px solid #aaa;
+}
 textarea.post-editor {
   width:100%;
   height:400px;
@@ -173,6 +219,8 @@ div.post-item div.link-pic img
   height:50px;
   width:50px;
   border-radius:50%;
+  border:1px solid #aaa;
+  padding: 2px;
 }
 
 .no-time-controls span.cal-button {

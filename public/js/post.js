@@ -1,36 +1,3 @@
-TB.app.directive('dragAndDrop', function() {
-    return {
-      restrict: 'A',
-      link: function($scope, elem, attr) {
-        elem.bind('dragover', function (e) {
-          e.stopPropagation();
-          e.preventDefault();
-          //debugger;
-          e.dataTransfer.dropEffect = 'copy';
-        });
-        elem.bind('dragenter', function(e) {
-          e.stopPropagation();
-          e.preventDefault();
-          $scope.$apply(function() {
-            $scope.divClass = 'on-drag-enter';
-          });
-        });
-        elem.bind('dragleave', function(e) {
-          e.stopPropagation();
-          e.preventDefault();
-          $scope.$apply(function() {
-            $scope.divClass = '';
-          });
-        });
-        elem.bind('drop', function(e,a,b) {
-          e.stopPropagation();
-          e.preventDefault();
-          alert('drop')
-        });
-      }
-    };
-  });
-
 TB.app.controller('PostController',
   ['$scope','$modal','PostService','WaypointService',
   function($scope,$modal,PostService,WaypointService) {
@@ -157,11 +124,6 @@ TB.app.controller('PostInstanceCtrl',
   $scope.setWhenceMinutes = function() {
     $scope.post.whence.setMinutes($scope.whenceminutes)
   }
-  $scope.openDate = function($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-    $scope.opened = true;
-  };
 });
 
 TB.app.service('PostService', function($http) {

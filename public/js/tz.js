@@ -269,12 +269,17 @@ if (typeof TZ === "undefined"){ var TZ = { base: '/js/zoneinfo/', cache: {} }; }
         var fix = function(str) {
             var repl = sign;
             if(Math.abs(zoff) < 1000) repl = repl + '0';
+            if(Math.abs(zoff) < 100) repl = repl + '0';
+            if(Math.abs(zoff) < 10) repl = repl + '0';
             repl = repl + zoff.toString(10);
             str = str.replace(/GMT[-+]\d{4}/, "GMT" + repl)
                      .replace(/\(.+\)$/, "(" + tz.name() + ")");
             return str;
         };
         return {
+            '_getUTC': function() { return utc; },
+            '_getHACK': function() { return hack; },
+            '_getCRACK': function() { return crack; },
             'getTime': function() { return utc.getTime(); },
             'getTimezoneOffset': function() { return tz.offset / -60; },
             'getDate': function() { return hack.getUTCDate(); },

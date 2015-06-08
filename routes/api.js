@@ -42,7 +42,7 @@ router.delete('/profile/link/:service/:remoteid', loggedin(function(req,res) {
     req.session.userid, req.params.service, req.params.remoteid,
     function(err, success) {
       if(!err && !success) err = "No such link";
-      api_response(res,err,body)
+      api_response(res,err)
     }
 )}));
 router.get('/profile/voyages', loggedin(function(req,res) {
@@ -81,6 +81,19 @@ router.get('/voyage/:shortname/profilepics/:ouserid', loggedin(function(req,res)
       api_response(res, err, pics);
     });
 }));
+router.post('/voyage/:shortname/profilepics', loggedin(function(req,res) {
+  Voyage.addProfilePic(req.session.userid, req.params.shortname, req.body,
+    function(err,pic) {
+      api_response(res, err, pic)
+    })
+}))
+router.delete('/voyage/:shortname/profilepics/:ouserid/:picid', loggedin(function(req,res) {
+  Voyage.deleteProfilePic(req.session.userid, req.params.shortname,
+                          req.params.ouserid, req.params.picid,
+    function(err) {
+      api_response(res, err)
+    })
+}))
 router.get('/voyage/:shortname/trip/:tripid/waypoints',
   loggedin(function(req,res) {
     Voyage.getTripWaypoints(req.session.userid, req.params.shortname,

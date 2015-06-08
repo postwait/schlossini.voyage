@@ -27,22 +27,93 @@
     </div>
     <div class="frontcontainer container-fluid" ng-controller="VoyageController">
       <% include include/notify %>
-      <div class="row" ng-hide="trip">
-        <div class="panel-default">
-          <div class="panel-title"><h2>Choose a Trip</h2></div>
-          <div class="panel-body">
-            <table class="table">
-              <tbody>
-                <tr ng-repeat="t in voyage.trips" ng-class="{active: t.active}">
-                  <td ng-click="selectTrip(t)">
-                    <span>{{t.description}}</span>
-                  </td>
-                  <td ng-click="selectTrip(t)"><span ng-if="t.start_date">{{t.start_date | date:'fullDate'}} - {{t.end_date | date:'fullDate'}}</span></td>
-                  <td style="width:1em"><span ng-click="saveTrip(t, t.active = true)" ng-show="!t.active" class="glyphicon glyphicon-play"></span>
-                      <span ng-click="saveTrip(t, t.active = false)" ng-show="t.active" class="glyphicon glyphicon-pause"></span></td>
-                </tr>
-              </tbody>
-            </table>
+      <div ng-hide="trip">
+        <div class="row">
+          <div class="panel-default">
+            <div class="panel-title"><h2>Trips</h2></div>
+            <div class="panel-body">
+              <table class="table">
+                <tbody>
+                  <tr ng-repeat="t in voyage.trips | orderBy:'-active'" ng-class="{active: t.active}">
+                    <td ng-click="selectTrip(t)">
+                      <span>{{t.description}}</span>
+                    </td>
+                    <td ng-click="selectTrip(t)"><span ng-if="t.start_date">{{t.start_date | date:'fullDate'}} - {{t.end_date | date:'fullDate'}}</span></td>
+                    <td style="width:1em"><span ng-click="saveTrip(t, t.active = true)" ng-show="!t.active" class="glyphicon glyphicon-play"></span>
+                        <span ng-click="saveTrip(t, t.active = false)" ng-show="t.active" class="glyphicon glyphicon-pause"></span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="panel-default profile-manager">
+            <script type="text/ng-template" id="ProfilePicAdd.html">
+              <div class="modal-header">
+                <h3 ng-hide="shouldDelete" class="modal-title">Add Profile Picture</h3>
+                <h3 ng-show="shouldDelete" class="modal-title">Delete Profile Picture</h3>
+                <% include include/notify %>
+              </div>
+              <form>
+              <div class="modal-body">
+                <div class="row" ng-hide="shouldDelete">
+                  <div class="col-md-9">
+                    <div class="input-group no-time-controls">
+                      <span class="input-group-addon" id="pic-whence">Arriving at</span>
+                      <div class="input-datetime">
+                      <input type="date" class="form-control input-date-flow" datepicker-popup ng-model="edit_whence" is-open="opened" date-disabled="false" ng-required="true" close-text="Close" />
+                      <input type="text" class="form-control input-time-flow" size="2" ng-change="setWhenceHours()" ng-model="whencehours"/>
+                      <input type="text" class="form-control input-time-flow" size="2" ng-change="setWhenceMinutes()" ng-model="whenceminutes"/>
+                      </div>
+                    </div>
+                    <div class="input-group no-time-controls">
+                      <span class="input-group-addon" id="pic-timezone">in timezone</span>
+                      <sdropdown dropdown-model="pic.timezone" dropdown-placeholder="{{pic.timezone}}">
+                        <sdropdown-group ng-repeat="(group, list) in zones" name="{{group}}">
+                          <sdropdown-item sdropdown-value="{{z.value}}" ng-repeat="z in list">{{z.name}}</sdropdown-item>
+                        </sdropdown-group>
+                      </sdropdown>
+                    </div>
+                    <div class="input-group">
+                      <span class="input-group-addon">url</span>
+                      <input type="text" class="form-control" ng-model="pic.url" drag-and-drop drop-action="setImage(event)"/>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <img class="profile-pic-add pull-right" ng-src="{{pic.url}}" drag-and-drop drop-action="setImage(event)"/>
+                  </div>
+                </div>
+                <div class="delete-pic-container" ng-show="shouldDelete"><img class="profile-pic-add" ng-src="{{pic.url}}" /></div>
+              </div>
+              <div class="modal-footer">
+                <button ng-hide="shouldDelete" class="btn btn-primary" ng-click="ok()">OK</button>
+                <button ng-show="shouldDelete" class="btn btn-primary" ng-click="delete()">Delete</button>
+                <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+              </div>
+              </form>
+            </script>
+            <div class="panel-title"><h2>Profile Pictures</h2></div>
+            <div class="panel-body">
+              <accordion close-others="true">
+                <accordion-group ng-repeat="t in voyage.travelers" heading="{{t.name}}"
+                                 is-open="pp.isactive[t.userid]" is-disabled="false">
+                  <div ng-show="isGuideOrOwner || t.userid == TB.userid" class="profile-pic">
+                    <div class="plus" ng-click="openProfilePic()">
+                      <span class="glyphicon glyphicon-plus"></span>
+                    </div>
+                    <span class="date">Add</span>
+                    <span class="time">&nbsp;</span>
+                  </div>
+                  <div class="profile-pic" ng-repeat="pic in pp.info[t.userid] | orderBy:-whence"
+                       ng-click="openProfilePic(pic,true)">
+                    <img ng-src="{{pic.url}}">
+                    <span class="date">{{pic.whence | tzdate:"yyyy-MM-dd":pic.timezone}}</span>
+                    <span class="time">{{pic.whence | tzdate:"ha Z":pic.timezone}}</span>
+                  </div>
+                </accordion-group>
+              </accordion>
+            </div>
           </div>
         </div>
       </div>

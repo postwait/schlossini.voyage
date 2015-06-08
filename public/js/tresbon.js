@@ -19,6 +19,9 @@ TB.unsmashTZ = function(tgt, d) {
                  d.getMilliseconds());
   return d;
 }
+TB.guessTimezone = function() {
+  return 'UTC';
+}
 TB.recent = {
   latitude: '0',
   longitude: '0',
@@ -30,8 +33,63 @@ if (navigator.geolocation) {
   });
 }
 
-TB.app = angular.module('tresbon', ['ngRoute','ngSanitize','ngDrop','markdown','ui.bootstrap','uiGmapgoogle-maps'])
-
+TB.app = angular.module('tresbon', ['ngRoute','ngSanitize',
+  'ngDrop','markdown','ui.bootstrap','uiGmapgoogle-maps',
+  'angular.filter'])
+TB.app.filter('tzdate', function($filter) {
+  return function(input,arg1,arg2) {
+    arg2 = arg2 || 'UTC';
+    var indate = new Date(input);
+    var d = TZ.undate(arg2,indate);
+    arg1 = arg1.replace(/Z/, '\u017D')
+    var harvest = d.toString().replace(/^.* GMT/, '');
+    var f = $filter('date')(d._getUTC(),arg1,arg2)
+    f = f.replace(/\u017D/g, harvest);
+    return f;
+  };
+});
+TB.app.directive('dragAndDrop', function() {
+    return {
+      restrict: 'A',
+      link: function($scope, elem, attr) {
+        elem.bind('dragover', function (e) {
+          e.stopPropagation();
+          e.preventDefault();
+          e.dataTransfer.dropEffect = 'copy';
+        });
+        elem.bind('dragenter', function(e) {
+          e.stopPropagation();
+          e.preventDefault();
+          $scope.$apply(function() {
+            $scope.divClass = 'on-drag-enter';
+          });
+        });
+        elem.bind('dragleave', function(e) {
+          e.stopPropagation();
+          e.preventDefault();
+          $scope.$apply(function() {
+            $scope.divClass = '';
+          });
+        });
+        elem.bind('dragstart', function(event) {
+          if(event.srcElement.localName === "img")
+            event.dataTransfer.setData('text/uri-list', event.srcElement.currentSrc)
+          if(attr.dragStartAction) {
+            $scope.event = event;
+            $scope.$apply(attr.dragStartAction)
+          }
+        });
+        elem.bind('drop', function(event) {
+          if(attr.dropAction) {
+            $scope.event = event;
+            $scope.$apply(attr.dropAction)
+          }
+          event.stopPropagation();
+          event.preventDefault();
+        });
+      }
+    };
+});
 TB.app.run(
   ['$http',
   function($http) {
