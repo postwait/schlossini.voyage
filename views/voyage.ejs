@@ -9,7 +9,7 @@
     TB._csrf = "<%= csrfToken %>";
     TB.userid = <%- userid %>;
     TB.voyage = TB.voyage || {};
-    TB.voyage.id = <%- voyageid_as_json %>;
+    TB.voyage.voyageid = <%- voyageid_as_json %>;
     TB.voyage.shortname = <%- shortname_as_json %>;
     </script>
   </head>
@@ -29,21 +29,42 @@
       <% include include/notify %>
       <div ng-hide="trip">
         <div class="row">
-          <div class="panel-default">
-            <div class="panel-title"><h2>Trips</h2></div>
+          <div class="col-md-6">
+            <div class="panel-default">
+              <div class="panel-title"><h2>Trips</h2></div>
+              <div class="panel-body">
+                <table class="table">
+                  <tbody>
+                    <tr ng-repeat="t in voyage.trips | orderBy:'-active'" ng-class="{active: t.active}">
+                      <td ng-click="selectTrip(t)">
+                        <span>{{t.description}}</span>
+                      </td>
+                      <td ng-click="selectTrip(t)"><span ng-if="t.start_date">{{t.start_date | date:'mediumDate'}} - {{t.end_date | date:'mediumDate'}}</span></td>
+                      <td style="width:1em"><span ng-click="saveTrip(t, t.active = true)" ng-show="!t.active" class="glyphicon glyphicon-play"></span>
+                          <span ng-click="saveTrip(t, t.active = false)" ng-show="t.active" class="glyphicon glyphicon-pause"></span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 integrations">
+            <div class="panel-title"><h2>Integrations</h2></div>
             <div class="panel-body">
-              <table class="table">
-                <tbody>
-                  <tr ng-repeat="t in voyage.trips | orderBy:'-active'" ng-class="{active: t.active}">
-                    <td ng-click="selectTrip(t)">
-                      <span>{{t.description}}</span>
-                    </td>
-                    <td ng-click="selectTrip(t)"><span ng-if="t.start_date">{{t.start_date | date:'fullDate'}} - {{t.end_date | date:'fullDate'}}</span></td>
-                    <td style="width:1em"><span ng-click="saveTrip(t, t.active = true)" ng-show="!t.active" class="glyphicon glyphicon-play"></span>
-                        <span ng-click="saveTrip(t, t.active = false)" ng-show="t.active" class="glyphicon glyphicon-pause"></span></td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="list-group">
+                <div class="list-group-item {{link.service}}" ng-repeat="link in info.thirdparty">
+                  <div class="link-pic pull-left" ng-if="link.image_url"><img ng-src="{{link.image_url}}"/></div>
+                  <div class="btn-group pull-right">
+                    <div class="btn btn-default" ng-class="{active: link.group_shared === null}" title="Do not use" ng-click="shareAssociation(link,null)"><span class="glyphicon glyphicon-remove-circle"></span></div>
+                    <div class="btn btn-default" ng-class="{active: link.group_shared === false}" title="Just for me"  ng-click="shareAssociation(link,false)"><span class="glyphicon glyphicon-user"></span></div>
+                    <div class="btn btn-default" ng-class="{active: link.group_shared === true}" title="Share with group" ng-click="shareAssociation(link,true)"><span class="glyphicon glyphicon-user"><span class="glyphicon glyphicon-user"></span></span></div>
+                  </div>
+                  <span class="{{ link.service }}">
+                  <h4>
+                  {{ link.display_name ? link.display_name : "???" }}
+	                </h4>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -93,10 +114,14 @@
               </div>
               </form>
             </script>
-            <div class="panel-title"><h2>Profile Pictures</h2></div>
+            <div class="panel-title">
+              <h2>Profile Pictures </h2>
+              <span class="subtitle">(<span ng-class="{inactive: !allProfiles}" ng-click="allProfiles=true">all</span> |
+              <span ng-class="{inactive: allProfiles}" ng-click="allProfiles=false">just me</span>)</span>
+            </div>
             <div class="panel-body">
               <accordion close-others="true">
-                <accordion-group ng-repeat="t in voyage.travelers" heading="{{t.name}}"
+                <accordion-group ng-repeat="t in voyage.travelers | filter:condUserSelector" heading="{{t.name}}"
                                  is-open="pp.isactive[t.userid]" is-disabled="false">
                   <div ng-show="isGuideOrOwner || t.userid == TB.userid" class="profile-pic">
                     <div class="plus" ng-click="openProfilePic()">

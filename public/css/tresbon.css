@@ -154,6 +154,16 @@ div.input-group .tag-add {
   width:80px;
 }
 
+div.panel-title h2 {
+  display: table-cell;
+}
+div.panel-title .subtitle {
+  display: table-cell;
+  padding-left:1em;
+}
+div.panel-title .subtitle span.inactive {
+  text-decoration: underline;
+}
 .profile-manager div.profile-pic {
   width:100px;
   text-align: center;
@@ -181,7 +191,6 @@ div.input-group .tag-add {
 .profile-manager span {
   white-space: nowrap;
   font-size: 12px;
-  display: block;
 }
 .profile-manager span.time {
   font-size: 9px;
@@ -213,8 +222,22 @@ div.modal.in {
   background-color: rgba(0,0,0,0.7);
 }
 
+div.integrations div.list-group-item {
+  min-height:70px;
+}
+div.integrations div.list-group-item h4 {
+  padding-left:70px;
+}
+.glyphicon-user > .glyphicon-user {
+  position: relative;
+  left: -0.5em;
+  top: 0.2em;
+  display: inline-block;
+  width: 0.5em;
+}
 div.profile-link div.link-pic img,
-div.post-item div.link-pic img
+div.post-item div.link-pic img,
+div.integrations div.link-pic img
 {
   height:50px;
   width:50px;

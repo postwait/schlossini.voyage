@@ -1,4 +1,5 @@
-TB.app.controller('VoyageController', ['$scope','$modal','VoyageService',
+TB.app.controller('VoyageController',
+  ['$scope','$modal','VoyageService',
   function($scope,$modal,VoyageService) {
 
     $scope.pp = { isactive: { }, info: {}, active: "" + TB.userid };
@@ -8,11 +9,14 @@ TB.app.controller('VoyageController', ['$scope','$modal','VoyageService',
     var refresh = function () {
       VoyageService.refresh(
         function(d) {
-          $scope.voyage = d.data;
-          $scope.$broadcast('voyage', $scope.voyage);
-          TB.voyage = $scope.voyage;
-          $scope.isGuideOrOwner = ($scope.voyage.guides.indexOf(TB.userid) >= 0 ||
-                                   $scope.voyage.owner == TB.userid);
+          if(d.info) { $scope.info = d.info }
+          else if(d.voyage) {
+            $scope.voyage = d.voyage;
+            $scope.$broadcast('voyage', $scope.voyage);
+            TB.voyage = $scope.voyage;
+            $scope.isGuideOrOwner = ($scope.voyage.guides.indexOf(TB.userid) >= 0 ||
+                                     $scope.voyage.owner == TB.userid);
+          }
         },
         seterror
       );
@@ -61,7 +65,22 @@ TB.app.controller('VoyageController', ['$scope','$modal','VoyageService',
       });
     }
     guessTimezone = TB.guessTimezone;
-
+    $scope.allProfiles = false;
+    $scope.shareAssociation = function(assoc, val) {
+      if(val === undefined || val === null) delete assoc['group_shared'];
+      else assoc['group_shared'] = !!val;
+      VoyageService.shareAssociation(assoc,
+        function() { refresh(); },
+        function(err) {
+          $scope.scopedError('voyage')(err);
+          refresh();
+        });
+    }
+    $scope.condUserSelector = function(a,b) {
+      if($scope.allProfiles) return true;
+      if(a.userid == TB.userid) return true;
+      return false;
+    }
     $scope.openProfilePic = function (pic, shouldDelete, error) {
       if(!$scope.isGuideOrOwner && pic.userid != TB.userid) return;
       var modalInstance = $modal.open({
@@ -166,10 +185,18 @@ TB.app.service('VoyageService', function($http) {
 
   return {
     refresh: function(dataf,errorf) {
+      $http.get('/api/profile/voyage/' + TB.voyage.shortname)
+        .success(function (result) {
+          if(result.status !== 'success') return errorf(result.error);
+          dataf({ info: result.data});
+         })
+        .error(function (e) {
+          errorf(e);
+        })
       $http.get('/api/voyage/' + TB.voyage.shortname)
         .success(function (result) {
           myData = result;
-          dataf(result);
+          dataf({voyage: result.data});
          })
         .error(function (e) {
           errorf(e);
@@ -206,6 +233,14 @@ TB.app.service('VoyageService', function($http) {
           return dataf()
         })
         .error(errorf)
-    }
+    },
+    shareAssociation: function(assoc, dataf, errorf) {
+      $http.csrfPost('/api/profile/voyage/' + TB.voyage.shortname + '/associate', assoc)
+        .success(function(body) {
+          if(body.status !== 'success') return errorf(body.error);
+          dataf();
+        })
+        .error(errorf)
+    },
   };
 });

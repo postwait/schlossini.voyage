@@ -6,6 +6,15 @@ var Voyage = require('../lib/voyage')
 var loggedin = require('../lib/login').require_login;
 var router = express.Router();
 
+function safe_user(user) {
+  delete user['password'];
+  user.thirdparty.forEach(function(a) {
+    ['userid','token','secret'].forEach(function(key) { delete a[key]; })
+    a.image_url = a.image_url || '/images/profiles/' + a.service + '.png';
+  });
+  user.notices = user.notices || [];
+  return user;
+}
 function api_response(res, err, data) {
   var obj = {};
   if(err) obj.error = err.toString();
@@ -20,18 +29,30 @@ router.get('/profile', loggedin(function(req, res) {
     function(err, user) {
       if(err) return api_response(res,err);
       User.getAssociations(req.session.userid, function(err2, assocs) {
-        delete user['password'];
-        assocs.forEach(function(a) {
-          ['userid','token','secret'].forEach(function(key) { delete a[key]; })
-          a.image_url = a.image_url || '/images/profiles/' + a.service + '.png';
-        });
         user.thirdparty = assocs;
-        user.notices = user.notices || [];
-        return api_response(res, err2, user);
+        return api_response(res, err2, safe_user(user));
       });
   });
 }));
-
+router.get('/profile/voyage/:shortname', loggedin(function(req, res) {
+  Voyage.getProfile(req.session.userid, req.session.userid, req.params.shortname,
+    function(err, user) {
+      return api_response(res,err,safe_user(user));
+    });
+}));
+router.get('/profile/voyage/:shortname/:ouserid', loggedin(function(req, res) {
+  Voyage.getProfile(req.session.userid, req.params.ouserid, req.params.shortname,
+    function(err, user) {
+      return api_response(res,err,safe_user(user));
+    });
+}));
+router.post('/profile/voyage/:shortname/associate', loggedin(function(req, res) {
+  if(!req.body.userid) req.body.userid = req.session.userid;
+  Voyage.shareAssociation(req.session.userid, req.body, req.params.shortname,
+    function(err, user) {
+      return api_response(res,err);
+    });
+}))
 router.post('/profile/confirm', loggedin(function(req,res) {
   User.sendConfirmation(req.session.userid, null, function(err,body) {
     api_response(res,err,body)
