@@ -33,14 +33,14 @@ TB.app.controller('PostController',
         resolve: {
           post: function () {
             if(post) return PostService.getPost(post.postid);
-            return { data: { data: {
+            return {
               data: {},
               author: TB.userid,
               whence: new Date(),
               timezone: WaypointService.guessTimezone(new Date()),
               tripid: $scope.tripid,
               published: false
-            }}}
+            }
           },
           voyage: function() { return $scope.voyage },
           zones: function() { return TB.zoneGroups },
@@ -50,7 +50,7 @@ TB.app.controller('PostController',
 
       var reopen_error = function(err) {
         console.log(err, "reopening")
-        $scope.openPost(mode,post,err);
+        $scope.openPost(mode,$scope.post,err);
       }
 
       modalInstance.result.then(function (post) {
@@ -75,8 +75,11 @@ TB.app.controller('PostController',
 TB.app.controller('PostInstanceCtrl',
                   function ($scope, $timeout, $modalInstance,
                             zones, post, voyage, error) {
-  $scope.error = error
-  $scope.post = post.data.data;
+  $scope.error = error;
+  if(post.data && post.data.data && post.data.data.author) post = post.data.data;
+  $scope.post = post;
+  $scope.post.data = $scope.post.data || {};
+  $scope.post.data.tags = $scope.post.data.tags || [];
   $scope.voyage = voyage;
   $scope.zones = zones;
   if($scope.post.whence.constructor != Date)
@@ -88,7 +91,7 @@ TB.app.controller('PostInstanceCtrl',
   if($scope.whencehours < 10) $scope.whencehours = "0" + $scope.whencehours;
   if($scope.whenceminutes < 10) $scope.whenceminutes = "0" + $scope.whenceminutes;
 
-  $scope.$watch('post.title', function(newVal, oldVal) {
+  $scope.$watch('post.data.title', function(newVal, oldVal) {
     if($scope.post.postid) return;
     if(!newVal) return;
     $scope.post.url_snippet = newVal

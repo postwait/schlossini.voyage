@@ -177,7 +177,7 @@ router.get('/voyage/:shortname/post/:postid',
 }));
 router.post('/voyage/:shortname/post',
   loggedin(function(req,res) {
-    Voyage.updatePost(req.session.userid, req.params.shortname,
+    Voyage.addPost(req.session.userid, req.params.shortname,
                       req.body,
       function(err, post) {
         api_response(res, err, post);
