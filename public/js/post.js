@@ -23,6 +23,30 @@ TB.app.controller('PostController',
     $scope.$on('postsChanged', refresh);
     var notify_refresh = function() { $scope.$emit('postsChanged'); }
 
+    $scope.deletePost = function (post) {
+      var modalInstance = $modal.open({
+        animation: false,
+        templateUrl: 'PostDelete.html',
+        controller: 'PostInstanceCtrl',
+        backdrop : 'static',
+        size: 'sm',
+        resolve: {
+          post: function () { return post },
+          voyage: function() { return $scope.voyage },
+          zones: function() { return TB.zoneGroups },
+          error: function() { return null },
+        }
+      });
+      modalInstance.result.then(function (post) {
+        PostService.deletePost(post,
+          function() {
+            $scope.posts = $scope.posts.filter(function(p) { return p.postid!=post.postid} );
+          },
+          $scope.scopedError('post')
+        )
+      }, function() {});
+    };
+
     $scope.openPost = function (mode, post, error) {
       var modalInstance = $modal.open({
         animation: false,
@@ -157,6 +181,14 @@ TB.app.service('PostService', function($http) {
           dataf(f);
         })
         .error(function(e) { errorf(e) })
+    },
+    deletePost: function(post,dataf,errorf) {
+      $http.csrfDelete('/api/voyage/' + TB.voyage.shortname + '/post/' + post.postid)
+        .success(function(data) {
+          if(data.status !== 'success') return errorf(data.error);
+          dataf(post);
+        })
+        .error(errorf)
     },
     getPost: function(postid) {
       return $http.get('/api/voyage/' + TB.voyage.shortname + '/post/' + postid);

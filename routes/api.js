@@ -191,5 +191,14 @@ router.post('/voyage/:shortname/post/:postid',
         api_response(res, err, post);
       });
 }));
+router.delete('/voyage/:shortname/post/:postid',
+  loggedin(function(req,res) {
+    Voyage.deletePost(req.session.userid, req.params.shortname,
+                      req.params.postid,
+      function(err) {
+        api_response(res, err);
+      }
+    )}
+));
 
 module.exports = router;

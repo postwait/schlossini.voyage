@@ -23,11 +23,27 @@ TB.app.controller('WaypointController', ['$scope','$modal','WaypointService',
     $scope.$on('waypointsChanged', refresh);
     var notify_refresh = function() { $scope.$emit('waypointsChanged'); }
 
-    $scope.removeWaypoint = function(id) {
-      WaypointService.removeWaypoint(id,
-        notify_refresh,
-        $scope.scopedError('waypoint')
-      );
+    $scope.removeWaypoint = function(waypoint) {
+      var modalInstance = $modal.open({
+        animation: false,
+        templateUrl: 'WaypointDelete.html',
+        controller: 'WaypointInstanceCtrl',
+        backdrop : 'static',
+        size: 'sm',
+        resolve: {
+          waypoint: function () { return waypoint },
+          trip: function() { return $scope.trip; },
+          zones: function() { return TB.zoneGroups; },
+        }
+      });
+
+      modalInstance.result.then(function (waypoint) {
+        WaypointService.removeWaypoint(waypoint.waypointid,
+          notify_refresh,
+          $scope.scopedError('waypoint')
+        ),
+        function() {}
+      });
     }
     $scope.openWaypoint = function (mode, waypoint) {
       var modalInstance = $modal.open({
