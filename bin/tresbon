@@ -3,9 +3,15 @@
 /**
  * Module dependencies.
  */
+
+if(process.argv.length < 3) {
+  console.log(process.argv[1], "<app|publish>", "[config.json]")
+  process.exit(-1)
+}
+
 var Config = require('../lib/config');
-var config = (new Config(process.argv[2] || 'etc/config.json')).config();
-var app = require('../lib/app');
+var config = (new Config(process.argv[3] || 'etc/config.json')).config();
+var app = require('../lib/' + process.argv[2]);
 var debug = require('debug')('voyage:server');
 var http = require('http');
 

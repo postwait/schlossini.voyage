@@ -6,8 +6,8 @@
   <body>
     <div class="jumbotron">
       <div class="container">
-          <a href="/traveler/<%- post.person %>"><div class="author_face">
-          <div class="author_image"><img src="/images/profiles/<%= TP.profile_pic(post.date, post.person) %>" /></div>
+          <a href="/traveler/<%- post.author %>"><div class="author_face">
+          <div class="author_image"><img src="<%- post.author_face %>" /></div>
         </div></a>
         <div class="imgspacer"></div>
         <h1><%= post.title %></h1>
@@ -15,8 +15,8 @@
       </div>
       <ol class="breadcrumb">
         <li><a href="/">Home</a></li>
-        <li><a href="/traveler/<%- post.person %>"><%- post.person %></a></li>
-        <li class="active">Post</li>
+        <li><a href="/traveler/<%- post.author %>/on/<%- trip.url_snippet %>"><%= post.author_name %></a></li>
+        <li class="active"><%= post.title %></li>
       </ol>
     </div>
     <div class="frontcontainer container-fluid single">
@@ -25,9 +25,9 @@
         </div>
         <div class="col-md-9">
         <div class="panel panel-default post">
-          <div class="post-date"><span><%- post.date.format("dS &#111;&#102; mmmm, yyyy", true) %></span></div>
+          <div class="post-date"><span><%- post.whence.format("dS &#111;&#102; mmmm, yyyy", true) %></span></div>
           <div class="panel-body">
-            <%- post.content %>
+            <%- post.data.html %>
           </div>
         </div>
         </div>

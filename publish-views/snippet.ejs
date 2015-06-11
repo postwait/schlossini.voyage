@@ -1,14 +1,14 @@
-<a href="/traveler/<%- post.person %>"><div class="author_face">
-  <div class="author_image"><img src="/images/profiles/<%= TP.profile_pic(post.date, post.person)%>" /></div>
+<a href="/traveler/<%- post.author %>"><div class="author_face">
+  <div class="author_image"><img src="<%- post.author_face %>" /></div>
 </div></a>
 <div class="panel panel-default post snippet">
-  <div class="post-date"><span><%- post.date.format("dS &#111;&#102; mmmm, yyyy", true) %></span></div>
+  <div class="post-date"><span><%- post.whence.format("dS &#111;&#102; mmmm, yyyy", true) %></span></div>
   <div class="panel-body">
     <div class="imgspacer"></div>
     <% if(post.title) { %><h1><%= post.title %></h1><% } %>
     <div class="post-content">
-    <%- post.content_brief %>
+    <%- post.data.html %>
     </div>
-  <div class="post-more"><div><span><a href="/traveler/<%- post.person %>/writes/<%- post.name %>">read more &rarr;</a></span></div></div>
+  <div class="post-more"><div><span><a href="/traveler/<%- post.author %>/on/<%- trip.url_snippet %>/writes/<%- post.url_snippet %>">read more &rarr;</a></span></div></div>
   </div>
 </div>

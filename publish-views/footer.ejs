@@ -1,4 +1,23 @@
 
+<% var last_loc, current_loc, next_loc, asynch_footer = false;
+   if(!waypoints || !travelers) {
+     waypoints = waypoints || []
+     travelers = travelers || []
+     asynch_footer = true;
+   }
+   for(var i=0; i<waypoints.length;i++) {
+     var p = waypoints[i];
+     if(p.visibility == 0) continue;
+     if(p.visibility == 1 && !current_loc) last_loc = p;
+     if(current_loc) {
+       next_loc = p;
+       break;
+     }
+     if(date > p.whence) currect_loc = p;
+   }
+   console.log(waypoints, last_loc, current_loc, next_loc)
+ %>
+
 <footer class="jumbotron footer">
 <div class="row">
   <div class="col-md-3">
@@ -7,11 +26,12 @@
         <h3>Where we were.</h3>
       </div>
       <div class="panel-body">
+        <% if(last_loc) { %>
         <p>
-        <% var last_loc = TP.get_location(date,-1); %>
         <%= last_loc.name %>
-        on <%= last_loc.when.format("yyyy-mm-dd",true) %>
+        <% if(last_loc.whence) { %> on <%= last_loc.whence.format("yyyy-mm-dd",true) %> <% } %>
         </p>
+        <% } %>
       </div>
     </div>
   </div>
@@ -21,11 +41,12 @@
         <h3>Where we are.</h3>
       </div>
       <div class="panel-body">
+        <% if(current_loc) { %>
         <p>
-        <% var current_loc = TP.get_location(date); %>
         <%= current_loc.name %>
-        since <%= current_loc.when.format("yyyy-mm-dd",true) %>
+        <% if(current_loc.whence) { %>since <%= current_loc.whence.format("yyyy-mm-dd",true) %><% } %>
         </p>
+        <% } %>
       </div>
     </div>
   </div>
@@ -35,13 +56,14 @@
         <h3>Where we're going.</h3>
       </div>
       <div class="panel-body">
+        <% if(next_loc) { %>
         <p>
-        <% var next_loc = TP.get_location(date,1); %>
         <%= next_loc.name %>
-        <% if (next_loc.when) { %>
-        on or around <%= next_loc.when.format("yyyy-mm-dd",true) %>
+        <% if (next_loc.whence) { %>
+        on or around <%= next_loc.whence.format("yyyy-mm-dd",true) %>
         <% } %>
         </p>
+        <% } %>
       </div>
     </div>
   </div>
@@ -53,11 +75,11 @@
       </div>
       <div class="panel-body">
         <ul class="travelers">
-        <% ['theo','lisa','zoe','gianna','tori'].forEach(function(person) { %>
-          <li><a href="/traveler/<%= person %>"><img src="/images/profiles/<%= TP.profile_pic(date,person) %>"/></a></li>
+        <% travelers.forEach(function(person) { %>
+          <li><a href="/traveler/<%= person.userid %>"><img src="<%- person.image_url %>"/></a></li>
         <% }); %>
         </ul>
-        <p><a href="/itinerary">Itinerary</a></p>
+        <p><a href="/t/<%- trip.url_snippet %>/itinerary">Itinerary</a></p>
       </div>
     </div>
   </div>

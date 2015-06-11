@@ -6,34 +6,40 @@
   <body>
     <div class="jumbotron">
       <div class="container">
-        <h1>Schlossini Travel Itinerary</h1>
-        <p>The master plan.</p>
+        <h1><%= voyage.title %></h1>
+        <p><%= trip.description %> ~ Itinerary</p>
       </div>
       <div class="world"></div>
       <ol class="breadcrumb">
-        <li><a href="/">Home</a></li>
+        <li><a href="/"><%= trip.description %></a></li>
         <li class="active">Itinerary</li>
       </ol>
     </div>
     <div class="frontcontainer container-fluid">
       <%
-        var agenda = TP.get_agenda();
-        for(var i=0;i<agenda.length;i++) {
-          var loc = agenda[i],
-              next_loc = (i+1 == agenda.length) ? {} : agenda[i+1];
+        var methods = {};
+        var last_loc = undefined;
+        for(var i=0;i<waypoints.length;i++) {
+          var loc = waypoints[i],
+              next_loc = (i+1 == waypoints.length) ? {} : waypoints[i+1];
+              methods[loc.arrival_method] = 1;
+          if(!last_loc) last_loc = loc;
+          if(loc.visibility != 1) continue;
       %>
       <div class="row">
         <div class="col-md-4 agenda">
-          <% if(loc.method && i) { %>
-            <div class="travel-method travel-method-<%= loc.method %>"><span>traveling by <%= loc.method %></span></div>
-          <% } %>
+          <% for(var m in methods) { %>
+            <div class="travel-method travel-method-<%= m %>"><span>traveling by <%= m %></span></div>
+          <% }
+             methods = {};
+          %>
           <div class="panel panel-default agenda-location">
             <div class="pin"></div>
             <div class="panel-body">
               <h2><%= loc.name %></h2>
               <p>
               <% if(i!=0) { %>
-              <%- loc.when ? loc.when.format("dS &#111;&#102; mmmm, yyyy", true) : "TBD" %> <!--  - <%- next_loc.when ? next_loc.when.format("dS &#111;&#102; mmmm, yyyy", true) : "TBD" %> -->
+              <%- loc.whence ? loc.whence.format("dS &#111;&#102; mmmm, yyyy", true) : "TBD" %> <!--  - <%- next_loc.when ? next_loc.when.format("dS &#111;&#102; mmmm, yyyy", true) : "TBD" %> -->
               <% } %>
               </p>
             </div>
@@ -41,17 +47,15 @@
           <div class="panel-follow"></div>
         </div>
         <div class="col-md-8">
-          <% if(loc.when && next_loc.when) {
-               var posts = TP.oldest(
-                (function(low,high) {
-                   return function(a) { return (a >= low && a < high); }
-                 })(loc.when, next_loc.when)
-               );
-               if(posts.length) { %>
+          <% if(loc.whence && next_loc.whence) {
+               var windowedposts = posts.filter(function (p) {
+                 return (p.whence >= last_loc.whence && p.whence < next_loc.whence);
+               });
+               if(windowedposts.length) { %>
           <div class="panel panel-default post snippet">
             <div class="panel-body">
-          <%   posts.forEach(function(post) { %>
-          <div><%- post.date.format("dS &#111;&#102; mmmm, yyyy", true) %> - <a href="/traveler/<%= post.person %>/writes/<%= post.name %>"><%= post.title %></a> - <a href="/traveler/<%= post.person%>"><%= post.person %></a></div>
+          <%   windowedposts.forEach(function(post) { %>
+          <div><%- post.whence ? post.whence.format("dS &#111;&#102; mmmm, yyyy", true) : '???' %> - <a href="/traveler/<%= post.author %>/writes/<%= post.url_snippet %>"><%= post.title %></a> - <a href="/traveler/<%= post.author%>/on/<%- trip.url_snippet %>"><%= post.author_name %></a></div>
           <%   }); %>
             </div>
           </div>
@@ -60,6 +64,7 @@
         </div>
       </div>
       <%
+        last_loc = next_loc;
         }
       %>
     </div>

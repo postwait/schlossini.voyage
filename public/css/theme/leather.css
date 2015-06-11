@@ -255,43 +255,50 @@ div#map-canvas {
 /* agenda */
 
 .agenda .travel-method {
- position:absolute;
+ position: relative;
+ display: inline-block;
 }
 .agenda .travel-method span {
  margin: 0.5em 1em;
 }
 @media (min-width: 992px) {
-.agenda .panel-follow {
-  height: 120px;
-}
-.agenda .travel-method {
-  height:100px;
-  top:-120px;
-}
-.agenda .travel-method span {
- left:-1000em;
-}
-.agenda .travel-method-air {
- content:url('/images/airplane-sewn.png');
- width:153px;
-}
-.agenda .travel-method-train {
- content:url('/images/train-sewn.png');
- width:178px;
-}
-.agenda .travel-method-auto {
- content:url('/images/auto-sewn.png');
- width:168px;
-}
-.agenda .travel-method-boat {
- content:url('/images/boat-sewn.png');
- width:150px;
-}
-.agenda div.panel {
-  -ms-transform: rotate(-4deg); /* IE 9 */
-  -webkit-transform: rotate(-4deg); /* Chrome, Safari, Opera */
-  transform: rotate(-4deg);
-}
+  .agenda .panel-follow {
+    height: 20px;
+  }
+  .agenda .travel-method {
+    height:75px;
+    top:-95px;
+    margin-top:75px;
+    margin-bottom:-75px;
+  }
+  .agenda .travel-method span {
+   left:-1000em;
+  }
+  .agenda .travel-method-car {
+   content:url('/images/auto-sewn.png');
+   width:114px;
+  }
+  .agenda .travel-method-air {
+   content:url('/images/airplane-sewn.png');
+   width:114px;
+  }
+  .agenda .travel-method-train {
+   content:url('/images/train-sewn.png');
+   width:134px;
+  }
+  .agenda .travel-method-auto {
+   content:url('/images/auto-sewn.png');
+   width:126px;
+  }
+  .agenda .travel-method-boat {
+   content:url('/images/boat-sewn.png');
+   width:114px;
+  }
+  .agenda div.panel {
+    -ms-transform: rotate(-4deg); /* IE 9 */
+    -webkit-transform: rotate(-4deg); /* Chrome, Safari, Opera */
+    transform: rotate(-4deg);
+  }
 }
 
 div.agenda-location {
