@@ -90,6 +90,21 @@ TB.app.directive('dragAndDrop', function() {
       }
     };
 });
+TB.app.directive('tzdate', function() {
+  return {
+    scope: true,
+    restrict: 'A',
+    replace:true,
+    template: '<span>{{date | tzdate:format:timezone}}</span>',
+    link: function($scope, elem, attr) {
+      $scope.format = attr.tzdateFormat || 'MMMM d, yyyy \'at\' ha Z'
+      $scope.timezone = attr.tzdateTimezone
+      $scope.date = TB.unsmashTZ($scope.timezone, new Date(parseInt(attr.tzdateDate)))
+      console.log($scope, attr.tzdateDate)
+    }
+  }
+})
+
 TB.app.run(
   ['$http',
   function($http) {

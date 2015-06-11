@@ -3,7 +3,7 @@
   <head>
     <% include head %>
   </head>
-  <body>
+  <body ng-app="tresbon" ng-controller="TBC">
     <div class="jumbotron">
       <div class="container">
         <h1><%= voyage.title %></h1>
@@ -12,6 +12,7 @@
       <div class="world"></div>
     </div>
     <div class="frontcontainer container-fluid">
+      <% include notify %>
       <%
         var start = 2;
         var todo = posts.slice(0,start);

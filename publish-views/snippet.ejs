@@ -2,7 +2,9 @@
   <div class="author_image"><img src="<%- post.author_face %>" /></div>
 </div></a>
 <div class="panel panel-default post snippet">
-  <div class="post-date"><span><%- post.whence.format("dS &#111;&#102; mmmm, yyyy", true) %></span></div>
+  <div class="post-date"><span tzdate tzdate-date="<%- post.whence.getTime() %>" tzdate-timezone="<%= post.timezone %>" tzdate-format="">
+    <%- post.whence.format("dS &#111;&#102; mmmm, yyyy", true) %>
+  </span></div>
   <div class="panel-body">
     <div class="imgspacer"></div>
     <% if(post.title) { %><h1><%= post.title %></h1><% } %>

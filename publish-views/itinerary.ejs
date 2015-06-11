@@ -3,7 +3,7 @@
   <head>
     <% include head %>
   </head>
-  <body>
+  <body ng-app="tresbon" ng-controller="TBC">
     <div class="jumbotron">
       <div class="container">
         <h1><%= voyage.title %></h1>
@@ -55,7 +55,9 @@
           <div class="panel panel-default post snippet">
             <div class="panel-body">
           <%   windowedposts.forEach(function(post) { %>
-          <div><%- post.whence ? post.whence.format("dS &#111;&#102; mmmm, yyyy", true) : '???' %> - <a href="/traveler/<%= post.author %>/writes/<%= post.url_snippet %>"><%= post.title %></a> - <a href="/traveler/<%= post.author%>/on/<%- trip.url_snippet %>"><%= post.author_name %></a></div>
+          <div><span tzdate tzdate-date="<%- post.whence.getTime() %>" tzdate-timezone="<%= post.timezone %>" tzdate-format="MMMM d, ha">
+            <%- post.whence.format("dS &#111;&#102; mmmm, yyyy", true) %>
+          </span> - <a href="/traveler/<%= post.author %>/writes/<%= post.url_snippet %>"><%= post.title %></a> - <a href="/traveler/<%= post.author%>/on/<%- trip.url_snippet %>"><%= post.author_name %></a></div>
           <%   }); %>
             </div>
           </div>

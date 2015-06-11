@@ -3,7 +3,7 @@
   <head>
     <% include head %>
   </head>
-  <body>
+  <body ng-app="tresbon" ng-controller="TBC">
     <div class="jumbotron">
       <div class="container">
           <a href="/traveler/<%- post.author %>"><div class="author_face">
@@ -25,7 +25,9 @@
         </div>
         <div class="col-md-9">
         <div class="panel panel-default post">
-          <div class="post-date"><span><%- post.whence.format("dS &#111;&#102; mmmm, yyyy", true) %></span></div>
+          <div class="post-date"><span tzdate tzdate-date="<%- post.whence.getTime() %>" tzdate-timezone="<%= post.timezone %>" tzdate-format="">
+            <%- post.whence.format("dS &#111;&#102; mmmm, yyyy", true) %>
+          </span></div>
           <div class="panel-body">
             <%- post.data.html %>
           </div>

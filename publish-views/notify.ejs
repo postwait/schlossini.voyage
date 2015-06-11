@@ -1,0 +1,23 @@
+<div class="notification-container">
+  <div class="alert alert-success ng-hide" ng-show="success" role="alert">
+    <span ng-bind="success"></span>
+  </div>
+  <div class="ng-hide" ng-show="error">
+    <div class="zero-clipboard alert-danger">
+      <button ng-click="clearError()" class="btn-clipboard"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+    </div>
+    <div class="alert alert-danger" role="alert">
+      <span ng-bind="error"></span>
+    </div>
+  </div>
+  <div class="alert alert-info ng-hide" ng-show="info.email_confirmed === false" role="alert">
+    <p>Your email address has not been confirmed.</p>
+    <p>Please check for a confirmation email from us and act on the link therein.</p>
+    <p>Didn't get the email? <a ng-click="sendConfirmation()">Send another.</a></p>
+  </div>
+  <div class="alert alert-info ng-hide" ng-show="info.notices && info.notices.length" role="alert">
+    <ul ng-repeat="notice in info.notices">
+      <li><span>{{notice}}</span></li>
+    </ul>
+  </div>
+</div>
