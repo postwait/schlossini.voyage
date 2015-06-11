@@ -42,7 +42,7 @@ router.get('/:person/on/:trip', require_voyage(function(req, res, next) {
                          author: req.params.person[1],
                          offset: (pageno - 1) * nelem },
         function(err, posts) {
-          var me = travelers.filter(function(t) { return t.userid == req.params.person[1]; })
+          var me = travelers.filter(function(t) { return t.userid === parseInt(req.params.person[1]); })
           if(me.length != 1) return next();
           posts.forEach(function(post) {post.data.html = converter.makeHtml(post.data.body);});
           res.render('person', { voyage: req.tresbon.voyage,
