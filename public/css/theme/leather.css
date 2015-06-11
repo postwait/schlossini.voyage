@@ -187,7 +187,7 @@ img.img-top {
   background-repeat:no-repeat;
   float:right;
   margin-right:-3px;
-  position: absolute;
+  position: relative;
 }
 .post div.post-date span {
   font-family: 'Calligraffitti', cursive;
