@@ -100,7 +100,6 @@ TB.app.directive('tzdate', function() {
       $scope.format = attr.tzdateFormat || 'MMMM d, yyyy \'at\' ha Z'
       $scope.timezone = attr.tzdateTimezone
       $scope.date = TB.unsmashTZ($scope.timezone, new Date(parseInt(attr.tzdateDate)))
-      console.log($scope, attr.tzdateDate)
     }
   }
 })

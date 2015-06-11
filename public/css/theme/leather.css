@@ -29,7 +29,7 @@ div.single div.panel-body {
   min-height: 190px;
 }
 .jumbotron ol.breadcrumb {
-  margin: 5px 0 -15px 0;
+  margin: 5px 0 -15px 15px;
   background: transparent;
   color: rgb(51,51,51);
 }
