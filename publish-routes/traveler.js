@@ -39,6 +39,7 @@ router.get('/:person/on/:trip', require_voyage(function(req, res, next) {
                          include_json: true,
                          published: true,
                          limit: nelem,
+                         author: req.params.person[1],
                          offset: (pageno - 1) * nelem },
         function(err, posts) {
           var me = travelers.filter(function(t) { return t.userid == req.params.person[1]; })
