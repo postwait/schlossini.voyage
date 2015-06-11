@@ -65,7 +65,8 @@ router.get('/t/:trip/itinerary', require_voyage(function(req, res) {
   // Itinerary is a monster, all waypoints, all posts, all travelers
   Voyage.travelers(req.tresbon.voyage, {date: req.tresbon.date}, function(err, travelers) {
     Voyage.tripBySlug(req.params.trip, req.tresbon.voyage, function(err, trip) {
-      Voyage.tripPosts(req.tresbon.voyage, trip.tripid, {date: req.tresbon.date}, function(err, posts) {
+      Voyage.tripPosts(req.tresbon.voyage, trip.tripid,
+                       {published: true, date: req.tresbon.date}, function(err, posts) {
         Voyage.tripWaypoints(req.tresbon.voyage, trip.tripid, {date: null}, function(err, points) {
           posts = posts.filter(function(p) { return p.published });
           points = points.filter(function(p) { return p.visibility > 0; })
