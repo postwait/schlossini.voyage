@@ -187,7 +187,11 @@ img.img-top {
   background-repeat:no-repeat;
   float:right;
   margin-right:-3px;
+  position: absolute;
+}
+.post-full div.post-date {
   position: relative;
+  margin-right: -17px;
 }
 .post div.post-date span {
   font-family: 'Calligraffitti', cursive;
