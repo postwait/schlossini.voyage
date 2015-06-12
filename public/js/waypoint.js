@@ -110,7 +110,7 @@ TB.app.controller('WaypointInstanceCtrl',
   $scope.waypoint.latlong = $scope.waypoint.latlong ||
     [TB.recent.latitude, TB.recent.longitude];
 
-  $scope.arrival_methods = ['air','boat','bus','train','car','van','bicycle''foot'];
+  $scope.arrival_methods = ['air','boat','bus','train','car','van','bicycle','foot'];
   $scope.map = {
     center: {
       latitude: $scope.waypoint.latlong[0],
