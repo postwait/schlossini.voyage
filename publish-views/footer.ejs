@@ -20,6 +20,23 @@
 
 <footer class="jumbotron footer">
 <div class="row">
+
+  <div class="col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-title">
+        <h3>General Information</h3>
+      </div>
+      <div class="panel-body">
+        <ul class="travelers">
+        <% travelers.forEach(function(person) { %>
+          <li><a href="/traveler/<%= person.userid %>"><img src="<%- person.image_url %>"/></a></li>
+        <% }); %>
+        </ul>
+        <p><a href="/t/<%- trip.url_snippet %>/itinerary">Itinerary</a></p>
+      </div>
+    </div>
+  </div>
+
   <div class="col-md-3">
     <div class="panel panel-default">
       <div class="panel-title">
@@ -64,22 +81,6 @@
         <% } %>
         </p>
         <% } %>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-3">
-    <div class="panel panel-default">
-      <div class="panel-title">
-        <h3>General Information</h3>
-      </div>
-      <div class="panel-body">
-        <ul class="travelers">
-        <% travelers.forEach(function(person) { %>
-          <li><a href="/traveler/<%= person.userid %>"><img src="<%- person.image_url %>"/></a></li>
-        <% }); %>
-        </ul>
-        <p><a href="/t/<%- trip.url_snippet %>/itinerary">Itinerary</a></p>
       </div>
     </div>
   </div>

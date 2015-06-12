@@ -282,6 +282,10 @@ div#map-canvas {
    content:url('/images/auto-sewn.png');
    width:114px;
   }
+  .agenda .travel-method-van {
+   content:url('/images/auto-sewn.png');
+   width:114px;
+  }
   .agenda .travel-method-air {
    content:url('/images/airplane-sewn.png');
    width:114px;
