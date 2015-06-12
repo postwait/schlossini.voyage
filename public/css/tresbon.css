@@ -2,9 +2,14 @@ html, body {
   height: 100%;
   margin: 0px;
   padding: 0px;
+  min-height: 100%;
   font-family: 'Roboto',Arial,sans-serif;
   font-weight: 300;
   font-size: 16px;
+}
+#pagewrap {
+  min-height: 100%;
+  position: relative;
 }
 body {
   -webkit-background-size: cover;
@@ -23,12 +28,24 @@ body {
   font-size:1.2em;
 }
 
+footer.jumbotron {
+  width: 100%;
+  height: 100px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
 .manage .jumbotron {
   padding: 0 40px;
   min-height: 120px;
 }
+.jumbotron-short,
+  .manage .jumbotron-short {
+  min-height: 80px;
+}
 .manage .jumbotron h1 {
-  font-size:36px;
+  font-size:2em;
 }
 .manage .jumbotron div.container {
   margin-left:inherit;
@@ -71,19 +88,27 @@ div.single div.panel-body {
 }
 div.frontcontainer {
   margin: 0 1em 0 3em;
+  padding-bottom: 200px;
 }
 div.frontcontainer h1 {
   font-size: 1.5em;
 }
 
+.login div.panel-body {
+  text-align: center;
+}
 /* login & profile */
+div.login-box { text-align:center }
+div.signup-box { text-align:center }
 div.login-or {
   margin-left: auto;
   margin-right: auto;
 }
 div.login-or span::before {
+  font-family: cursive;
   content: ' ~ or ~ ';
 }
+div.login-smugmug { display: none; }
 
 div.waypoints .list-item-itinerary {
   border-left: solid #337ab7 8px;
