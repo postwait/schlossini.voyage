@@ -39,6 +39,8 @@ footer.jumbotron {
 .manage .jumbotron {
   padding: 0 40px;
   min-height: 120px;
+  background-color: #191c21;
+  color: #dddddd;
 }
 .jumbotron-short,
   .manage .jumbotron-short {
@@ -85,6 +87,22 @@ div.single div.panel-body {
 }
 .jumbotron ol.breadcrumb>.active {
   color: rgb(51,51,51);
+}
+.jumbotron.jumbotron-short ol.breadcrumb {
+  margin: -5px 0 -15px 0;
+}
+.manage .jumbotron a {
+  color: #ccc;
+}
+.manage .jumbotron ol.breadcrumb {
+  color: #ccc;
+}
+.manage .jumbotron ol.breadcrumb>.active {
+  color: #ccc;
+}
+.manage div.modal-header {
+  background-color: #191c21;
+  color: #dddddd;
 }
 div.frontcontainer {
   margin: 0 1em 0 3em;
