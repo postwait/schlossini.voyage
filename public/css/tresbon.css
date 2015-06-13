@@ -77,16 +77,17 @@ div.single div.panel-body {
 .single p { font-size: 1em; }
 .jumbotron {
   padding: 10px 40px 0px 40px;
-  background-color:rgba(224, 224, 224, 0.85);
+  background-color: rgba(25,23,38,0.8);
+  color: #dddddd;
   min-height: 160px;
 }
 .jumbotron ol.breadcrumb {
   margin: 5px 0 -15px 0;
   background: transparent;
-  color: rgb(51,51,51);
+  color: #ccc;
 }
 .jumbotron ol.breadcrumb>.active {
-  color: rgb(51,51,51);
+  color: #ccc;
 }
 .jumbotron.jumbotron-short ol.breadcrumb {
   margin: -5px 0 -15px 0;
@@ -101,7 +102,7 @@ div.single div.panel-body {
   color: #ccc;
 }
 .manage div.modal-header {
-  background-color: #191c21;
+  background-color: rgba(25,23,38,0.9);
   color: #dddddd;
 }
 div.frontcontainer {
