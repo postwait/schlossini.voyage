@@ -29,7 +29,7 @@
       <div class="panel-body">
         <ul class="travelers">
         <% travelers.forEach(function(person) { %>
-          <li><a href="/traveler/<%= person.userid %>"><img src="<%- person.image_url %>"/></a></li>
+          <li><a href="/traveler/<%- person.userid %>/on/<%- trip.url_snippet %>"><img src="<%- person.author_face %>"/></a></li>
         <% }); %>
         </ul>
         <p><a href="/t/<%- trip.url_snippet %>/itinerary">Itinerary</a></p>
