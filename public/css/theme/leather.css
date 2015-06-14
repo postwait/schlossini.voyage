@@ -353,6 +353,9 @@ ul.travelers li {
 }
 .footer ul.travelers img {
   width: 40px;
+  border: solid black 1px;
+  border-radius: 40px;
+  padding: 1px;
 }
 .footer .panel {
   border:0;
