@@ -13,6 +13,27 @@ TB.app.controller('ProfileController', ['$scope','ProfileService',
     refresh();
     $scope.$on('profileChanged', refresh);
     var notify_refresh = function() { $scope.$emit('profileChanged'); }
+    $scope.TB = TB;
+    $scope.invitee = {}
+    $scope.expanded_voyage = {}
+
+    $scope.newtravelname = {}
+    $scope.acceptinput = {}
+    $scope.inviteUser = function(voyageid) {
+      ProfileService.sendInvite(voyageid, $scope.invitee[voyageid],
+        function() { refresh(); }, seterror
+      )
+    }
+    $scope.discardInvite = function(voyageid,email) {
+      ProfileService.discardInvite(voyageid, email,
+        function() { refresh(); }, seterror
+      )
+    }
+    $scope.acceptInvite = function(voyageid,email) {
+      ProfileService.acceptInvite(voyageid,$scope.newtravelname[voyageid],
+        function() { refresh(); }, seterror
+      )
+    }
     $scope.removeLink = function(link) {
       ProfileService.removeLink(link, notify_refresh, seterror);
     }
@@ -63,6 +84,30 @@ TB.app.service('ProfileService', function($http) {
           success(data);
         })
         .error(function(data) { cb(data); });
-    }
+    },
+    sendInvite: function(voyageid, email, dataf, errorf) {
+      $http.csrfPost('/api/profile/invite/send', { voyageid:voyageid, email:email })
+        .success(function(data) {
+          if(data.error) return errorf(data.error);
+          dataf(data);
+        })
+        .error(function(data) { errorf(data); });
+    },
+    discardInvite: function(voyageid, email, dataf, errorf) {
+      $http.csrfPost('/api/profile/invite/discard', { voyageid:voyageid, email:email })
+        .success(function(data) {
+          if(data.error) return errorf(data.error);
+          dataf(data);
+        })
+        .error(function(data) { errorf(data); });
+    },
+    acceptInvite: function(voyageid, name, dataf, errorf) {
+      $http.csrfPost('/api/profile/invite/accept', { voyageid:voyageid, name:name })
+        .success(function(data) {
+          if(data.error) return errorf(data.error);
+          dataf(data);
+        })
+        .error(function(data) { errorf(data); });
+    },
   };
 });

@@ -58,6 +58,16 @@ router.post('/profile/confirm', loggedin(function(req,res) {
     api_response(res,err,body)
   });
 }));
+router.post('/profile/invite/:action', loggedin(function(req,res) {
+  if(!/^(send|discard|accept)$/.test(req.params.action)) {
+    return api_response(res,"invalid invite action")
+  }
+  User.processInvitation(req.session.userid, req.params.action, req.body,
+    function(err,body) {
+      api_response(res,err,body)
+    });
+}));
+
 router.delete('/profile/link/:service/:remoteid', loggedin(function(req,res) {
   User.deleteAssociation(
     req.session.userid, req.params.service, req.params.remoteid,

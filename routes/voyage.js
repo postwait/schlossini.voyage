@@ -13,6 +13,7 @@ router.get('/:shortname', loggedin(function(req, res, next) {
       res.render('voyage',
              { title: 'Voyage: ' + (voyage.title || voyage.shortname),
                userid: req.session.userid,
+               email_as_json: JSON.stringify(req.session.email || ""),
                csrfToken: req.csrfToken(),
                voyageid_as_json: JSON.stringify(voyage.voyageid),
                shortname_as_json: JSON.stringify(voyage.shortname),

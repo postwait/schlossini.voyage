@@ -26,7 +26,7 @@
 
                   <div class="input-group">
                     <span class="input-group-addon">Email</span>
-                    <input type="text" name="login_email" class="form-control" placeholder="janet@example.com" aria-describedby="email" />
+                    <input type="email" name="login_email" class="form-control" placeholder="janet@example.com" aria-describedby="email" />
                   </div>
                   <div class="input-group">
                     <span class="input-group-addon">Password</span>
@@ -43,7 +43,7 @@
                 <a href="/auth/smugmug?method=login"><span>Login with SmugMug</span></a>
               </div>
               <div class="login-google">
-                <a href="/auth/google?method=login"><img src="/images/icons/google_signup_md.png"/></a>
+                <a href="/auth/google?method=login"><img src="/images/icons/google_signin_md.png"/></a>
               </div>
             </div>
           </div>
@@ -59,7 +59,7 @@
                   <% if(to) { %> <input type="hidden" name="to" value="<%= to %>"/> <% } %>
                   <div class="input-group">
                     <span class="input-group-addon">Email</span>
-                    <input type="text" class="form-control" name="signup_email">
+                    <input type="email" class="form-control" placeholder="janet@example.com" name="signup_email">
                   </div>
                   <div class="input-group">
                     <span class="input-group-addon">Password</span>

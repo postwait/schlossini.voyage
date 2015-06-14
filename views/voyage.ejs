@@ -8,6 +8,7 @@
     <script>
     TB._csrf = "<%= csrfToken %>";
     TB.userid = <%- userid %>;
+    TB.email = <%- email_as_json %>;
     TB.voyage = TB.voyage || {};
     TB.voyage.voyageid = <%- voyageid_as_json %>;
     TB.voyage.shortname = <%- shortname_as_json %>;
@@ -69,7 +70,8 @@
           </div>
         </div>
         <div class="row">
-          <div class="panel-default profile-manager">
+          <div class="col-md-12">
+            <div class="panel-default profile-manager">
             <script type="text/ng-template" id="ProfilePicAdd.html">
               <div class="modal-header">
                 <h3 ng-hide="shouldDelete" class="modal-title">Add Profile Picture</h3>
@@ -115,9 +117,11 @@
               </form>
             </script>
             <div class="panel-title">
+              <div class="btn-group pull-right">
+                <div class='btn btn-primary' ng-click="allProfiles=true" ng-class="{active: allProfiles}">all</div>
+                <div class='btn btn-primary' ng-click="allProfiles=false" ng-class="{active: !allProfiles}">just me</div>
+              </div>
               <h2>Profile Pictures </h2>
-              <span class="subtitle">(<span ng-class="{inactive: !allProfiles}" ng-click="allProfiles=true">all</span> |
-              <span ng-class="{inactive: allProfiles}" ng-click="allProfiles=false">just me</span>)</span>
             </div>
             <div class="panel-body">
               <accordion close-others="true">

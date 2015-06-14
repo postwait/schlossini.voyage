@@ -9,6 +9,8 @@ router.get('/', loggedin(function(req, res) {
   res.render('profile',
              { title: 'Profile',
                csrfToken: req.csrfToken(),
+               userid: req.session.userid,
+               email_as_json: JSON.stringify(req.session.email || ""),
              });
 }));
 

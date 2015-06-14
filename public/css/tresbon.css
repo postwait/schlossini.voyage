@@ -129,20 +129,33 @@ div.login-or span::before {
 }
 div.login-smugmug { display: none; }
 
-div.waypoints .list-item-itinerary {
+div.waypoints .list-item-itinerary,
+div.posts .list-item-published,
+.list-item-owner,
+.list-item-primary {
   border-left: solid #337ab7 8px;
 }
-div.waypoints .list-item-private {
+div.waypoints .list-item-private,
+.list-item-warning {
   border-left: solid #fcf8e3 8px;
 }
-div.waypoints .list-item-hidden {
+div.waypoints .list-item-hidden.
+.list-item-default,
+.list-item-traveler {
   border-left: solid #666 8px;
 }
-
-div.posts .list-item-published {
-  border-left: solid #337ab7 8px;
+.list-item-traveler {
+  border-left: solid rgba(0,0,0,0) 8px;
 }
-div.posts .list-item-unpublished {
+
+.list-item-guide {
+  border-left: solid rgb(92,184,92) 8px;
+}
+.list-group.travelers .list-group-item .btn-group {
+  bottom:6px;
+}
+div.posts .list-item-unpublished,
+.list-item-inactive {
   background: #eee;
 }
 span.post-remove {
@@ -240,8 +253,10 @@ div.panel-title .subtitle span.inactive {
   font-size: 9px;
   display: block;
 }
-div.panel-heading a {
+div.panel-heading .panel-title>a,
+div.panel-heading .panel-title>a:hover {
     outline: none;
+    text-decoration: none;
 }
 div.delete-pic-container {
   text-align:center;
