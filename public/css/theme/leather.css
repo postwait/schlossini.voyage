@@ -332,6 +332,7 @@ div.agenda-location .pin::after {
 footer.jumbotron {
   margin-top: 2em;
   margin-bottom:0;
+  position: relative;
 }
 @media (max-width: 767px) {
   p {
