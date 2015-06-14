@@ -39,7 +39,7 @@ footer.jumbotron {
 .manage .jumbotron {
   padding: 0 40px;
   min-height: 120px;
-  background-color: #191c21;
+  background-color: rgba(25,23,38,0.8);
   color: #dddddd;
 }
 .jumbotron-short,
