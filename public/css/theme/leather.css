@@ -26,6 +26,7 @@ div.single div.panel-body {
 .jumbotron {
   padding: 10px 40px;
   background-color:rgba(224, 224, 224, 0.5);
+  color: #333;
   min-height: 190px;
 }
 .jumbotron ol.breadcrumb {
