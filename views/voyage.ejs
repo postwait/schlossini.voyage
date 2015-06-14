@@ -9,9 +9,7 @@
     TB._csrf = "<%= csrfToken %>";
     TB.userid = <%- userid %>;
     TB.email = <%- email_as_json %>;
-    TB.voyage = TB.voyage || {};
-    TB.voyage.voyageid = <%- voyageid_as_json %>;
-    TB.voyage.shortname = <%- shortname_as_json %>;
+    TB.voyage = <%- voyage_as_json %>;
     </script>
   </head>
   <body class="manage" ng-app="tresbon" ng-controller="TBC">
@@ -31,7 +29,7 @@
       <div ng-hide="trip">
         <div class="row">
           <div class="col-md-6">
-            <div class="panel-default">
+            <div class="panel panel-default">
               <div class="panel-title"><h2>Trips</h2></div>
               <div class="panel-body">
                 <table class="table">
@@ -50,20 +48,22 @@
             </div>
           </div>
           <div class="col-md-6 integrations">
-            <div class="panel-title"><h2>Integrations</h2></div>
-            <div class="panel-body">
-              <div class="list-group">
-                <div class="list-group-item {{link.service}}" ng-repeat="link in info.thirdparty">
-                  <div class="link-pic pull-left" ng-if="link.image_url"><img ng-src="{{link.image_url}}"/></div>
-                  <div class="btn-group pull-right">
-                    <div class="btn btn-default" ng-class="{active: link.group_shared === null}" title="Do not use" ng-click="shareAssociation(link,null)"><span class="glyphicon glyphicon-remove-circle"></span></div>
-                    <div class="btn btn-default" ng-class="{active: link.group_shared === false}" title="Just for me"  ng-click="shareAssociation(link,false)"><span class="glyphicon glyphicon-user"></span></div>
-                    <div class="btn btn-default" ng-class="{active: link.group_shared === true}" title="Share with group" ng-click="shareAssociation(link,true)"><span class="glyphicon glyphicon-user"><span class="glyphicon glyphicon-user"></span></span></div>
+            <div class="panel panel-default">
+              <div class="panel-title"><h2>Integrations</h2></div>
+              <div class="panel-body">
+                <div class="list-group">
+                  <div class="list-group-item {{link.service}}" ng-repeat="link in info.thirdparty">
+                    <div class="link-pic pull-left" ng-if="link.image_url"><img ng-src="{{link.image_url}}"/></div>
+                    <div class="btn-group pull-right">
+                      <div class="btn btn-default" ng-class="{active: link.group_shared === null}" title="Do not use" ng-click="shareAssociation(link,null)"><span class="glyphicon glyphicon-remove-circle"></span></div>
+                      <div class="btn btn-default" ng-class="{active: link.group_shared === false}" title="Just for me"  ng-click="shareAssociation(link,false)"><span class="glyphicon glyphicon-user"></span></div>
+                      <div class="btn btn-default" ng-class="{active: link.group_shared === true}" title="Share with group" ng-click="shareAssociation(link,true)"><span class="glyphicon glyphicon-user"><span class="glyphicon glyphicon-user"></span></span></div>
+                    </div>
+                    <span class="{{ link.service }}">
+                    <h4>
+                    {{ link.display_name ? link.display_name : "???" }}
+  	                </h4>
                   </div>
-                  <span class="{{ link.service }}">
-                  <h4>
-                  {{ link.display_name ? link.display_name : "???" }}
-	                </h4>
                 </div>
               </div>
             </div>
@@ -71,7 +71,7 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            <div class="panel-default profile-manager">
+            <div class="panel panel-default profile-manager">
             <script type="text/ng-template" id="ProfilePicAdd.html">
               <div class="modal-header">
                 <h3 ng-hide="shouldDelete" class="modal-title">Add Profile Picture</h3>
@@ -150,4 +150,13 @@
       <% include include/trip %>
     </div>
   </body>
+<style>
+body {
+  background: url(https://lh3.googleusercontent.com/ZooyT7yYy9T__5GMwVlY5nHwPJxEZl3BeE0coH-aj2w=w1252-h705-no) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+</style>
 </html>

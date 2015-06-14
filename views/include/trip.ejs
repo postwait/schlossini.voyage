@@ -1,7 +1,7 @@
 <div ng-show="trip">
   <div class="row">
     <div class="col-lg-6">
-      <div class="panel-default waypoints" ng-controller="WaypointController">
+      <div class="panel panel-default waypoints" ng-controller="WaypointController">
         <script type="text/ng-template" id="WaypointDelete.html">
           <div class="modal-header">
             <h3 class="modal-title">Delete Waypoint</h3>
@@ -75,8 +75,8 @@
           </div>
         </script>
         <div class="panel-title">
-          <div class="waypoint-add">
-            <span ng-click="openWaypoint('add')" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+          <div class="pull-right">
+            <div class="btn btn-default" ng-click="openWaypoint('add')"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div>
           </div>
           <h2>Waypoints</h2>
         </div>
@@ -96,7 +96,7 @@
       </div>
     </div>
     <div class="col-lg-6">
-      <div class="panel-default posts" ng-controller="PostController">
+      <div class="panel panel-default posts" ng-controller="PostController">
         <script type="text/ng-template" id="PostDelete.html">
           <div class="modal-header">
             <h3 class="modal-title">Delete Post</h3>
@@ -190,8 +190,8 @@
           </form>
         </script>
         <div class="panel-title">
-          <div class="post-add">
-            <span ng-click="openPost('add')" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+          <div class="pull-right">
+            <div class="btn btn-default" ng-click="openPost('add')"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div>
           </div>
           <h2>Posts</h2>
         </div>

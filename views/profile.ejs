@@ -20,7 +20,7 @@
       <% include include/notify %>
       <div class="row">
         <div class="col-lg-6">
-          <div class="panel-default">
+          <div class="panel panel-default">
             <div class="panel-title"><h2 class="profile-profile">Profile</h2></div>
             <div class="panel-body">
               <dl class="dl-horizontal">
@@ -29,10 +29,9 @@
               </dl>
             </div>
           </div>
-          <div class="panel-default profile-link" ng-controller="LoginController">
+          <div class="panel panel-default profile-link" ng-controller="LoginController">
             <div class="panel-title">
-              <div class="link-add">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+              <div class="pull-right">
                 <div class="link-new link-facebook">
                   <a ng-click="fb_associate()"><img src="/images/icons/facebook.png" title="Connect to Facebook" alt="Facebook"/></a>
                 </div>
@@ -65,7 +64,7 @@
           </div>
         </div>
         <div class="col-lg-6">
-          <div class="panel-default">
+          <div class="panel panel-default">
             <div class="panel-title"><h2>Voyages</h2></div>
             <div class="panel-body">
               <accordion close-others="true">
@@ -123,4 +122,13 @@
       </div>
     </div>
   </body>
+<style>
+body {
+  background: url(https://lh3.googleusercontent.com/VCO9iKcskclf3nLu8ZX5K13DoyOKriV_G0hgoyrNWWI=w1252-h705-no) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+</style>
 </html>

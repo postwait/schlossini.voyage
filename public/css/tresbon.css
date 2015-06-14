@@ -105,6 +105,13 @@ div.single div.panel-body {
   background-color: rgba(25,23,38,0.9);
   color: #dddddd;
 }
+.manage div.panel {
+  background-color: rgba(255,255,255,0.7);
+}
+.manage div.panel-title {
+ padding: 0.5em 1em 0em 1em;
+}
+
 div.frontcontainer {
   margin: 0 1em 0 3em;
   padding-bottom: 200px;
@@ -161,10 +168,6 @@ div.posts .list-item-unpublished,
 span.post-remove {
   float:right;
 }
-div.post-add {
-  float:right;
-  padding-right:15px;
-}
 div.post-tag {
   display:inline-flex;
 }
@@ -175,17 +178,6 @@ span.label.post-tag .glyphicon {
 }
 span.waypoint-remove {
   float:right;
-}
-div.waypoint-add {
-  float:right;
-  padding-right:15px;
-}
-div.link-add {
-  float:right;
-  padding-right:15px;
-}
-div.link-add .glyphicon {
-  font-size:1.2em;
 }
 div.link-new {
   display:inline;

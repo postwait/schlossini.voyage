@@ -49,9 +49,10 @@ TB.app.controller('VoyageController',
 
     $scope.getTrip = function() { return $scope.trip; }
     $scope.selectTrip = function(trip) {
-      var links = [ { name: 'Home' } ];
+      var links = [ { name: "Home", click: function() { document.location = '/profile'; } },
+                    { name: TB.voyage.title } ];
       if(trip) {
-        links[0].click = function() { $scope.selectTrip(); }
+        links[1].click = function() { $scope.selectTrip(); }
         links.push({name: trip.description})
       }
       $scope.trip = trip;

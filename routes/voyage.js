@@ -15,8 +15,7 @@ router.get('/:shortname', loggedin(function(req, res, next) {
                userid: req.session.userid,
                email_as_json: JSON.stringify(req.session.email || ""),
                csrfToken: req.csrfToken(),
-               voyageid_as_json: JSON.stringify(voyage.voyageid),
-               shortname_as_json: JSON.stringify(voyage.shortname),
+               voyage_as_json: JSON.stringify(voyage),
              });
     })
 }));
