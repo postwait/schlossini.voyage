@@ -57,7 +57,7 @@
           <%   windowedposts.forEach(function(post) { %>
           <div><span tzdate tzdate-date="<%- post.whence.getTime() %>" tzdate-timezone="<%= post.timezone %>" tzdate-format="MMMM d, ha">
             <%- post.whence.format("dS &#111;&#102; mmmm, yyyy", true) %>
-          </span> - <a href="/traveler/<%= post.author %>/writes/<%= post.url_snippet %>"><%= post.title %></a> - <a href="/traveler/<%= post.author%>/on/<%- trip.url_snippet %>"><%= post.author_name %></a></div>
+          </span> - <a href="/traveler/<%- post.author %>/on/<%- trip.url_snippet %>/writes/<%- post.url_snippet %>"><%= post.title %></a> - <a href="/traveler/<%= post.author%>/on/<%- trip.url_snippet %>"><%= post.author_name %></a></div>
           <%   }); %>
             </div>
           </div>
