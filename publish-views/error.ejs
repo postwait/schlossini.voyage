@@ -1,3 +1,36 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include head %>
+  </head>
+  <body ng-app="tresbon" ng-controller="TBC">
+    <div class="jumbotron jumbotron-short">
+      <h1><%= voyage.title %></h1>
+    </div>
+    <div class="frontcontainer container-fluid manage">
+      <div class="row">
+        <div class="panel panel-default">
+        <% if(error.status == 404) { %>
+        <div class="panel-title">
+        <h2>Every traveler loses their bearings at some point.</h2>
+        </div>
+        <div class="panel-body">
+        <p>It would appear you're lost, or this landmark has moved.</p>
+        <ol>
+          <li><a href="/">Home</a></li>
+        </ol>
+        </div>
+        <% } else { %>
+        <div class="panel-title">
+        <h2>It appears we've stumbled:</h2>
+        </div>
+        <div class="panel-body">
+        <pre><%= error.stack %></pre>
+        </div>
+        <% } %>
+        </div>
+      </div>
+    </div>
+    <%- include footer.ejs %>
+  </body>
+</html>
