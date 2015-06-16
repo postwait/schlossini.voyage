@@ -38,6 +38,7 @@ TB.app.controller('TripFooterCtrl',
     }
     if(needs_refresh) refresh();
     compile();
+console.log("HERE", $scope);
 }])
 
 TB.app.service('TripService', function($http) {

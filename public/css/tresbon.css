@@ -28,9 +28,13 @@ body {
   font-size:1.2em;
 }
 
+div.nonfooter {
+  padding-bottom:280px;
+}
 footer.jumbotron {
   width: 100%;
   height: 100px;
+  min-height: 240px;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -92,7 +96,7 @@ div.single div.panel-body {
 .jumbotron.jumbotron-short ol.breadcrumb {
   margin: -5px 0 -15px 0;
 }
-.manage .jumbotron a {
+.jumbotron a {
   color: #ccc;
 }
 .manage .jumbotron ol.breadcrumb {
@@ -114,7 +118,6 @@ div.single div.panel-body {
 
 div.frontcontainer {
   margin: 0 1em 0 3em;
-  padding-bottom: 200px;
 }
 div.frontcontainer h1 {
   font-size: 1.5em;
@@ -309,6 +312,73 @@ div.input-datetime input.input-time-flow {
 }
 
 .angular-google-map-container { height: 200px; }
+
+/* generic theme stuff */
+
+div.frontcontainer div.author_face {
+  width: 80px;
+  height: 80px;
+}
+div.author_face {
+  position: absolute;
+  padding: 4px;
+  margin: 4px;
+  left: 20px;
+  top: 10px;
+}
+div.author_face img {
+  width:90px;
+  height:90px;
+  padding:2px;
+  border: 1px solid #666;
+  border-radius: 80px;
+}
+div.imgspacer {
+  width:100px;
+  height:100px;
+  float:left;
+}
+div.post-date {
+  padding-top: 0.5em;
+  padding-right:1em;
+  float:right;
+}
+ul.travelers {
+  list-style-type: none;
+  margin:0;
+  padding:0;
+}
+ul.travelers li {
+  display: inline;
+}
+.footer ul.travelers img {
+  width: 40px;
+  border: solid black 1px;
+  border-radius: 40px;
+  padding: 1px;
+}
+.footer .panel {
+  border:0;
+  background-color:transparent;
+}
+.manage .footer div.panel {
+  background-color: transparent;
+}
+.footer .panel-title {
+}
+.footer .panel-body {
+  padding: 0;
+  background-color:transparent;
+  background-image:none;
+}
+.footer .copyright {
+  color: #666;
+  font-size: 0.8em;
+  text-align:center;
+}
+.footer p {
+  font-size: 1.1em;
+}
 
 img.img-1-8 { width:12.5% }
 img.img-2-8 { width:25% }

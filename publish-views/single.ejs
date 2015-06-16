@@ -4,6 +4,8 @@
     <% include head %>
   </head>
   <body ng-app="tresbon" ng-controller="TBC">
+  <div id="pagewrap">
+    <div class="nonfooter">
     <div class="jumbotron">
       <div class="container">
           <a href="/traveler/<%- post.author %>/on/<%- trip.url_snippet %>"><div class="author_face">
@@ -35,6 +37,8 @@
         </div>
       </div>
     </div>
+    </div>
     <%- include footer.ejs %>
+  </div>
   </body>
 </html>

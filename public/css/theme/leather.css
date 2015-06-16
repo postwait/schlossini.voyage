@@ -99,31 +99,6 @@ div.post {
   */
   background-color: rgba(240,240,240,0.9);
 }
-img.img-1-8 { width:12.5% }
-img.img-2-8 { width:25% }
-img.img-3-8 { width:37.5% }
-img.img-4-8 { width:50% }
-img.img-5-8 { width:62.5% }
-img.img-6-8 { width:75% }
-img.img-7-8 { width:87.5% }
-img.img-8-8 { width:100% }
-img.img-right {
-  float: right;
-  margin: 0.5em 0 0.5em 0.5em;
-}
-img.img-left {
-  float: left;
-  margin: 0.5em 0.5em 0.5em 0;
-}
-img.img-top {
-  margin-top: 0;
-}
-.post img {
-  max-width:100%;
-  padding:4px;
-  background-color:rgba(252, 240, 232, 1);
-  border:solid #262626 1px;
-}
 @media (max-width: 900px) {
   .post .panel-body {
     font-size: 1.1em;
@@ -342,34 +317,4 @@ footer.jumbotron {
 }
 .footer p {
   font-size: 1.1em;
-}
-ul.travelers {
-  list-style-type: none;
-  margin:0;
-  padding:0;
-}
-ul.travelers li {
-  display: inline;
-}
-.footer ul.travelers img {
-  width: 40px;
-  border: solid black 1px;
-  border-radius: 40px;
-  padding: 1px;
-}
-.footer .panel {
-  border:0;
-  background-color:transparent;
-}
-.footer .panel-title {
-}
-.footer .panel-body {
-  padding: 0;
-  background-color:transparent;
-  background-image:none;
-}
-.footer .copyright {
-  color: #666;
-  font-size: 0.8em;
-  text-align:center;
 }

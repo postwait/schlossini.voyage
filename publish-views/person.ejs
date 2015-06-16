@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
   <% include head %>
-  <body>
+  <body ng-app="tresbon" ng-controller="TBC">
+  <div id="pagewrap">
+    <div class="nonfooter">
     <div class="jumbotron">
       <div class="container">
           <div class="author_face">
@@ -39,6 +41,8 @@
         </div>
       </div>
     </div>
-  <%- include footer.ejs %>
+    </div>
+    <%- include footer.ejs %>
+  </div>
   </body>
 </html>

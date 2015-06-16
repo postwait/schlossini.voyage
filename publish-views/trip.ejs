@@ -4,6 +4,8 @@
     <% include head %>
   </head>
   <body ng-app="tresbon" ng-controller="TBC">
+  <div id="pagewrap">
+    <div class="nonfooter">
     <div class="jumbotron">
       <div class="container">
         <h1><%= voyage.title %></h1>
@@ -35,6 +37,8 @@
         }
       %>
     </div>
+    </div>
     <%- include footer.ejs %>
+    </div>
   </body>
 </html>
