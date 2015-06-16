@@ -233,11 +233,6 @@ footer.jumbotron {
   margin-top: 2em;
   margin-bottom:0;
 }
-@media (max-width: 767px) {
-  p {
-    font-size: 1.1em;
-  }
-}
 .footer p {
   font-size: 1.1em;
 }

@@ -57,7 +57,6 @@
                   <h4>
                   {{ link.display_name ? link.display_name : link.service }}
 	                </h4>
-                  <a href="{{ link.url }}">link</a>
                   <span class="link-remove"><a ng-click="removeLink(link)">remove</a></span>
                   <span class="link-refresh"><a ng-click="link.service === 'facebook' ? fb_associate() : refreshLink(link)">refresh</a></span>
                 </div>
