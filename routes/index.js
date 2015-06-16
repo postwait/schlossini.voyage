@@ -5,7 +5,7 @@ var router = express.Router();
 
 router.get('/', function(req, res) {
   res.render('index',
-             { title: 'Tres Bon Voyage' });
+             { title: 'Trés Bon Voyage' });
 });
 
 module.exports = router;
