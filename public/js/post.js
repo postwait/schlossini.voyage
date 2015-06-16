@@ -23,6 +23,12 @@ TB.app.controller('PostController',
     $scope.$on('postsChanged', refresh);
     var notify_refresh = function() { $scope.$emit('postsChanged'); }
 
+    $scope.allPosts = false;
+    $scope.condPostSelector = function(a,b) {
+      if($scope.allPosts) return true;
+      if(a.author == TB.userid) return true;
+      return false;
+    }
     $scope.deletePost = function (post) {
       var modalInstance = $modal.open({
         animation: false,

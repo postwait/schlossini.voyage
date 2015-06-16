@@ -19,6 +19,18 @@ TB.app.controller('ProfileController', ['$scope','ProfileService',
 
     $scope.newtravelname = {}
     $scope.acceptinput = {}
+    $scope.selectVoyage = function(voyage) {
+      document.location = '/voyage/' + voyage.shortname;
+    }
+    $scope.toggleVoyage = function(voyage) {
+      for(var sn in $scope.expanded_voyage) {
+        if(sn !== voyage.shortname && $scope.expanded_voyage.hasOwnProperty(sn))
+          $scope.expanded_voyage[sn] = false;
+      }
+      $scope.expanded_voyage[voyage.shortname] =
+        !$scope.expanded_voyage[voyage.shortname];
+      console.log($scope.expanded_voyage);
+    }
     $scope.inviteUser = function(voyageid) {
       ProfileService.sendInvite(voyageid, $scope.invitee[voyageid],
         function() { refresh(); }, seterror

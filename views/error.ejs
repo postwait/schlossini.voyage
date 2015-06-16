@@ -1,3 +1,45 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include include/head %>
+  </head>
+  <body>
+  <div id="pagewrap">
+    <div class="nonfooter">
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Trés Bon Voyage</h1>
+        <p>&hellip; en dépit des événements inattendus.</p>
+      </div>
+    </div>
+    <div class="frontcontainer container-fluid">
+      <div class="panel panel-warning">
+        <% if (error.status == 404) { %>
+          <div class="panel-title">
+          <h1>Being lost isn't so bad...</h1>
+          </div>
+          <div class="panel-body">
+          <p>You are in a wide open field with beauty all around you.</p>
+          <p>When you decide to move on, you may <a href="/">go north</a> from here.</p>
+          </div>
+        <% } else { %>
+        <h1><%= message %></h1>
+        <h2><%= error.status %></h2>
+        <pre><%= error.stack %></pre>
+        <% } %>
+      </div>
+    </div>
+    </div>
+    <% include include/footer %>
+  </div>
+<style>
+body {
+  background: url(https://lh3.googleusercontent.com/S4nXrOw7g6NIO_0igGXs2XFogOuD5P5Dx8DMbfXiFPQ=w1250-h704-no) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+</style>
+  </body>
+</html>

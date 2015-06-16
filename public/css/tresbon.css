@@ -11,6 +11,7 @@ html, body {
   min-height: 100%;
   position: relative;
 }
+div.clear-both { clear:both; }
 body {
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -110,14 +111,16 @@ div.single div.panel-body {
   background-color: rgba(25,23,38,0.9);
   color: #dddddd;
 }
-.manage div.panel {
+div.panel {
   background-color: rgba(255,255,255,0.7);
 }
-.manage div.panel-title {
- padding: 0.5em 1em 0em 1em;
-}
 .panel-title {
+ padding: 0.5em 1em 0em 1em;
  font-size:1em;
+}
+.list-group-item.panel-title .btn {
+  margin-top: -0.5em;
+  padding-bottom: 0.5em;
 }
 
 div.frontcontainer {
@@ -204,10 +207,15 @@ div.profile-link div.link-pic,
 div.post-item div.link-pic {
   float: left;
   margin-right: 15px;
+}
+div.post-item div.link-pic {
   margin-top: 5px;
 }
 div.input-group .tag-add {
   width:80px;
+}
+.profile-link div.list-group-item {
+  min-height: 70px;
 }
 
 div.panel-title h2 {

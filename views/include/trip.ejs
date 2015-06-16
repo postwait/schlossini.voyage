@@ -191,13 +191,19 @@
         </script>
         <div class="panel-title">
           <div class="pull-right">
-            <div class="btn btn-default" ng-click="openPost('add')"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div>
+            <div class="btn-group">
+              <div class='btn btn-primary' ng-click="allPosts=true" ng-class="{active: allPosts}">all</div>
+              <div class='btn btn-primary' ng-click="allPosts=false" ng-class="{active: !allPosts}">just me</div>
+            </div>
+            <div class="btn-group">
+              <div class="btn btn-default" ng-click="openPost('add')"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div>
+            </div>
           </div>
           <h2>Posts</h2>
         </div>
         <div class="panel-body">
           <div class="list-group post-item">
-            <div ng-class="{ 'list-group-item': true, 'list-item-published': p.published, 'list-item-unpublished': !p.published }"  ng-repeat="p in posts | orderBy:'-whence'">
+            <div ng-class="{ 'list-group-item': true, 'list-item-published': p.published, 'list-item-unpublished': !p.published }"  ng-repeat="p in posts | filter:condPostSelector | orderBy:'-whence'">
               <span ng-click="deletePost(p)" class="post-remove glyphicon glyphicon-remove" aria-hidden="true"></span>
               <div ng-click="openPost('edit', p)">
                 <div class="link-pic" ng-if="p.author_face"><img ng-src="{{p.author_face}}"/></div>

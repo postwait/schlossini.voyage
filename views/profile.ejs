@@ -54,11 +54,11 @@
                 <div class="list-group-item" ng-repeat="link in info.thirdparty">
                   <div class="link-pic" ng-if="link.image_url"><img ng-src="{{link.image_url}}"/></div>
                   <span class="{{ link.service }}">
-                  <h4>
-                  {{ link.display_name ? link.display_name : link.service }}
-	                </h4>
-                  <span class="link-remove"><a ng-click="removeLink(link)">remove</a></span>
-                  <span class="link-refresh"><a ng-click="link.service === 'facebook' ? fb_associate() : refreshLink(link)">refresh</a></span>
+                  <div class="btn-group pull-right">
+                    <div class="btn btn-default" ng-click="removeLink(link)"><span class="glyphicon glyphicon-remove"></span></div>
+                    <div class="btn btn-default" ng-click="link.service === 'facebook' ? fb_associate() : refreshLink(link)"><span class="glyphicon glyphicon-refresh"></span></div>
+                  </div>
+                  <h4>{{ link.display_name ? link.display_name : link.service }}</h4>
                 </div>
               </div>
             </div>
@@ -68,12 +68,22 @@
           <div class="panel panel-default">
             <div class="panel-title"><h2>Voyages</h2></div>
             <div class="panel-body">
-              <accordion close-others="true">
-                <accordion-group ng-repeat="voyage in info.voyages" is-disabled="false" is-open="expanded_voyage[voyage.voyageid]">
-                  <accordion-heading>
-                    <span class="pull-right glyphicon glyphicon-user"><span class="glyphicon glyphicon-user"></span></span>
-                    <span>{{voyage.title || voyage.shortname}} (<a href="/voyage/{{voyage.shortname}}">manage</a>)</span>
-                  </accordion-heading>
+              <div class="list-group">
+                <div ng-repeat="voyage in info.voyages" is-disabled="false" is-open="expanded_voyage[voyage.voyageid]">
+                  <div class="list-group-item">
+	    <div class="pull-right btn-group">
+                      <div class="btn btn-default" ng-click="toggleVoyage(voyage)">
+                      <span class="glyphicon glyphicon-user"><span class="glyphicon glyphicon-user"></span></span>
+                      </div>
+                      <div class="btn btn-default" ng-click="selectVoyage(voyage)">
+                      <span class="glyphicon glyphicon-pencil"></span>
+                      </div>
+                    </div>
+                    <span class="h4">{{voyage.title || voyage.shortname}}</span>
+                    <div class="clear-both"></div>
+                  </h4>
+                </div>
+                <div class="well well-lg" ng-show="expanded_voyage[voyage.shortname]">
                   <div class="list-group travelers">
                     <div class="list-group-item"
                          ng-class="{'list-item-owner': t.userid == voyage.owner, 'list-item-{{t.role_name}}': t.userid != voyage.owner}"
@@ -115,8 +125,8 @@
                       </div>
                     </form>
                   </div>
-                </accordion-group>
-              </accordian>
+                </div>
+              </div>
             </div>
           </div>
         </div>
