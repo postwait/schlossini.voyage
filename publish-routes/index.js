@@ -39,7 +39,6 @@ router.get('/', require_voyage(function(req, res) {
                         trips: trips,
                         travelers: null,
                         waypoints: null,
-                        trip: null,
                         })
   });
 }))
@@ -94,11 +93,7 @@ router.get('/:date', function(req, res) {
     expires: new Date(Date.now() + 14*1000*86400),
     httpOnly: false
   });
-  res.render('index', { title: 'Schlossini Voyage',
-                        dateparam: dateparam,
-                        date: date,
-                        TP: travel_posts,
-                        posts: travel_posts.frontage(date,6) });
+  return res.redirect('/');
 });
 
 module.exports = router;

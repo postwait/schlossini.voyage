@@ -24,7 +24,7 @@ router.get('/trip/:trip/footer', require_voyage(function(req, res, next) {
                        { date: req.tresbon.date,
                          published: true,
                          limit: 10 }, function(err3, posts) {
-        Voyage.tripWaypoints(req.tresbon.voyage, trip.tripid, { date:req.tresbon.date },
+        Voyage.tripWaypoints(req.tresbon.voyage, trip.tripid, null,
           function(err4, points) {
             api_response(res,err1||err2||err3||err4, {
               travelers:travelers,
