@@ -54,7 +54,7 @@
                  return (p.whence >= last_loc.whence && p.whence < next_loc.whence);
                });
                if(windowedposts.length) { %>
-          <div class="panel panel-default post snippet">
+          <div class="panel panel-default snippet">
             <div class="panel-body">
           <%   windowedposts.forEach(function(post) { %>
           <div><span tzdate tzdate-date="<%- post.whence.getTime() %>" tzdate-timezone="<%= post.timezone %>" tzdate-format="MMMM d, ha">
