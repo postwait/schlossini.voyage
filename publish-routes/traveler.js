@@ -6,6 +6,7 @@ var showdown = require('../public/js/showdown')
 var converter = new showdown.Converter();
 var router = express.Router();
 var require_voyage = Voyage.express_voyage;
+var rssFeed = require('../lib/feed');
 
 var default_perpage = 3;
 
@@ -56,6 +57,20 @@ router.get('/:person/on/:trip', require_voyage(function(req, res, next) {
                                  nelem: nelem,
                                  posts: posts });
         });
+    });
+  });
+}));
+
+router.get('/:person/on/:trip/feed.xml', require_voyage(function(req, res) {
+  Voyage.tripBySlug(req.params.trip, req.tresbon.voyage, function(err, trip) {
+    Voyage.tripWaypoints(req.tresbon.voyage, trip.tripid, {date: null}, function(err, points) {
+      Voyage.tripPosts(req.tresbon.voyage, trip.tripid,
+                       {published: true, include_json: true, author: req.params.person[1], reverse: true, limit: 20},
+                       function(err, posts) {
+        var xml = rssFeed.make(req.tresbon.voyage, trip, points, posts);
+        res.writeHead(200, { 'Content-Type': 'application/rss+xml' });
+        res.end(xml);
+      });
     });
   });
 }));

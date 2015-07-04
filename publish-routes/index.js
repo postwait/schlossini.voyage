@@ -5,7 +5,9 @@ var express = require('express');
 var showdown = require('../public/js/showdown')
 var converter = new showdown.Converter();
 var router = express.Router();
-var require_voyage = Voyage.express_voyage
+var require_voyage = Voyage.express_voyage;
+var rssFeed = require('../lib/feed');
+var RSS = require('rss');
 
 router.param(function(name, fn){
   if (fn instanceof RegExp) {
@@ -20,9 +22,6 @@ router.param(function(name, fn){
     }
   }
 });
-
-var tp = require('../travel-posts');
-var travel_posts = new tp('./posts/.');
 
 router.param('date', /^(\d{4}-\d{2}-\d{2})?$/);
 router.param('person', /^([0-9]+)$/);
@@ -60,6 +59,21 @@ router.get('/t/:trip', require_voyage(function(req, res) {
       });
   });
 }));
+
+router.get('/t/:trip/feed.xml', require_voyage(function(req, res) {
+  Voyage.tripBySlug(req.params.trip, req.tresbon.voyage, function(err, trip) {
+    Voyage.tripWaypoints(req.tresbon.voyage, trip.tripid, {date: null}, function(err, points) {
+      Voyage.tripPosts(req.tresbon.voyage, trip.tripid,
+                       {published: true, include_json: true, reverse: true, limit: 20},
+                       function(err, posts) {
+        var xml = rssFeed.make(req.tresbon.voyage, trip, points, posts);
+        res.writeHead(200, { 'Content-Type': 'application/rss+xml' });
+        res.end(xml);
+      });
+    });
+  });
+}));
+
 router.get('/t/:trip/itinerary', require_voyage(function(req, res) {
   // Itinerary is a monster, all waypoints, all posts, all travelers
   Voyage.travelers(req.tresbon.voyage, {date: req.tresbon.date}, function(err, travelers) {
