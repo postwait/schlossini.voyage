@@ -44,7 +44,8 @@ router.get('/', require_voyage(function(req, res) {
 router.get('/t/:trip', require_voyage(function(req, res) {
   Voyage.tripBySlug(req.params.trip, req.tresbon.voyage, function(err, trip) {
     Voyage.tripPosts(req.tresbon.voyage, trip.tripid,
-                     { date: req.tresbon.date,
+                     { published: true,
+                       date: req.tresbon.date,
                        include_json: true,
                        limit: 6 },
       function(err, posts) {
