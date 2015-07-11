@@ -1,8 +1,12 @@
+<a href="/traveler/<%- post.author %>/on/<%- trip.url_snippet %>"><div class="author_face">
+  <div class="author_image"><img src="<%- post.author_face %>" /></div>
+</div></a>
 <div class="panel panel-default post post-full">
   <div class="post-date"><span tzdate tzdate-date="<%- post.whence.getTime() %>" tzdate-timezone="<%= post.timezone %>" tzdate-format="">
     <%- post.whence.format("dS &#111;&#102; mmmm, yyyy", true) %>
   </span></div>
   <div class="panel-body">
+    <div class="imgspacer"></div>
     <% if(post.title) { %><h1><a href="/traveler/<%- post.author %>/on/<%- trip.url_snippet %>/writes/<%- post.url_snippet %>"><%= post.title %></a></h1><% } %>
     <%- post.data.html %>
   </div>
