@@ -405,6 +405,8 @@ img.img-right {
   margin: 0.5em 0 0.5em 0.5em;
 }
 img.img-center {
+  display:block;
+  margin: 0 auto;
 }
 img.img-left {
   float: left;
