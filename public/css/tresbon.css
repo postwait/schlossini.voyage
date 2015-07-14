@@ -404,6 +404,8 @@ img.img-right {
   float: right;
   margin: 0.5em 0 0.5em 0.5em;
 }
+img.img-center {
+}
 img.img-left {
   float: left;
   margin: 0.5em 0.5em 0.5em 0;
