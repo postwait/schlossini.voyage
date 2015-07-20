@@ -14,17 +14,19 @@ TB.app.controller('TripFooterCtrl',
     var compile = function() {
       TB.footer.waypoints.forEach(function(p) { p.whence = new Date(p.whence); })
       TB.footer.posts.forEach(function(p) { p.whence = new Date(p.whence); })
-      for(var i=0; i<TB.footer.waypoints.length;i++) {
-        var p = TB.footer.waypoints[i];
-        if(p.visibility == 0) continue;
-        if(p.visibility == 1 && !$scope.current_loc) $scope.last_loc = p;
-        if($scope.current_loc) {
-          $scope.next_loc = p;
+      $scope.current_loc = $scope.next_loc = $scope.last_loc = undefined;
+      var vis = TB.footer.waypoints.filter(function(p) { return p.visibility == 1 });
+      vis.unshift(undefined);
+      vis.unshift(undefined);
+      for(var i=2; i<vis.length; i++) {
+        if(TB.date < vis[i].whence) {
+          $scope.last_loc = vis[i-2];
+          $scope.current_loc = vis[i-1];
+          $scope.next_loc = vis[i];
           break;
         }
-        if(TB.date > p.whence) $scope.current_loc = p;
       }
-      $scope.last_loc = $scope.last_loc;
+      if(!$scope.last_loc) $scope.last_loc = vis[vis.length-2];
     }
 
     var refresh = function () {
@@ -38,7 +40,6 @@ TB.app.controller('TripFooterCtrl',
     }
     if(needs_refresh) refresh();
     compile();
-console.log("HERE", $scope);
 }])
 
 TB.app.service('TripService', function($http) {
