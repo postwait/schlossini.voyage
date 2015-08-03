@@ -136,7 +136,7 @@
                     <span class="date">Add</span>
                     <span class="time">&nbsp;</span>
                   </div>
-                  <div class="profile-pic" ng-repeat="pic in pp.info[t.userid] | orderBy:-whence"
+                  <div class="profile-pic" ng-repeat="pic in pp.info[t.userid] | orderBy:'-whence'"
                        ng-click="openProfilePic(pic,true)">
                     <img ng-src="{{pic.url}}">
                     <span class="date">{{pic.whence | tzdate:"yyyy-MM-dd":pic.timezone}}</span>
