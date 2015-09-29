@@ -1,3 +1,6 @@
+body {
+  color:#555;
+}
 div.author_face {
   position: absolute;
   padding: 4px;
@@ -12,6 +15,29 @@ div.author_face {
 div.frontcontainer div.author_face {
   width: 96px;
   height: 96px;
+}
+p {
+  font-family:'Roboto',helvetica;
+  font-weight:300;
+}
+div.frontcontainer h1 {
+  font-size: 1.8em;
+}
+h1,h2,h3,h4,h5 {
+  font-family:'Roboto',helvetica;
+  font-weight:700;
+}
+h2 {
+  font-weight:600;
+}
+h3,h4,h5 {
+  font-weight:500;
+}
+.snippet h3 {
+  font-size: 20px;
+}
+div.jumbotron h1 {
+  font-family:'Calligraffitti', cursive;
 }
 div.jumbotron div.back {
   height:187px;
@@ -30,6 +56,9 @@ div.jumbotron div.author_face {
   height: 150px;
   left: 3em;
   top: 2em;
+}
+div.author_face img {
+  border-radius: 0px;
 }
 div.jumbotron div.imgspacer {
   width: 168px;
@@ -69,8 +98,17 @@ img.img-top {
     font-size: 1.2em;
   }
 }
+div.panel {
+  background-color: rgba(255,255,255,0.8);
+}
 .post .panel-body {
   padding-left: 1.5em;
+}
+div.post div.panel-body h1:first-of-type {
+  font-family: 'Calligraffitti', cursive;
+}
+div.snippet div.panel-body h1:first-of-type {
+  margin-top: 1.5em;
 }
 .snippet .post-content {
   padding-top:0.5em;
@@ -98,6 +136,7 @@ img.img-top {
   text-align:right;
   padding:0.5em 1em;
   width:100%;
+  background: linear-gradient(rgba(240,240,240,0),rgba(240,240,240,0.6),rgba(240,240,240,0.8),rgba(240,240,240,1));
   height:60px;
 }
 .snippet div.post-more div span {
@@ -114,15 +153,25 @@ img.img-top {
   padding:0px;
   padding-left:17px;
   float:right;
+  position:absolute;
+  width:50%;
+  text-align:right;
+  line-height:1.2em;
+}
+.post-full div.post-date {
+  position: relative;
+  margin-right: -17px;
 }
 .post div.post-date span {
-  font-family: 'Roboto','Calligraffitti', cursive;
-  font-size: 1.2em;
-  height:100%;
-  padding-top:6px;
-  display:block;
+  font-family: Helvetica;
+  font-size: 1em;
   vertical-align:middle;
   padding-right:8px;
+  margin-left:-8px;
+}
+.post div.post-date span.nbws {
+  height:1.2em;
+  white-space:nowrap;
 }
 .frontcontainer div.pagination {
   float:right;
@@ -131,7 +180,7 @@ img.img-top {
   margin-top:1em;
 }
 div.author_image img {
-  border: solid rgba(252, 240, 232, 1) 4px;
+  border: solid rgba(220, 220, 220, 1) 2px;
   width: 100%;
   height: 100%;
 }
@@ -139,7 +188,7 @@ div.author_face div.author_image {
   width: 100%;
   height: 100%;
   position: absolute;
-  background-color: rgba(240, 240, 240, 1);
+  background-color: rgba(180, 180, 180, 1);
   border: 1px solid #262626;
   left: 0px;
   top: 0px;
@@ -232,9 +281,10 @@ div.agenda-location .pin::after {
 footer.jumbotron {
   margin-top: 2em;
   margin-bottom:0;
+  font-size: 12px;
 }
 .footer p {
-  font-size: 1.1em;
+  font-size: 1em;
 }
 ul.travelers {
   list-style-type: none;
@@ -246,6 +296,7 @@ ul.travelers li {
 }
 .footer ul.travelers img {
   width: 40px;
+  border: solid #2B2A2A 1px;
 }
 .footer .panel {
   border:0;
@@ -254,7 +305,7 @@ ul.travelers li {
 .footer .panel-title {
 }
 .footer .panel-body {
-  padding: 0;
+  padding: 0em 1em 0em 1em;
   background-color:transparent;
   background-image:none;
 }

@@ -46,16 +46,24 @@ router.get('/:person/on/:trip', require_voyage(function(req, res, next) {
           var me = travelers.filter(function(t) { return t.userid === parseInt(req.params.person[1]); })
           if(me.length != 1) return next();
           posts.forEach(function(post) {post.data.html = converter.makeHtml(post.data.body);});
-          res.render('person', { voyage: req.tresbon.voyage,
-                                 person: me[0],
-                                 trip: trip,
-                                 dateparam: undefined,
-                                 date: req.tresbon.date,
-                                 travelers: null,
-                                 waypoints: null,
-                                 pageno: pageno,
-                                 nelem: nelem,
-                                 posts: posts });
+
+          var info = { voyage: req.tresbon.voyage,
+                       person: me[0],
+                       trip: trip,
+                       dateparam: undefined,
+                       date: req.tresbon.date,
+                       travelers: null,
+                       waypoints: null,
+                       pageno: pageno,
+                       nelem: nelem,
+                       posts: posts };
+          var backs = posts.map(function(a) { return a.data.background })
+                           .filter(function(a) { return !!a; });
+          if(backs.length) {
+            if(!info.page) info.page = {};
+            info.page.background = backs[0];
+          }
+          res.render('person', info);
         });
     });
   });
@@ -86,15 +94,20 @@ router.get('/:person/on/:trip/writes/:title', require_voyage(function(req, res, 
         var post = posts[0]
         post.data.html = converter.makeHtml(post.data.body);
         var person = req.params.person[1];
-        res.render('single', { title: post.title || req.tresbon.voyage.title,
-                        voyage: req.tresbon.voyage,
-                        trip: trip,
-                        person: person,
-                        date: post.whece,
-                        dateparam: undefined,
-                        waypoints: null,
-                        travelers: null,
-                        post: post });
+        var info = { title: post.title || req.tresbon.voyage.title,
+                     voyage: req.tresbon.voyage,
+                     trip: trip,
+                     person: person,
+                     date: post.whece,
+                     dateparam: undefined,
+                     waypoints: null,
+                     travelers: null,
+                     post: post };
+        if(!!post.data.background) {
+          if(!info.page) info.page = {};
+          info.page.background = post.data.background;
+        }
+        res.render('single', info);
       });
     });
 }));

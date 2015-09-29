@@ -7,7 +7,7 @@ html, body {
 }
 body {
   background-color: #725940;
-  background: url("/images/leather.jpg") no-repeat center center fixed;
+  background: url("/images/leather.jpg") no-repeat center center fixed !important;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -165,6 +165,7 @@ div.post {
   right:12px;
   padding:0px;
   padding-left:17px;
+  padding-top:3px;
   background-image:url('/images/tape-end.png');
   background-repeat:no-repeat;
   float:right;
@@ -179,10 +180,11 @@ div.post {
   font-family: 'Calligraffitti', cursive;
   font-size: 1.2em;
   height:100%;
-  padding-top:6px;
-  display:block;
+  padding-top:2px;
+  /*display:block;*/
   vertical-align:middle;
   padding-right:8px;
+  margin-right:-6px;
   background-image:url('/images/tape.png');
   background-repeat:repeat-x;
   color:#ddd;

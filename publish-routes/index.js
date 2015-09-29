@@ -50,13 +50,20 @@ router.get('/t/:trip', require_voyage(function(req, res) {
                        limit: 6 },
       function(err, posts) {
         posts.forEach(function(p) { p.data.html = converter.makeHtml(p.data.body) })
-        res.render('trip', { voyage: req.tresbon.voyage,
-                             trip: trip,
-                             dateparam: undefined,
-                             date: req.tresbon.date,
-                             travelers: null,
-                             waypoints: null,
-                             posts: posts });
+        var info = { voyage: req.tresbon.voyage,
+                     trip: trip,
+                     dateparam: undefined,
+                     date: req.tresbon.date,
+                     travelers: null,
+                     waypoints: null,
+                     posts: posts };
+        var backs = posts.map(function(a) { return a.data.background })
+                         .filter(function(a) { return !!a; });
+        if(backs.length) {
+          if(!info.page) info.page = {};
+          info.page.background = backs[0];
+        }
+        res.render('trip', info);
       });
   });
 }));
