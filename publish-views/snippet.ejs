@@ -9,7 +9,7 @@
   </div>
   <div class="panel-body">
     <div class="imgspacer"></div>
-    <% if(post.title) { %><h1><%= post.title %></h1><% } %>
+    <% if(post.title) { %><h1><a href="/traveler/<%- post.author %>/on/<%- trip.url_snippet %>/writes/<%- post.url_snippet %>"><%= post.title %></a></h1><% } %>
     <div class="post-content">
     <%- post.data.html %>
     </div>
