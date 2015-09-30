@@ -383,6 +383,10 @@ ul.travelers li {
   background-color:transparent;
   background-image:none;
 }
+.footer .travelers {
+  text-align:center;
+  padding-bottom:1em;
+}
 .footer .copyright {
   color: #666;
   font-size: 0.8em;

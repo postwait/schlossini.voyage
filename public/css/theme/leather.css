@@ -315,6 +315,10 @@ div.agenda-location .pin::after {
 
 /* footer */
 
+.footer .travelers {
+  text-align:center;
+  padding-bottom:1em;
+}
 footer.jumbotron {
   margin-top: 2em;
   margin-bottom:0;
