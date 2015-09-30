@@ -22,11 +22,16 @@
         var methods = {};
         var last_loc = undefined;
         for(var i=0;i<waypoints.length;i++) {
-          var loc = waypoints[i],
-              next_loc = (i+1 == waypoints.length) ? {} : waypoints[i+1];
-              methods[loc.arrival_method] = 1;
+          var loc = waypoints[i], next_loc = {}, j = i+1;
+          methods[loc.arrival_method] = 1;
           if(!last_loc) last_loc = loc;
           if(loc.visibility != 1) continue;
+          for(;j<waypoints.length;j++) {
+            if(waypoints[j].visibility == 1) {
+              next_loc = waypoints[j];
+              break;
+            }
+          }
       %>
       <div class="row">
         <div class="col-md-4 agenda">
