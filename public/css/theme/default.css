@@ -238,6 +238,7 @@ div#map-canvas {
 }
 .agenda .travel-method span {
  margin: 0.5em 1em;
+ display: none;
 }
 @media (min-width: 992px) {
 .agenda .panel-follow {
