@@ -71,7 +71,7 @@
               </div>
               <div class="input-group no-time-controls">
                 <span class="input-group-addon" id="post-timezone">in timezone</span>
-                <sdropdown dropdown-model="waypoint.timezone" dropdown-placeholder="{{post.timezone}}">
+                <sdropdown dropdown-model="post.timezone" dropdown-placeholder="{{post.timezone}}">
                   <sdropdown-group ng-repeat="(group, list) in zones" name="{{group}}">
                     <sdropdown-item sdropdown-value="{{z.value}}" ng-repeat="z in list">{{z.name}}</sdropdown-item>
                   </sdropdown-group>
