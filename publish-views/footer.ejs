@@ -57,7 +57,7 @@
 <div class="row">
   <div class="col-md-12 travelers">
         <ul class="travelers">
-          <li ng-repeat="person in data.travelers"><a href="/traveler/{{ person.userid }}/on/{{ data.trip.url_snippet }}"><img ng-src="{{person.author_face}}"/></a></li>
+          <li ng-repeat="person in data.travelers | filter:{ visible: true }"><a href="/traveler/{{ person.userid }}/on/{{ data.trip.url_snippet }}"><img ng-src="{{person.author_face}}"/></a></li>
         </ul>
   </div>
 </div>
