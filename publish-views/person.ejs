@@ -38,7 +38,7 @@
             <% if(pageno > 1) { %>
             <a class="btn btn-default" role="button" href="?page=<%= (pageno-1) %>">see newer posts</a>
             <% } %>
-            <% if(posts.length > pageno*nelem) { %>
+            <% if(more_posts) { %>
             <a class="btn btn-default" role="button" href="?page=<%= (pageno+1) %>">see older posts</a>
             <% } %>
           </div>

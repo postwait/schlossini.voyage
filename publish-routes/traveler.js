@@ -39,12 +39,14 @@ router.get('/:person/on/:trip', require_voyage(function(req, res, next) {
                        { date: req.tresbon.date,
                          include_json: true,
                          published: true,
-                         limit: nelem,
+                         limit: nelem + 1,
                          author: req.params.person[1],
                          offset: (pageno - 1) * nelem },
         function(err, posts) {
           var me = travelers.filter(function(t) { return t.userid === parseInt(req.params.person[1]); })
           if(me.length != 1) return next();
+          var more_posts = posts.length > nelem;
+          if(posts.length > nelem) posts.pop();
           posts.forEach(function(post) {post.data.html = converter.makeHtml(post.data.body);});
 
           var info = { voyage: req.tresbon.voyage,
@@ -56,6 +58,7 @@ router.get('/:person/on/:trip', require_voyage(function(req, res, next) {
                        waypoints: null,
                        pageno: pageno,
                        nelem: nelem,
+                       more_posts: more_posts,
                        posts: posts };
           var backs = posts.map(function(a) { return a.data.background })
                            .filter(function(a) { return !!a; });
