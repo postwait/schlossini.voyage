@@ -146,6 +146,7 @@ div.login-or span::before {
 }
 div.login-smugmug { display: none; }
 
+div.comments { }
 div.waypoints .list-item-itinerary,
 div.posts .list-item-published,
 .list-item-owner,

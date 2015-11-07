@@ -36,6 +36,33 @@
         </div>
         </div>
       </div>
+ <% if(comments) { %>
+   <% if(comments.disqus) { %>
+      <div class="row">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-8">
+        <div class="panel panel-default comments">
+          <div class="panel-body">
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        // this.page.url = PAGE_URL;
+        this.page.identifier = '<%- trip.tripid %>/<%- post.postid %>';
+    };
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//<%- comments.disqus.account %>.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+          </div>
+        </div>
+      </div>
+  <% } %>
+<% } %>
     </div>
     </div>
     <div class="bottom-spacer"></div>
