@@ -35,6 +35,7 @@ router.get('/', require_voyage(function(req, res) {
     res.render('index', { voyage: req.tresbon.voyage,
                         dataparam: undefined,
                         date: req.tresbon.date,
+                        subtitle: null,
                         trips: trips,
                         travelers: null,
                         waypoints: null,
@@ -52,6 +53,7 @@ router.get('/t/:trip', require_voyage(function(req, res) {
         posts.forEach(function(p) { p.data.html = converter.makeHtml(p.data.body) })
         var info = { voyage: req.tresbon.voyage,
                      trip: trip,
+                     subtitle: null,
                      dateparam: undefined,
                      date: req.tresbon.date,
                      travelers: null,
@@ -93,6 +95,7 @@ router.get('/t/:trip/itinerary', require_voyage(function(req, res) {
           points = points.filter(function(p) { return p.visibility > 0; })
           res.render('itinerary', { voyage: req.tresbon.voyage,
                                     trip: trip,
+                                    subtitle: 'Itinerary',
                                     dateparam: undefined,
                                     date: req.tresbon.date,
                                     travelers: travelers,
